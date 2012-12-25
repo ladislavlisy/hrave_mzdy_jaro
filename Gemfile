@@ -7,6 +7,21 @@ gem 'rails', '3.2.8'
 
 gem 'sqlite3'
 
+group :test do
+  gem 'spork-rails', '~> 3.2.0'
+  gem 'rspec-rails', '~> 2.11.0'
+  gem 'cucumber-rails', '~> 1.3.0', require: false
+  gem 'capybara', '~> 1.1.2'
+  gem 'database_cleaner', '~> 0.8.0'
+  gem 'annotate', '~> 2.5.0'
+  gem 'factory_girl_rails', '~> 4.0.0'
+
+end
+
+group :development do
+  gem 'annotate', '~> 2.5.0'
+  gem 'rspec-rails', '~> 2.11.0'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.

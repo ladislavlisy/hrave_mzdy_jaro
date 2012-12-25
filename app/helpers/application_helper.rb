@@ -1,8 +1,10 @@
+# encoding: utf-8
+
 module ApplicationHelper
   def title
 
     # return title on a per-page basis.
-    base_title = "Hrave Mzdy - platova a mzdova agenda"
+    base_title = "Hravé Mzdy - online platová a mzdová agenda"
     if @title.nil?
       base_title
     else

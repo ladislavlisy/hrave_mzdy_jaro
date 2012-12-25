@@ -1,10 +1,12 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe PagesController do
   render_views
 
   before(:each) do
-    @base_title = "Hrave Mzdy - platova a mzdova agenda"
+    @base_title = "Hravé Mzdy - online platová a mzdová agenda"
   end
 
   describe "GET 'home'" do

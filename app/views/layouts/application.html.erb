@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hrave Mzdy - platova a mzdova agenda | <%= @title %></title>
+  <title><%= title %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= render 'layouts/header' %>
+  <%= image_tag("tagline.png",
+                alt: "Now, Simple and Clearly",
+                id: "tagline") %>
+  <div class="container">
+    <section id="content">
+      <%= yield %>
+    </section>
+    <section id="sidebar">
+      <%= yield :sidebar %>
+      <section id="recent_activity">
+        <header><h1 class="ir" id="recent">Recent Activity</h1></header>
+        <%= render partial: 'activity_items/recent' %>
+      </section>
+    </section>
+  </div>
 
-<%= yield %>
-
+  <%= render 'layouts/footer' %>
 </body>
 </html>

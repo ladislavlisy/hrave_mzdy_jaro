@@ -1,4 +1,6 @@
 HraveMzdyJaro::Application.routes.draw do
+  resources :payroll_tasks, :only => [:new, :show]
+
   get "pages/home"
 
   get "pages/about"
@@ -6,6 +8,7 @@ HraveMzdyJaro::Application.routes.draw do
   get "pages/help"
 
   root :to => 'pages#home'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

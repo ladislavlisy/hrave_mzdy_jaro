@@ -1,0 +1,18 @@
+<h1>Hravé Mzdy</h1>
+<p>
+  This is a start page for the
+  <a href="http://hravemzdy.org/">Hravé Mzdy</a>
+  payroll application.
+</p>
+<%= form_for(:payroll_task) do |f| %>
+    <p>
+      <%= f.label :description %><br />
+      <%= f.text_field :description %>
+    </p>
+    <p>
+      <%= f.label :payroll_period %><br />
+      <%= f.collection_select(:payroll_period, PayrollPeriod.all, :code, :name) %>
+    </p>
+    <%= f.submit "Calculate payroll" %>
+
+<% end %>

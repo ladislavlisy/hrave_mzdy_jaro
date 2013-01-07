@@ -5,14 +5,19 @@
   payroll application.
 </p>
 <%= form_for(:payroll_task) do |f| %>
-    <p>
-      <%= f.label :description %><br />
-      <%= f.text_field :description %>
-    </p>
-    <p>
-      <%= f.label :payroll_period %><br />
-      <%= f.collection_select(:payroll_period, PayrollPeriod.all, :code, :name) %>
-    </p>
-    <%= f.submit "Calculate payroll" %>
+  <fieldset>
+    <legend>Payroll task</legend>
+    <ol>
+      <li>
+        <%= f.label :description %>
+        <%= f.text_field :description %>
+      </li>
+      <li>
+        <%= f.label :payroll_period %>
+        <%= f.collection_select(:payroll_period, PayrollPeriod.all, :code, :name) %>
+      </li>
+    </ol>
+  </fieldset>
+  <%= f.submit "Calculate payroll" %>
 
 <% end %>

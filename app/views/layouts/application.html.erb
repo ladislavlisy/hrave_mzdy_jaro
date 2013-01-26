@@ -4,13 +4,11 @@
   <title><%= title %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "layout_head" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
   <%= render 'layouts/header' %>
-  <%= image_tag("tagline.png",
-                alt: "Now, Simple and Clearly",
-                id: "tagline") %>
   <div class="container">
     <section id="content">
       <%= yield %>

@@ -1,5 +1,5 @@
 HraveMzdyJaro::Application.routes.draw do
-  resources :payroll_tasks, :only => [:new, :show]
+  resources :payroll_tasks, :only => [:index, :new, :show]
 
   get "pages/home"
 

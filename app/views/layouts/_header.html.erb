@@ -1,9 +1,40 @@
 <header id="page_header" role="banner">
   <nav id="utility">
   </nav>
-  <%= link_to(image_tag("logo.png",
-                        alt: "Payroll The Game",
-                        id: "logo"),
-              root_url,
-              title: "Dashboard") %>
+  <div id="main" role="main">
+    <div id="middle_column">
+      <div class="ribbon">
+        <div class="left_folded_back"></div>
+        <%= content_tag(:canvas, "Canvas is not supported in your browser ! :(",
+                        :id => "tapeta", :width => "1024", :height => "460") %>
+        <%= link_to(content_tag(:canvas,
+                                "Canvas is not supported in your browser ! :(",
+                                :id => "tplogo", :width => "388", :height => "76"),
+                    root_url,
+                    title: "Home page") %>
+        <%= content_tag(:canvas, "Canvas is not supported in your browser ! :(",
+                       :id => "tpbtag", :width => "162", :height => "88") %>
+        <h3>
+          <span class="left"></span>
+          <span class="right"></span>
+          OKamžitě - Přirozeně - Přehledně
+        </h3>
+        <div class="right_folded_back"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+      $(function(){
+          var srclogo = "<%= image_path("logo.png") %>";
+          var pllogo = document.getElementById('tplogo');
+          kresliLogo(pllogo, srclogo);
+
+          var srcbtag = "<%= image_path("brandtag.png") %>";
+          var plbtag = document.getElementById('tpbtag');
+          kresliBrandTag(plbtag, srcbtag);
+
+          var platno = document.getElementById('tapeta');
+          kresliTapetu(platno);
+      });
+  </script>
 </header>

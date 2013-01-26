@@ -1,12 +1,12 @@
 section#sidebar {
-  background-color: #edeae6;
+  background-color: #8dd3f5;
   -webkit-border-top-left-radius: 10px;
   -webkit-border-bottom-left-radius: 10px;
   -moz-border-radius-topleft: 10px;
   -moz-border-radius-bottomleft: 10px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
-  color: #666;
+  color: #4384D1;
   font: {
     size: 0.8em;
     weight: normal;
@@ -16,12 +16,12 @@ section#sidebar {
   a,
   a:link,
   a:visited {
-    color: #666;
+    color: #4384D1;
     text-decoration: underline;
   }
   a:hover,
   a:active {
-    color: #bc471d;
+    color: #6da4bc;
   }
   section {
   }
@@ -34,8 +34,8 @@ section#sidebar {
   }
   #recent_activity {
     header {
-      background-color: #bc471d;
-      border-bottom: 5px solid #807c77;
+      background-color: #6da4bc;
+      border-bottom: 5px solid #4384D1;
       margin: 10px -10px;
       padding: 5px 10px 0 10px;
       h1#recent {
@@ -43,7 +43,7 @@ section#sidebar {
                     no-repeat scroll top left;
         margin: 5px 0 0 0;
         padding: 0;
-        text-indent: -999px;
+        text-indent: -9999px;
       }
     }
   }

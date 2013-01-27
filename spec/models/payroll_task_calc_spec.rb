@@ -6,10 +6,10 @@ describe "Payroll Tasks Calculation" do
     period = FactoryGirl.build(:periodJan2013)
     @payroll_process = PayrollProcess.new(period)
     #@payroll_process.ins_term_salary(PayTagGateway::TAG_SALARY_BASE, 3, 3000)
-    @payroll_process.ins_term_salary(PayTagGateway::TAG_SALARY_BASE, 5, 5000)
-    @payroll_process.ins_term_salary(PayTagGateway::TAG_SALARY_BASE, 1, 1000)
-    @payroll_process.ins_term_salary(PayTagGateway::TAG_SALARY_BASE, 4, 4000)
-    @payroll_process.ins_term_salary(PayTagGateway::TAG_SALARY_BASE, 2, 2000)
+    #@payroll_process.ins_term_salary(PayTagGateway::TAG_SALARY_BASE, 5, 5000)
+    #@payroll_process.ins_term_salary(PayTagGateway::TAG_SALARY_BASE, 1, 1000)
+    #@payroll_process.ins_term_salary(PayTagGateway::TAG_SALARY_BASE, 4, 4000)
+    #@payroll_process.ins_term_salary(PayTagGateway::TAG_SALARY_BASE, 2, 2000)
   end
 
 

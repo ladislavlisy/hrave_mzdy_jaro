@@ -13,7 +13,9 @@ class PayTagGateway
   end
 
   def classname_for(tag_code)
-    tag_code.camelize + 'Tag'
+    tag_name = tag_code.match(/TAG_(.*)/)[1]
+    class_name = tag_name.underscore.camelize + 'Tag'
+    class_name
   end
 
   def load_pay_tags

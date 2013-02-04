@@ -7,7 +7,4 @@ class ScheduleWeeklyConcept < PayrollConcept
     @hours_weekly = values[:hours_weekly]
   end
 
-  def pending_codes
-    []
-  end
 end

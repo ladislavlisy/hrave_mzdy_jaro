@@ -10,4 +10,14 @@ class AmountMonthlyConcept < PayrollConcept
   def pending_codes
     [ ScheduleWorkTag.new ]
   end
+
+  def summary_codes
+    [
+      IncomeGrossTag.new,
+      IncomeNettoTag.new,
+      InsuranceSocialBaseTag.new,
+      InsuranceHealthBaseTag.new,
+      IncomeTaxableTag.new
+    ]
+  end
 end

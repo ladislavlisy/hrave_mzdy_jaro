@@ -15,10 +15,10 @@ class PayConceptGateway
     load_concepts
   end
 
-  def concept_for(concept_code, values)
+  def concept_for(tag_code, concept_code, values)
     concept_class = classname_for(concept_code)
     concept_class = self.class.const_get(concept_class)
-    concept_class.new(values)
+    concept_class.new(tag_code, values)
   end
 
   def classname_for(code)

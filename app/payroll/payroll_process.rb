@@ -16,7 +16,7 @@ class PayrollProcess
   def ins_term(period, term_refer, code_order, amount)
     term_key = TagRefer.new(period, term_refer.code, code_order)
     term_tag = tags.tag_for(term_refer.name)
-    @terms[term_key] = concepts.concept_for(term_tag.concept.name, amount)
+    @terms[term_key] = concepts.concept_for(term_refer.code, term_tag.concept.name, amount)
     term_key
   end
 

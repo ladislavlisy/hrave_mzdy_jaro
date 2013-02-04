@@ -12,9 +12,10 @@ describe "Payroll Concept Gateway" do
     end
 
     it "returns code CONCEPT_AMOUNT_MONTHLY for new Concept" do
-      concept_item = @payroll_gateway.concept_for(:CONCEPT_AMOUNT_MONTHLY.id2name, {amount_monthly: 0})
-      concept_item.code.should == :CONCEPT_AMOUNT_MONTHLY
+      concept_item = @payroll_gateway.concept_for(:TAG_SALARY_BASE, :CONCEPT_AMOUNT_MONTHLY.id2name, {amount_monthly: 0})
       concept_item.name.should == "CONCEPT_AMOUNT_MONTHLY"
+      concept_item.code.should == :CONCEPT_AMOUNT_MONTHLY
+      concept_item.tag_code.should == :TAG_SALARY_BASE
     end
 
   end

@@ -1,6 +1,6 @@
 class InsuranceHealthConcept < PayrollConcept
-  def initialize
-    super(:CONCEPT_INSURANCE_HEALTH, :CONCEPT_INSURANCE_HEALTH.id2name)
+  def initialize(tag_code)
+    super(:CONCEPT_INSURANCE_HEALTH, :CONCEPT_INSURANCE_HEALTH.id2name, tag_code)
   end
 
   def pending_codes

@@ -1,6 +1,6 @@
 class IncomeTaxableConcept < PayrollConcept
-  def initialize
-    super(:CONCEPT_INCOME_TAXABLE, :CONCEPT_INCOME_TAXABLE.id2name)
+  def initialize(tag_code)
+    super(:CONCEPT_INCOME_TAXABLE, :CONCEPT_INCOME_TAXABLE.id2name, tag_code)
   end
 
 end

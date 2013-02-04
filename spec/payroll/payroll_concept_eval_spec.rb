@@ -13,7 +13,7 @@ describe "Payroll Concept Eval" do
       payroll_results = Hash.new
       concept_value = {}
 
-      concept_item = @payroll_concepts.concept_for(:CONCEPT_SCHEDULE_WEEKLY.id2name, concept_value)
+      concept_item = @payroll_concepts.concept_for(:TAG_SCHEDULE_WORK, :CONCEPT_SCHEDULE_WEEKLY.id2name, concept_value)
       eval_value = concept_item.eval(@payroll_period, payroll_results)
 
       eval_value.should == 184

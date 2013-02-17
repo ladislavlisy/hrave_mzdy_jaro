@@ -3,12 +3,12 @@ FactoryGirl.define do
   factory :payroll_period do
     factory :periodJan2013 do
       code 201301
-      name "January 2013"
+      name 'January 2013'
     end
 
     factory :periodNoName do
       code 201301
-      name ""
+      name ''
     end
   end
 end
@@ -20,11 +20,11 @@ FactoryGirl.define do
     task_end nil
 
     factory :task_example do
-      description "Payroll task (January 2013)"
+      description 'Payroll task (January 2013)'
     end
 
     factory :task_empty do
-      description ""
+      description ''
     end
 
   end

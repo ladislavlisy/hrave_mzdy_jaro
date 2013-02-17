@@ -4,7 +4,7 @@ class TaxAdvanceConcept < PayrollConcept
   end
 
   def pending_codes
-    [ IncomeTaxableTag.new ]
+    [ TaxIncomeBaseTag.new ]
   end
 
 end

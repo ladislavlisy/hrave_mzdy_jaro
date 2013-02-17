@@ -1,14 +1,17 @@
-class AmountMonthlyConcept < PayrollConcept
+class SalaryMonthlyConcept < PayrollConcept
   attr_reader :amount_monthly
 
   def initialize(tag_code, values)
-     super(:CONCEPT_AMOUNT_MONTHLY, :CONCEPT_AMOUNT_MONTHLY.id2name, tag_code)
+     super(:CONCEPT_SALARY_MONTHLY, :CONCEPT_SALARY_MONTHLY.id2name, tag_code)
 
      @amount_monthly = values[:amount_monthly]
   end
 
   def pending_codes
-    [ ScheduleWorkTag.new ]
+    [
+      HoursWorkingTag.new,
+      HoursAbsenceTag.new
+    ]
   end
 
   def summary_codes
@@ -17,7 +20,7 @@ class AmountMonthlyConcept < PayrollConcept
       IncomeNettoTag.new,
       InsuranceSocialBaseTag.new,
       InsuranceHealthBaseTag.new,
-      IncomeTaxableTag.new
+      TaxIncomeBaseTag.new
     ]
   end
 end

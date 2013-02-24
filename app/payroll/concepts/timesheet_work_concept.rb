@@ -1,6 +1,6 @@
 class TimesheetWorkConcept < PayrollConcept
   def initialize(tag_code)
-    super(:CONCEPT_TIMESHEET_WORK, :CONCEPT_TIMESHEET_WORK.id2name, tag_code)
+    super(TimesheetWorkConceptRefer.new, tag_code)
   end
 
   def pending_codes

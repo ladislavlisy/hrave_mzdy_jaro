@@ -1,6 +1,6 @@
 class InsuranceSocialConcept < PayrollConcept
   def initialize(tag_code)
-    super(:CONCEPT_INSURANCE_SOCIAL, :CONCEPT_INSURANCE_SOCIAL.id2name, tag_code)
+    super(InsuranceSocialConceptRefer.new, tag_code)
   end
 
   def pending_codes

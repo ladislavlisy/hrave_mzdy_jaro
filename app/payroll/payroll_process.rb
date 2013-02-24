@@ -6,11 +6,13 @@ class PayrollProcess
   attr_reader :tags
   attr_reader :concepts
 
-  def initialize(period, tag_gate, concept_gate)
-    @period = period
-    @terms = Hash.new
+  def initialize(tag_gate, concept_gate, period)
     @tags = tag_gate
     @concepts = concept_gate
+
+    @period = period
+    @terms = Hash.new
+    @results = Hash.new
   end
 
   def ins_term(period, term_refer, code_order, amount)
@@ -53,6 +55,15 @@ class PayrollProcess
 
   def get_term(pay_tag)
     @terms.select { |key,_| key==pay_tag }
+  end
+
+  def get_result(pay_tag)
+    @results.select { |key,_| key==pay_tag }
+  end
+
+  def evaluate(pay_tag)
+    @results = Hash[@terms.map { |x,y| [x, y.evaluate] }]
+    get_result(pay_tag)
   end
 
   def run_verify_pending

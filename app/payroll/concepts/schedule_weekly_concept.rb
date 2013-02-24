@@ -2,9 +2,15 @@ class ScheduleWeeklyConcept < PayrollConcept
   attr_reader :hours_weekly
 
   def initialize(tag_code, values)
-    super(:CONCEPT_SCHEDULE_WEEKLY, :CONCEPT_SCHEDULE_WEEKLY.id2name, tag_code)
+    super(ScheduleWeeklyConceptRefer.new, tag_code)
 
     @hours_weekly = values[:hours_weekly]
   end
 
+  def evaluate
+    hours_daily = @hours_weekly/5
+    hours_week = [hours_daily,hours_daily,hours_daily,hours_daily,hours_daily,0,0]
+
+    ScheduleWeeklyResult.new(@tag_code, @code, self, {week_schedule: hours_week})
+  end
 end

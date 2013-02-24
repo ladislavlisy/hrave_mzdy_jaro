@@ -2,7 +2,7 @@
 
 class InsuranceSocialTag < PayrollTag
   def initialize
-    super(:TAG_INSURANCE_SOCIAL, :TAG_INSURANCE_SOCIAL.id2name,
+    super(InsuranceSocialTagRefer.new,
           CodeNameRefer.new(:CONCEPT_INSURANCE_SOCIAL, :CONCEPT_INSURANCE_SOCIAL.id2name))
 
   end

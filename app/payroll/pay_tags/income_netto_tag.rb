@@ -2,7 +2,7 @@
 
 class IncomeNettoTag < PayrollTag
   def initialize
-    super(:TAG_INCOME_NETTO, :TAG_INCOME_NETTO.id2name,
+    super(IncomeNettoTagRefer.new,
           CodeNameRefer.new(:CONCEPT_INCOME_NETTO, :CONCEPT_INCOME_NETTO.id2name))
 
   end

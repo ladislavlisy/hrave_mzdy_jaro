@@ -2,7 +2,7 @@ class SalaryMonthlyConcept < PayrollConcept
   attr_reader :amount_monthly
 
   def initialize(tag_code, values)
-     super(:CONCEPT_SALARY_MONTHLY, :CONCEPT_SALARY_MONTHLY.id2name, tag_code)
+     super(SalaryMonthlyConceptRefer.new, tag_code)
 
      @amount_monthly = values[:amount_monthly]
   end

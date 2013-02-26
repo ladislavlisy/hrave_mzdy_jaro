@@ -2,8 +2,6 @@
 
 class InsuranceHealthBaseTag < PayrollTag
   def initialize
-    super(InsuranceHealthBaseTagRefer.new,
-          CodeNameRefer.new(:CONCEPT_INSURANCE_HEALTH_BASE, :CONCEPT_INSURANCE_HEALTH_BASE.id2name))
-
+    super(PayTagGateway::REF_INSURANCE_HEALTH_BASE, PayConceptGateway::REFCON_INSURANCE_HEALTH_BASE)
   end
 end

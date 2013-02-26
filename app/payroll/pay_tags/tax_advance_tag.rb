@@ -2,9 +2,7 @@
 
 class TaxAdvanceTag < PayrollTag
   def initialize
-    super(TaxAdvanceTagRefer.new,
-          CodeNameRefer.new(:CONCEPT_TAX_ADVANCE, :CONCEPT_TAX_ADVANCE.id2name))
-
+    super(PayTagGateway::REF_TAX_ADVANCE, PayConceptGateway::REFCON_TAX_ADVANCE)
   end
 
 end

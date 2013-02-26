@@ -49,13 +49,15 @@ describe 'Payroll Process Calculations' do
 
   describe 'Timesheet Period' do
     it 'returns Array of working days' do
-      schedule_value = {hours_weekly: 40}
+      schedule_work_value = {hours_weekly: 40}
+      schedule_term_value = {date_from: nil, date_end: nil}
+      timesheet_value = {}
 
-      schedule_ref = ScheduleWorkTagRefer.new
-      schedule_tag = @payroll_process.add_term(schedule_ref, schedule_value)
-      schedule_res = @payroll_process.evaluate(schedule_tag)
+      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      timesheet_tag = @payroll_process.add_term(PayTagGateway::REF_TIMESHEET_PERIOD, timesheet_value)
 
-      schedule_res[schedule_tag].week_schedule.should == [8,8,8,8,8,0,0]
+      timesheet_result = @payroll_process.evaluate(timesheet_tag)
     end
   end
 

@@ -1,5 +1,5 @@
 class IncomeNettoConceptRefer < CodeNameRefer
-  def initialize(tag_code)
+  def initialize
     super(:CONCEPT_INCOME_NETTO, :CONCEPT_INCOME_NETTO.id2name)
   end
 

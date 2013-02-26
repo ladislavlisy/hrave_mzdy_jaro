@@ -1,6 +1,5 @@
 class ScheduleTermTag < PayrollTag
   def initialize
-    super(ScheduleTermTagRefer.new,
-          CodeNameRefer.new(:CONCEPT_SCHEDULE_TERM, :CONCEPT_SCHEDULE_TERM.id2name))
+    super(PayTagGateway::REF_SCHEDULE_TERM, PayConceptGateway::REFCON_SCHEDULE_TERM)
   end
 end

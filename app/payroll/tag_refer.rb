@@ -9,15 +9,28 @@ class TagRefer
     @code_order = code_order
   end
 
-  def <=>(tag_other)
-    if @period_base == tag_other.period_base
-      if @code == tag_other.code
-        @code_order <=> tag_other.code_order
+  def ==(other)
+    @period_base == other.period_base && @code == other.code && @code_order == other.code_order
+  end
+
+  def <=>(other)
+    if @period_base == other.period_base
+      if @code == other.code
+        @code_order <=> other.code_order
       else
-        @code <=> tag_other.code
+        @code <=> other.code
       end
     else
-      @period_base <=> tag_other.period_base
+      @period_base <=> other.period_base
     end
+  end
+
+  def eql?(other)
+    @period_base == other.period_base && @code == other.code && @code_order == other.code_order
+  end
+
+  def hash
+    code_int = @code.hash
+    @period_base ^ code_int ^ @code_order
   end
 end

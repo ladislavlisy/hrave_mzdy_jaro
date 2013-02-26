@@ -2,8 +2,6 @@
 
 class IncomeGrossTag < PayrollTag
   def initialize
-    super(IncomeGrossTagRefer.new,
-          CodeNameRefer.new(:CONCEPT_INCOME_GROSS, :CONCEPT_INCOME_GROSS.id2name))
-
+    super(PayTagGateway::REF_INCOME_GROSS, PayConceptGateway::REFCON_INCOME_GROSS)
   end
 end

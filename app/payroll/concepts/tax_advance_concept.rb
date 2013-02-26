@@ -1,5 +1,5 @@
 class TaxAdvanceConcept < PayrollConcept
-  def initialize(tag_code)
+  def initialize(tag_code, values)
     super(TaxAdvanceConceptRefer.new, tag_code)
   end
 

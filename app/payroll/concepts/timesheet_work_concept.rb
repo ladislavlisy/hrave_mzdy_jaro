@@ -1,5 +1,5 @@
 class TimesheetWorkConcept < PayrollConcept
-  def initialize(tag_code)
+  def initialize(tag_code, values)
     super(TimesheetWorkConceptRefer.new, tag_code)
   end
 

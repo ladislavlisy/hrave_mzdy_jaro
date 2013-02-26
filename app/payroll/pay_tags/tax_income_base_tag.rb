@@ -2,8 +2,6 @@
 
 class TaxIncomeBaseTag < PayrollTag
   def initialize
-    super(TaxIncomeBaseTagRefer.new,
-          CodeNameRefer.new(:CONCEPT_TAX_INCOME_BASE, :CONCEPT_TAX_INCOME_BASE.id2name))
-
+    super(PayTagGateway::REF_TAX_INCOME_BASE, PayConceptGateway::REFCON_TAX_INCOME_BASE)
   end
 end

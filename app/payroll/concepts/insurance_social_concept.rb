@@ -1,5 +1,5 @@
 class InsuranceSocialConcept < PayrollConcept
-  def initialize(tag_code)
+  def initialize(tag_code, values)
     super(InsuranceSocialConceptRefer.new, tag_code)
   end
 

@@ -1,6 +1,5 @@
 class HoursAbsenceTag < PayrollTag
   def initialize
-    super(HoursAbsenceTagRefer.new,
-          CodeNameRefer.new(:CONCEPT_HOURS_ABSENCE, :CONCEPT_HOURS_ABSENCE.id2name))
+    super(PayTagGateway::REF_HOURS_ABSENCE, PayConceptGateway::REFCON_HOURS_ABSENCE)
   end
 end

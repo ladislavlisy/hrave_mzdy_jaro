@@ -19,7 +19,6 @@
 
 class ScheduleWorkTag < PayrollTag
   def initialize
-    super(ScheduleWorkTagRefer.new,
-          CodeNameRefer.new(:CONCEPT_SCHEDULE_WEEKLY, :CONCEPT_SCHEDULE_WEEKLY.id2name))
+    super(PayTagGateway::REF_SCHEDULE_WORK, PayConceptGateway::REFCON_SCHEDULE_WEEKLY)
   end
 end

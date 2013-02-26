@@ -1,6 +1,5 @@
 class TimesheetWorkTag < PayrollTag
   def initialize
-    super(TimesheetWorkTagRefer.new,
-          CodeNameRefer.new(:CONCEPT_TIMESHEET_WORK, :CONCEPT_TIMESHEET_WORK.id2name))
+    super(PayTagGateway::REF_TIMESHEET_WORK, PayConceptGateway::REFCON_TIMESHEET_WORK)
   end
 end

@@ -1,5 +1,5 @@
 class InsuranceHealthConcept < PayrollConcept
-  def initialize(tag_code)
+  def initialize(tag_code, values)
     super(InsuranceHealthConceptRefer.new, tag_code)
   end
 

@@ -1,6 +1,5 @@
 class SalaryBaseTag < PayrollTag
   def initialize
-    super(SalaryBaseTagRefer.new,
-          CodeNameRefer.new(:CONCEPT_SALARY_MONTHLY, :CONCEPT_SALARY_MONTHLY.id2name))
+    super(PayTagGateway::REF_SALARY_BASE, PayConceptGateway::REFCON_SALARY_MONTHLY)
   end
 end

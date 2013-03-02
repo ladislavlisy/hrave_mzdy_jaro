@@ -1,10 +1,10 @@
 class ScheduleTermResult < PayrollResult
-  attr_reader :term_from, :term_end
+  attr_reader :day_ord_from, :day_ord_end
 
   def initialize(tag_code, concept_code, concept_item, values)
     super(tag_code, concept_code, concept_item)
 
-    @term_from = values[:term_from]
-    @term_end = values[:term_end]
+    @day_ord_from = values[:day_ord_from]
+    @day_ord_end = values[:day_ord_end]
   end
 end

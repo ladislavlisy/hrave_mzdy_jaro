@@ -31,6 +31,6 @@ class TagRefer
 
   def hash
     code_int = @code.hash
-    @period_base ^ code_int ^ @code_order
+    @period_base.hash ^ code_int ^ @code_order.hash
   end
 end

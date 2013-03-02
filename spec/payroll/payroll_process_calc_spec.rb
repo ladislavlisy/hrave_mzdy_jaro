@@ -60,6 +60,26 @@ describe 'Payroll Process Calculations' do
       timesheet_result = @payroll_process.evaluate(timesheet_tag)
       timesheet_result[timesheet_tag].month_schedule[0].should == 8
     end
+
+    it 'returns Array of working days form 10 to 25 of month' do
+      schedule_work_value = {hours_weekly: 40}
+      timesheet_value = {}
+
+      period = @payroll_process.period
+      date_test_beg = Date.new(period.year, period.month, 15)
+      date_test_end = Date.new(period.year, period.month, 24)
+      schedule_term_value = {date_from: date_test_beg, date_end: date_test_end}
+
+      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      timesheet_tag = @payroll_process.add_term(PayTagGateway::REF_TIMESHEET_WORK, timesheet_value)
+
+      timesheet_result = @payroll_process.evaluate(timesheet_tag)
+      timesheet_result[timesheet_tag].month_schedule[14-1].should == 0
+      timesheet_result[timesheet_tag].month_schedule[25-1].should == 0
+      timesheet_result[timesheet_tag].month_schedule[15-1].should == 8
+      timesheet_result[timesheet_tag].month_schedule[24-1].should == 8
+    end
   end
 
   describe 'Timesheet Work' do

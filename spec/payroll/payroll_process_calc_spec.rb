@@ -55,10 +55,43 @@ describe 'Payroll Process Calculations' do
 
       schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
       schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      timesheet_tag = @payroll_process.add_term(PayTagGateway::REF_TIMESHEET_PERIOD, timesheet_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_TIMESHEET_PERIOD, timesheet_value)
 
-      timesheet_result = @payroll_process.evaluate(timesheet_tag)
-      timesheet_result[timesheet_tag].month_schedule[0].should == 8
+      timesheet_result = @payroll_process.evaluate(result_tag)
+      timesheet_result[result_tag].month_schedule[0].should == 8
+    end
+
+  end
+
+  describe 'Timesheet Work' do
+    it 'returns Array of working days' do
+      schedule_work_value = {hours_weekly: 40}
+      schedule_term_value = {date_from: nil, date_end: nil}
+      timesheet_value = {}
+
+      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_TIMESHEET_WORK, timesheet_value)
+
+      timesheet_result = @payroll_process.evaluate(result_tag)
+      #first week
+      timesheet_result[result_tag].month_schedule[0].should == 8
+      timesheet_result[result_tag].month_schedule[1].should == 8
+      timesheet_result[result_tag].month_schedule[2].should == 8
+      timesheet_result[result_tag].month_schedule[3].should == 8
+      timesheet_result[result_tag].month_schedule[4].should == 0
+      timesheet_result[result_tag].month_schedule[5].should == 0
+      timesheet_result[result_tag].month_schedule[6].should == 8
+      timesheet_result[result_tag].month_schedule[7].should == 8
+      #third week
+      timesheet_result[result_tag].month_schedule[14].should == 8
+      timesheet_result[result_tag].month_schedule[15].should == 8
+      timesheet_result[result_tag].month_schedule[16].should == 8
+      timesheet_result[result_tag].month_schedule[17].should == 8
+      timesheet_result[result_tag].month_schedule[18].should == 0
+      timesheet_result[result_tag].month_schedule[19].should == 0
+      timesheet_result[result_tag].month_schedule[20].should == 8
+      timesheet_result[result_tag].month_schedule[21].should == 8
     end
 
     it 'returns Array of working days form 10 to 25 of month' do
@@ -72,34 +105,62 @@ describe 'Payroll Process Calculations' do
 
       schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
       schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      timesheet_tag = @payroll_process.add_term(PayTagGateway::REF_TIMESHEET_WORK, timesheet_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_TIMESHEET_WORK, timesheet_value)
 
-      timesheet_result = @payroll_process.evaluate(timesheet_tag)
-      timesheet_result[timesheet_tag].month_schedule[14-1].should == 0
-      timesheet_result[timesheet_tag].month_schedule[25-1].should == 0
-      timesheet_result[timesheet_tag].month_schedule[15-1].should == 8
-      timesheet_result[timesheet_tag].month_schedule[24-1].should == 8
-    end
-  end
-
-  describe 'Timesheet Work' do
-    it 'returns Array of working days' do
+      timesheet_result = @payroll_process.evaluate(result_tag)
+      timesheet_result[result_tag].month_schedule[14-1].should == 0
+      timesheet_result[result_tag].month_schedule[25-1].should == 0
+      timesheet_result[result_tag].month_schedule[15-1].should == 8
+      timesheet_result[result_tag].month_schedule[24-1].should == 8
     end
   end
 
   describe 'Hours Working' do
-    it 'returns Sum of working hours' do
+    it 'should return for period 1/2013 sum of working hours = 184' do
+      schedule_work_value = {hours_weekly: 40}
+      timesheet_value = {}
+
+      period = @payroll_process.period
+      schedule_term_value = {date_from: nil, date_end: nil}
+
+      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_HOURS_WORKING, timesheet_value)
+
+      result_value = @payroll_process.evaluate(result_tag)
+      result_value[result_tag].hours.should == 184
     end
   end
 
   describe 'Hours Absence' do
-    it 'returns Sum of absence hours' do
+    it 'should return Sum of absence hours = 0' do
+      schedule_work_value = {hours_weekly: 40}
+      timesheet_value = {}
+
+      period = @payroll_process.period
+      schedule_term_value = {date_from: nil, date_end: nil}
+
+      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_HOURS_ABSENCE, timesheet_value)
+
+      result_value = @payroll_process.evaluate(result_tag)
+      result_value[result_tag].hours.should == 0
     end
   end
 
-
   describe 'Salary Base' do
-    it 'returns Salary amount	Salary value' do
+    it 'should return for Salary amount	15 000,- Salary value = 15 000,-' do
+      schedule_work_value = {hours_weekly: 40}
+      schedule_term_value = {date_from: nil, date_end: nil}
+      salary_amount_value = {amount_monthly: 15000}
+
+      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+
+      salary_result = @payroll_process.evaluate(salary_amount_tag)
+      salary_result[salary_amount_tag].payment.should == 15000
     end
   end
 

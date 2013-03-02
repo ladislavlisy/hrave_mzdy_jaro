@@ -7,7 +7,7 @@ class ScheduleWeeklyConcept < PayrollConcept
     @hours_weekly = values[:hours_weekly]
   end
 
-  def evaluate
+  def evaluate(period, results)
     hours_daily = @hours_weekly/5
     hours_week = [hours_daily,hours_daily,hours_daily,hours_daily,hours_daily,0,0]
 

@@ -58,6 +58,7 @@ describe 'Payroll Process Calculations' do
       timesheet_tag = @payroll_process.add_term(PayTagGateway::REF_TIMESHEET_PERIOD, timesheet_value)
 
       timesheet_result = @payroll_process.evaluate(timesheet_tag)
+      timesheet_result[timesheet_tag].month_schedule[0].should == 8
     end
   end
 

@@ -1,3 +1,6 @@
+TERM_BEG_FINISHED = 32
+TERM_END_FINISHED =  0
+
 class PayrollConcept < CodeNameRefer
   attr_reader :tag_code
 
@@ -26,5 +29,11 @@ class PayrollConcept < CodeNameRefer
     else
       tag_code <=> concept_other.tag_code
     end
+  end
+
+  #get term from Results by key of tag
+  def get_result_by(results, pay_tag)
+    result_hash = results.select { |key,_| key.code==pay_tag }
+    result_hash.values[0]
   end
 end

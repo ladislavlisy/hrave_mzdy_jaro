@@ -3,6 +3,7 @@ class ScheduleTermConcept < PayrollConcept
 
   def initialize(tag_code, values)
     super(ScheduleTermConceptRefer.new, tag_code)
+    @tag_pending_codes = rec_pending_codes(pending_codes())
 
     @date_from = values[:date_from]
     @date_end  = values[:date_end]

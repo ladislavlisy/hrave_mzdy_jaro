@@ -1,10 +1,14 @@
 class TimesheetWorkConcept < PayrollConcept
   def initialize(tag_code, values)
     super(TimesheetWorkConceptRefer.new, tag_code)
+    @tag_pending_codes = rec_pending_codes(pending_codes())
   end
 
   def pending_codes
-    [ TimesheetPeriodTag.new, ScheduleTermTag.new ]
+    [
+      TimesheetPeriodTag.new,
+      ScheduleTermTag.new
+    ]
   end
 
   def evaluate(period, results)

@@ -3,6 +3,7 @@ class ScheduleWeeklyConcept < PayrollConcept
 
   def initialize(tag_code, values)
     super(ScheduleWeeklyConceptRefer.new, tag_code)
+    @tag_pending_codes = rec_pending_codes(pending_codes())
 
     @hours_weekly = values[:hours_weekly]
   end

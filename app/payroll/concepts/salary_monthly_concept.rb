@@ -3,6 +3,7 @@ class SalaryMonthlyConcept < PayrollConcept
 
   def initialize(tag_code, values)
      super(SalaryMonthlyConceptRefer.new, tag_code)
+     @tag_pending_codes = rec_pending_codes(pending_codes())
 
      @amount_monthly = values[:amount_monthly]
   end

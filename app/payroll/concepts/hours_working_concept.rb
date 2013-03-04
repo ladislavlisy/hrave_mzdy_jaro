@@ -3,7 +3,14 @@ class HoursWorkingConcept < PayrollConcept
 
   def initialize(tag_code, values)
     super(HoursWorkingConceptRefer.new, tag_code)
-    @hours = values[:hours]
+    @hours = values[:hours] || 0
+    @tag_pending_codes = rec_pending_codes(pending_codes())
+  end
+
+  def pending_codes
+    [
+      TimesheetWorkTag.new
+    ]
   end
 
   def evaluate(period, results)

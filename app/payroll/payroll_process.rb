@@ -66,7 +66,7 @@ class PayrollProcess
 
     calculation_steps = create_calculation_steps(@terms, period_base, pending_uniq_codes)
 
-    sorted_calculation = calculation_steps.sort {|a,b| a<=>b}
+    sorted_calculation = calculation_steps.sort {|a,b| a.last<=>b.last}
 
     @results = sorted_calculation.inject({}) do |agr, x|
       agr.merge!({x[0] => x[1].evaluate(period, agr)})
@@ -145,8 +145,18 @@ class PayrollProcess
   end
 
   def collect_pending_codes_for(term_hash)
-    pending = term_hash.inject ([]) { |agr, e| agr.concat(e.last.pending_codes()) }
+    pending = term_hash.inject ([]) { |agr, e| agr.concat(rec_pending_codes(e.last)) }
     pending_uniq = pending.uniq
+  end
+
+  def rec_pending_codes(concept)
+    pending_codes = concept.pending_codes
+    ret_codes = pending_codes.inject(pending_codes.dup) {|agr, t| agr.concat(rec_pending_codes(concept_for(t)))}
+  end
+
+  def concept_for(code)
+    values = {}
+    concept = concepts.concept_for(code.concept_code, code.concept_name, values)
   end
 
   def create_calculation_steps(term_hash, period_base, pending_codes)

@@ -1,3 +1,5 @@
+#require 'bigdecimal'
+
 TERM_BEG_FINISHED = 32
 TERM_END_FINISHED =  0
 
@@ -7,28 +9,15 @@ class PayrollConcept < CodeNameRefer
   def initialize(code_refer, tag_code)
     super(code_refer.code, code_refer.name)
     @tag_code = tag_code
-    @tag_pending_codes = []
+    @tag_pending_codes = nil
   end
 
-  def rec_pending_codes(pending_codes)
-    ret_codes = pending_codes.inject(pending_codes.dup)  do |agr, t|
-      agr.concat(rec_pending_codes(pending_codes_for_tag_code(t)))
-    end
-    ret_codes.uniq
+  def init_code(code)
+    @tag_code = code
   end
 
-  def pending_codes_for_tag_code(tag_refer)
-    empty_values = {}
-    concept_class = classname_for(tag_refer.concept_name)
-    concept_class = self.class.const_get(concept_class)
-    concepts_item = concept_class.new(tag_refer, empty_values)
-    concepts_item.tag_pending_codes
-  end
-
-  def classname_for(code)
-    concept_name = code.match(/CONCEPT_(.*)/)[1]
-    class_name = concept_name.underscore.camelize + 'Concept'
-    class_name
+  def init_pending_codes(pending_codes)
+    @tag_pending_codes = pending_codes.dup
   end
 
   def pending_codes
@@ -39,8 +28,11 @@ class PayrollConcept < CodeNameRefer
     []
   end
 
+  def summary?
+    false
+  end
+
   def <=>(concept_other)
-    other_pending_select = concept_other.tag_pending_codes.select {|x| x.code==tag_code}
     if count_pending_codes(tag_pending_codes, concept_other.tag_code)!=0
       return 1
     elsif count_pending_codes(concept_other.tag_pending_codes, tag_code)!=0
@@ -49,6 +41,10 @@ class PayrollConcept < CodeNameRefer
       return -1
     elsif count_summary_codes(concept_other.summary_codes, tag_code)!=0
       return 1
+    elsif summary? && !concept_other.summary?
+      return 1
+    elsif !summary? && concept_other.summary?
+      return -1
     else
       tag_code <=> concept_other.tag_code
     end
@@ -68,5 +64,59 @@ class PayrollConcept < CodeNameRefer
   def get_result_by(results, pay_tag)
     result_hash = results.select { |key,_| key.code==pay_tag }
     result_hash.values[0]
+  end
+
+  def big_insurance_round_up(value_dec)
+    round_up_to_big(value_dec)
+  end
+
+  def fix_insurance_round_up(value_dec)
+    round_up_to_fix(value_dec)
+  end
+
+  def big_tax_round_up(value_dec)
+    round_up_to_big(value_dec)
+  end
+
+  def fix_tax_round_up(value_dec)
+    round_up_to_fix(value_dec)
+  end
+
+  def big_tax_round_down(value_dec)
+    round_down_to_big(value_dec)
+  end
+
+  def fix_tax_round_down(value_dec)
+    round_down_to_fix(value_dec)
+  end
+
+  def round_up_to_big(value_dec)
+    BigDecimal.new(value_dec < 0 ? -value_dec.abs.ceil : value_dec.abs.ceil)
+  end
+
+  def round_up_to_fix(value_dec)
+    (value_dec < 0 ? -value_dec.abs.ceil : value_dec.abs.ceil)
+  end
+
+  def round_down_to_big(value_dec)
+    BigDecimal.new(value_dec < 0 ? -value_dec.abs.floor : value_dec.abs.floor)
+  end
+
+  def round_down_to_fix(value_dec)
+    (value_dec < 0 ? -value_dec.abs.floor : value_dec.abs.floor)
+  end
+
+  def near_round_up(value_dec, nearest=100)
+    big_value = BigDecimal.new(value_dec, 15)
+    big_nearest = BigDecimal.new(nearest, 15)
+
+    round_up_to_big(big_value/big_nearest)*big_nearest
+  end
+
+  def near_round_down(value_dec, nearest=100)
+    big_value = BigDecimal.new(value_dec, 15)
+    big_nearest = BigDecimal.new(nearest, 15)
+
+    round_down_to_big(big_value/big_nearest)*big_nearest
   end
 end

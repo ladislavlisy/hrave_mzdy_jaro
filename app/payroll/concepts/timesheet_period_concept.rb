@@ -1,15 +1,29 @@
 class TimesheetPeriodConcept < PayrollConcept
+  TAG_SCHEDULE_WORK = PayTagGateway::REF_SCHEDULE_WORK.code
+
   def initialize(tag_code, values)
-    super(TimesheetPeriodConceptRefer.new, tag_code)
-    @tag_pending_codes = rec_pending_codes(pending_codes())
+    super(PayConceptGateway::REFCON_TIMESHEET_PERIOD, tag_code)
+    init_values(values)
+  end
+
+  def init_values(values)
+  end
+
+  def dup_with_value(code, values)
+    new_concept = self.dup
+    new_concept.init_code(code)
+    new_concept.init_values(values)
+    return new_concept
   end
 
   def pending_codes
-    [ ScheduleWorkTag.new ]
+    [
+      ScheduleWorkTag.new
+    ]
   end
 
-  def evaluate(period, results)
-    result_schedule_work = get_result_by(results, :TAG_SCHEDULE_WORK)
+  def evaluate(period, tag_config, results)
+    result_schedule_work = get_result_by(results, TAG_SCHEDULE_WORK)
 
     week_hours = result_schedule_work.week_schedule
 

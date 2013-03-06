@@ -16,34 +16,34 @@ class PayrollProcess
   end
 
   #add fetched term
-  def ins_term(period_base, term_refer, code_order, amount)
-    ins_term_to_hash(@terms, period_base, term_refer, code_order, amount)
+  def ins_term(period_base, term_refer, code_order, term_values)
+    ins_term_to_hash(@terms, period_base, term_refer, code_order, term_values)
   end
 
-  def ins_term_to_hash(term_hash, period_base, term_refer, code_order, amount)
-    term_to_insert = new_term_pair_with_order(period_base, term_refer, code_order, amount)
+  def ins_term_to_hash(term_hash, period_base, term_refer, code_order, term_values)
+    term_to_insert = new_term_pair_with_order(period_base, term_refer, code_order, term_values)
     term_hash.merge!(term_to_insert)
     term_to_insert.keys[0]
   end
 
   #add a new term
-  def add_term(term_refer, amount)
+  def add_term(term_refer, term_values)
     period_base = PayrollPeriod::NOW
-    add_term_to_hash(@terms, period_base, term_refer, amount)
+    add_term_to_hash(@terms, period_base, term_refer, term_values)
   end
 
-  def add_term_to_hash(term_hash, period_base, term_refer, amount)
-    term_to_add = new_term_pair(term_hash, period_base, term_refer, amount)
+  def add_term_to_hash(term_hash, period_base, term_refer, term_values)
+    term_to_add = new_term_pair(term_hash, period_base, term_refer, term_values)
     term_hash.merge!(term_to_add)
     term_to_add.keys[0]
   end
 
   #add term for a new or ignore for existing term
-  def merge_term_to_hash(term_hash, period_base, term_refer, amount)
+  def merge_term_to_hash(term_hash, period_base, term_refer, term_values)
     merge_code_order = get_tag_order_from(term_hash, period_base, term_refer.code)
-    term_to_merge = new_term_pair_with_order(period_base, term_refer, merge_code_order, amount)
-    term_hash.merge!(term_to_merge) do |tag, term_value, _|
-      term_value
+    term_to_merge = new_term_pair_with_order(period_base, term_refer, merge_code_order, term_values)
+    term_hash.merge!(term_to_merge) do |tag, term_concept, _|
+      term_concept
     end
     term_hash
   end
@@ -62,14 +62,14 @@ class PayrollProcess
   def evaluate(pay_tag)
     period_base = PayrollPeriod::NOW
 
-    pending_uniq_codes = collect_pending_codes_for(@terms)
+    pending_uniq_codes = concepts.collect_pending_codes_for(@terms)
 
     calculation_steps = create_calculation_steps(@terms, period_base, pending_uniq_codes)
 
     sorted_calculation = calculation_steps.sort {|a,b| a.last<=>b.last}
 
     @results = sorted_calculation.inject({}) do |agr, x|
-      agr.merge!({x[0] => x[1].evaluate(period, agr)})
+      agr.merge!({x.first => x.last.evaluate(period, tags, agr)})
     end
 
     get_result(pay_tag)
@@ -81,23 +81,24 @@ class PayrollProcess
   end
 
   #create concept with value of amount, for tag code, figure out concept name
-  def new_term_concept(term_refer, amount)
-    term_tag = tags.tag_for(term_refer.name)
-    term_concept = concepts.concept_for(term_refer.code, term_tag.concept.name, amount)
+  def new_term_concept(term_refer, term_values)
+    term_tag = tags.tag_from_models(term_refer)
+    base_concept = concepts.concept_from_models(term_tag)
+    term_concept = base_concept.dup_with_value(term_tag.code, term_values)
   end
 
   #create pair of TagRefer and PayrollConcept with code order
-  def new_term_pair_with_order(period_base, term_refer, code_order, amount)
+  def new_term_pair_with_order(period_base, term_refer, code_order, term_values)
     term_key = new_term_key_with_order(period_base, term_refer, code_order)
-    term_concept = new_term_concept(term_refer, amount)
+    term_concept = new_term_concept(term_refer, term_values)
     {term_key => term_concept}
   end
 
   #create pair of TagRefer and PayrollConcept with a new code order
-  def new_term_pair(term_hash, period_base, term_refer, amount)
+  def new_term_pair(term_hash, period_base, term_refer, term_values)
     new_code_order = get_new_tag_order_from(term_hash, period_base, term_refer.code)
     term_key = new_term_key_with_order(period_base, term_refer, new_code_order)
-    term_concept = new_term_concept(term_refer, amount)
+    term_concept = new_term_concept(term_refer, term_values)
     {term_key => term_concept}
   end
 
@@ -144,19 +145,9 @@ class PayrollProcess
     first_code_order = orders_sorted.first unless orders_sorted.first.nil?
   end
 
-  def collect_pending_codes_for(term_hash)
-    pending = term_hash.inject ([]) { |agr, e| agr.concat(rec_pending_codes(e.last)) }
-    pending_uniq = pending.uniq
-  end
-
-  def rec_pending_codes(concept)
-    pending_codes = concept.pending_codes
-    ret_codes = pending_codes.inject(pending_codes.dup) {|agr, t| agr.concat(rec_pending_codes(concept_for(t)))}
-  end
-
   def concept_for(code)
-    values = {}
-    concept = concepts.concept_for(code.concept_code, code.concept_name, values)
+    empty_values = {}
+    concept = concepts.concept_for(code.concept_code, code.concept_name, empty_values)
   end
 
   def create_calculation_steps(term_hash, period_base, pending_codes)
@@ -166,4 +157,5 @@ class PayrollProcess
     end
     calculation_steps
   end
+
 end

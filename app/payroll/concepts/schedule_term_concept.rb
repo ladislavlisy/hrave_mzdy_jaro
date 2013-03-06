@@ -2,14 +2,23 @@ class ScheduleTermConcept < PayrollConcept
   attr_reader :date_from, :date_end
 
   def initialize(tag_code, values)
-    super(ScheduleTermConceptRefer.new, tag_code)
-    @tag_pending_codes = rec_pending_codes(pending_codes())
+    super(PayConceptGateway::REFCON_SCHEDULE_TERM, tag_code)
+    init_values(values)
+  end
 
+  def init_values(values)
     @date_from = values[:date_from]
     @date_end  = values[:date_end]
   end
 
-  def evaluate(period, results)
+  def dup_with_value(code, values)
+    new_concept = self.dup
+    new_concept.init_code(code)
+    new_concept.init_values(values)
+    return new_concept
+  end
+
+  def evaluate(period, tag_config, results)
     day_term_from = TERM_BEG_FINISHED
     day_term_end  = TERM_END_FINISHED
 

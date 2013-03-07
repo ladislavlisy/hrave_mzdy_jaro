@@ -6,4 +6,8 @@ class InsuranceSocialResult < PayrollResult
 
     @payment = values[:payment]
   end
+
+  def deduction
+    @payment
+  end
 end

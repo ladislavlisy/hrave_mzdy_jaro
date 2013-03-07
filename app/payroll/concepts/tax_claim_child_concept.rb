@@ -1,0 +1,46 @@
+class TaxClaimChildConcept < PayrollConcept
+  attr_reader :relief_code
+
+  def initialize(tag_code, values)
+    super(PayConceptGateway::REFCON_TAX_CLAIM_CHILD, tag_code)
+    init_values(values)
+  end
+
+  def init_values(values)
+    @relief_code = values[:relief_code] || 0
+  end
+
+  def dup_with_value(code, values)
+    new_concept = self.dup
+    new_concept.init_code(code)
+    new_concept.init_values(values)
+    return new_concept
+  end
+
+  def evaluate(period, tag_config, results)
+    relief_value = relief_claim_amount(period.year, relief_code)
+    TaxClaimChildResult.new(@tag_code, @code, self, {tax_relief: relief_value})
+  end
+
+  def relief_claim_amount(year, code)
+    relief_amount = 0
+    return relief_amount if code == 0
+    if year >= 2010
+      relief_amount = 967
+    elsif year == 2009
+      relief_amount = 890
+    elsif year == 2008
+      relief_amount = 890
+    elsif year >= 2006
+      relief_amount = 500
+    elsif year >= 2005
+      relief_amount = 500
+    else
+      relief_amount = 0
+    end
+    if code == 2
+      return 2*relief_amount
+    end
+    return relief_amount
+  end
+end

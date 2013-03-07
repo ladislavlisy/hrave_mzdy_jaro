@@ -13,4 +13,28 @@ class PayrollTag < CodeNameRefer
   def concept_name
     concept.name
   end
+
+  def insurance_health?
+    false
+  end
+
+  def insurance_social?
+    false
+  end
+
+  def tax_advance?
+    false
+  end
+
+  def income_gross?
+    false
+  end
+
+  def income_netto?
+    false
+  end
+
+  def deduction_netto?
+    false
+  end
 end

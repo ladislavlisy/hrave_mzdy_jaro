@@ -38,6 +38,10 @@ class SalaryMonthlyConcept < PayrollConcept
     ]
   end
 
+  def calc_category
+    CALC_CATEGORY_AMOUNT
+  end
+
   def evaluate(period, tag_config, results)
     result_timesheet = get_result_by(results, TAG_TIMESHEET_PERIOD)
     result_working = get_result_by(results, TAG_HOURS_WORKING)
@@ -60,12 +64,11 @@ class SalaryMonthlyConcept < PayrollConcept
   end
 
   def factorize_amount(amount, schedule_factor)
-    amount_factor = BigDecimal.new(amount*schedule_factor, 15)
+    amount_factor = big_multi(amount, schedule_factor)
   end
 
   def payment_from_amount(big_amount, timesheet_hours, working_hours, absence_hours)
-    big_salaried_hours = BigDecimal.new(([0, working_hours-absence_hours].max).to_f, 15)
-    big_timesheet_hours = BigDecimal.new(timesheet_hours.to_f, 15)
-    payment_value = big_salaried_hours/big_timesheet_hours*big_amount
+    salaried_hours = [0, working_hours-absence_hours].max
+    payment_value = big_multi_and_div(salaried_hours, big_amount, timesheet_hours)
   end
 end

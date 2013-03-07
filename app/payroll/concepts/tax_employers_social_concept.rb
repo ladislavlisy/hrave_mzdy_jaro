@@ -1,8 +1,8 @@
-class InsuranceSocialConcept < PayrollConcept
+class TaxEmployersSocialConcept < PayrollConcept
   TAG_AMOUNT_BASE = PayTagGateway::REF_INSURANCE_SOCIAL_BASE.code
 
   def initialize(tag_code, values)
-    super(PayConceptGateway::REFCON_INSURANCE_SOCIAL, tag_code)
+    super(PayConceptGateway::REFCON_TAX_EMPLOYERS_SOCIAL, tag_code)
     init_values(values)
   end
 
@@ -36,25 +36,17 @@ class InsuranceSocialConcept < PayrollConcept
     result_income = get_result_by(results, TAG_AMOUNT_BASE)
 
     payment_value = fix_insurance_round_up(
-        big_multi(result_income.income_base, social_insurance_factor(period, false))
+        big_multi(result_income.income_base, social_insurance_factor(period))
     )
-    InsuranceSocialResult.new(@tag_code, @code, self, {payment: payment_value})
+    TaxEmployersSocialResult.new(@tag_code, @code, self, {payment: payment_value})
   end
 
-  def social_insurance_factor(period, pens_pill)
+  def social_insurance_factor(period)
     factor = 0.0
-    if (period.year<1993)
-      factor = 0.0
-    elsif (period.year<2009)
-      factor = 8.0
-    elsif (period.year<2013)
-      factor = 6.5
+    if (period.year<2009)
+      factor = 0
     else
-      if pens_pill
-        factor = 3.5
-      else
-        factor = 6.5
-      end
+      factor = 25
     end
     return BigDecimal.new(factor.fdiv(100), 15)
   end

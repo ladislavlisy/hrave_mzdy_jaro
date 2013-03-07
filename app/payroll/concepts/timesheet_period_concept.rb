@@ -22,6 +22,10 @@ class TimesheetPeriodConcept < PayrollConcept
     ]
   end
 
+  def calc_category
+    CALC_CATEGORY_TIMES
+  end
+
   def evaluate(period, tag_config, results)
     result_schedule_work = get_result_by(results, TAG_SCHEDULE_WORK)
 

@@ -22,18 +22,27 @@ class InsuranceHealthConcept < PayrollConcept
     ]
   end
 
+  def summary_codes
+    [
+      IncomeNettoTag.new
+    ]
+  end
+
+  def calc_category
+    CALC_CATEGORY_NETTO
+  end
+
   def evaluate(period, tag_config, results)
     result_income = get_result_by(results, TAG_AMOUNT_BASE)
 
-    big_income = BigDecimal.new(result_income.income_base, 15)
     empl_payment_value = big_insurance_round_up(
-        BigDecimal.new(big_income*HealthInsuranceFactor(period))
+        big_multi(result_income.income_base, health_insurance_factor(period))
     )
-    cont_payment_value = fix_insurance_round_up(empl_payment_value.fdiv(3))
+    cont_payment_value = fix_insurance_round_up(big_div(empl_payment_value, 3))
     InsuranceHealthResult.new(@tag_code, @code, self, {payment: cont_payment_value})
   end
 
-  def HealthInsuranceFactor(period)
+  def health_insurance_factor(period)
     factor = 0.0
     if (period.year<1993)
       factor = 0.0

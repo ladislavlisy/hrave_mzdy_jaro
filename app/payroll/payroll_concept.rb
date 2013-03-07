@@ -3,6 +3,13 @@
 TERM_BEG_FINISHED = 32
 TERM_END_FINISHED =  0
 
+CALC_CATEGORY_START  = 0
+CALC_CATEGORY_TIMES  = 0
+CALC_CATEGORY_AMOUNT = 0
+CALC_CATEGORY_GROSS  = 1
+CALC_CATEGORY_NETTO  = 2
+CALC_CATEGORY_FINAL  = 9
+
 class PayrollConcept < CodeNameRefer
   attr_reader :tag_code, :tag_pending_codes
 
@@ -28,8 +35,8 @@ class PayrollConcept < CodeNameRefer
     []
   end
 
-  def summary?
-    false
+  def calc_category
+    CALC_CATEGORY_START
   end
 
   def <=>(concept_other)
@@ -41,12 +48,10 @@ class PayrollConcept < CodeNameRefer
       return -1
     elsif count_summary_codes(concept_other.summary_codes, tag_code)!=0
       return 1
-    elsif summary? && !concept_other.summary?
-      return 1
-    elsif !summary? && concept_other.summary?
-      return -1
-    else
+    elsif calc_category == concept_other.calc_category
       tag_code <=> concept_other.tag_code
+    else
+      calc_category <=> concept_other.calc_category
     end
   end
 
@@ -64,6 +69,25 @@ class PayrollConcept < CodeNameRefer
   def get_result_by(results, pay_tag)
     result_hash = results.select { |key,_| key.code==pay_tag }
     result_hash.values[0]
+  end
+
+  def big_multi(op1, op2)
+    big_op1 = BigDecimal.new(op1, 15)
+    big_op2 = BigDecimal.new(op2, 15)
+    return big_op1*big_op2
+  end
+
+  def big_div(op1, op2)
+    big_op1 = BigDecimal.new(op1, 15)
+    big_op2 = BigDecimal.new(op2, 15)
+    return big_op1/big_op2
+  end
+
+  def big_multi_and_div(op1, op2, div)
+    big_op1 = BigDecimal.new(op1, 15)
+    big_op2 = BigDecimal.new(op2, 15)
+    big_div = BigDecimal.new(div, 15)
+    return big_op1*big_op2/big_div
   end
 
   def big_insurance_round_up(value_dec)
@@ -106,17 +130,11 @@ class PayrollConcept < CodeNameRefer
     (value_dec < 0 ? -value_dec.abs.floor : value_dec.abs.floor)
   end
 
-  def near_round_up(value_dec, nearest=100)
-    big_value = BigDecimal.new(value_dec, 15)
-    big_nearest = BigDecimal.new(nearest, 15)
-
-    round_up_to_big(big_value/big_nearest)*big_nearest
+  def big_near_round_up(value_dec, nearest=100)
+    big_multi(round_up_to_big(big_div(value_dec, nearest)), nearest)
   end
 
-  def near_round_down(value_dec, nearest=100)
-    big_value = BigDecimal.new(value_dec, 15)
-    big_nearest = BigDecimal.new(nearest, 15)
-
-    round_down_to_big(big_value/big_nearest)*big_nearest
+  def big_near_round_down(value_dec, nearest=100)
+    big_multi(round_down_to_big(big_div(value_dec, nearest)), nearest)
   end
 end

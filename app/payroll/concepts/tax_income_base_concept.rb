@@ -14,8 +14,8 @@ class TaxIncomeBaseConcept < PayrollConcept
     return new_concept
   end
 
-  def summary?
-    true
+  def calc_category
+    CALC_CATEGORY_GROSS
   end
 
   def evaluate(period, tag_config, results)
@@ -25,7 +25,7 @@ class TaxIncomeBaseConcept < PayrollConcept
       agr + sum_term_for(tag_config, tag_code, term_key, term_result)
     end
 
-    InsuranceHealthBaseResult.new(@tag_code, @code, self, {income_base: result_income})
+    TaxIncomeBaseResult.new(@tag_code, @code, self, {income_base: result_income})
   end
 
   def sum_term_for(tag_config, tag_code, result_key, result_item)

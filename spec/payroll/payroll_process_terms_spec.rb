@@ -11,7 +11,7 @@ describe 'Payroll Process Terms' do
 
   describe 'working schedule' do
     it 'returns weekly schedule hours 40' do
-      tag_code_name = ScheduleWorkTagRefer.new
+      tag_code_name = PayTagGateway::REF_SCHEDULE_WORK
       pay_tag = @payroll_process.add_term(tag_code_name, hours_weekly: 40)
       pay_ter = @payroll_process.get_term(pay_tag)
       pay_ter[pay_tag].hours_weekly.should == 40
@@ -20,7 +20,7 @@ describe 'Payroll Process Terms' do
 
   describe 'base salary' do
     it 'returns monthly amount 15 000 CZK' do
-      tag_code_name = SalaryBaseTagRefer.new
+      tag_code_name = PayTagGateway::REF_SALARY_BASE
       pay_tag = @payroll_process.add_term(tag_code_name, amount_monthly: 15000)
       pay_ter = @payroll_process.get_term(pay_tag)
       pay_ter[pay_tag].amount_monthly.should == 15000

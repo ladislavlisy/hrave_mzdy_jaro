@@ -14,4 +14,12 @@ class SalaryBaseTag < PayrollTag
   def tax_advance?
     true
   end
+
+  def income_gross?
+    true
+  end
+
+  def income_netto?
+    true
+  end
 end

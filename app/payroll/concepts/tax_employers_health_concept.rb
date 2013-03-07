@@ -1,8 +1,8 @@
-class InsuranceSocialConcept < PayrollConcept
-  TAG_AMOUNT_BASE = PayTagGateway::REF_INSURANCE_SOCIAL_BASE.code
+class TaxEmployersHealthConcept < PayrollConcept
+  TAG_AMOUNT_BASE = PayTagGateway::REF_INSURANCE_HEALTH_BASE.code
 
   def initialize(tag_code, values)
-    super(PayConceptGateway::REFCON_INSURANCE_SOCIAL, tag_code)
+    super(PayConceptGateway::REFCON_TAX_EMPLOYERS_HEALTH, tag_code)
     init_values(values)
   end
 
@@ -18,7 +18,7 @@ class InsuranceSocialConcept < PayrollConcept
 
   def pending_codes
     [
-      InsuranceSocialBaseTag.new
+      InsuranceHealthBaseTag.new
     ]
   end
 
@@ -35,26 +35,21 @@ class InsuranceSocialConcept < PayrollConcept
   def evaluate(period, tag_config, results)
     result_income = get_result_by(results, TAG_AMOUNT_BASE)
 
-    payment_value = fix_insurance_round_up(
-        big_multi(result_income.income_base, social_insurance_factor(period, false))
+    empl_payment_value = big_insurance_round_up(
+        big_multi(result_income.income_base, health_insurance_factor(period))
     )
-    InsuranceSocialResult.new(@tag_code, @code, self, {payment: payment_value})
+    cont_payment_value = fix_insurance_round_up(big_div(empl_payment_value, 3))
+    payment_value = empl_payment_value - cont_payment_value
+
+    TaxEmployersHealthResult.new(@tag_code, @code, self, {payment: payment_value})
   end
 
-  def social_insurance_factor(period, pens_pill)
+  def health_insurance_factor(period)
     factor = 0.0
     if (period.year<1993)
       factor = 0.0
-    elsif (period.year<2009)
-      factor = 8.0
-    elsif (period.year<2013)
-      factor = 6.5
-    else
-      if pens_pill
-        factor = 3.5
-      else
-        factor = 6.5
-      end
+    else (period.year<2009)
+      factor = 13.5
     end
     return BigDecimal.new(factor.fdiv(100), 15)
   end

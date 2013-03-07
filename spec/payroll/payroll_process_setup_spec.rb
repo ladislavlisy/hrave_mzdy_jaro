@@ -12,7 +12,7 @@ describe 'Payroll Process Setup' do
   describe 'inserting term and get code_order' do
     it 'returns code_order == 1 at beginning' do
       period = PayrollPeriod::NOW
-      tag_code_name = SalaryBaseTagRefer.new
+      tag_code_name = PayTagGateway::REF_SALARY_BASE
       @payroll_process.ins_term(period, tag_code_name, 3, amount_monthly:  3000)
       @payroll_process.ins_term(period, tag_code_name, 5, amount_monthly:  5000)
       @payroll_process.ins_term(period, tag_code_name, 4, amount_monthly:  4000)
@@ -23,7 +23,7 @@ describe 'Payroll Process Setup' do
 
     it 'returns code_order == 3 in the middle' do
       period = PayrollPeriod::NOW
-      tag_code_name = SalaryBaseTagRefer.new
+      tag_code_name = PayTagGateway::REF_SALARY_BASE
       @payroll_process.ins_term(period, tag_code_name, 5, amount_monthly:  5000)
       @payroll_process.ins_term(period, tag_code_name, 1, amount_monthly:  1000)
       @payroll_process.ins_term(period, tag_code_name, 4, amount_monthly:  4000)
@@ -34,7 +34,7 @@ describe 'Payroll Process Setup' do
 
     it 'returns code_order == 6 at the end' do
       period = PayrollPeriod::NOW
-      tag_code_name = SalaryBaseTagRefer.new
+      tag_code_name = PayTagGateway::REF_SALARY_BASE
       @payroll_process.ins_term(period, tag_code_name, 3, amount_monthly:  3000)
       @payroll_process.ins_term(period, tag_code_name, 5, amount_monthly:  5000)
       @payroll_process.ins_term(period, tag_code_name, 1, amount_monthly:  1000)

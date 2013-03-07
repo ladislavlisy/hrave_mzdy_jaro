@@ -22,6 +22,10 @@ class HoursAbsenceConcept < PayrollConcept
     ]
   end
 
+  def calc_category
+    CALC_CATEGORY_TIMES
+  end
+
   def evaluate(period, tag_config, results)
     result_hours = hours
     HoursAbsenceResult.new(@tag_code, @code, self, {hours: result_hours})

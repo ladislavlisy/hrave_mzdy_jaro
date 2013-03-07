@@ -1,7 +1,6 @@
 class TaxAdvanceConcept < PayrollConcept
-  TAG_AMOUNT_BASE = PayTagGateway::REF_TAX_INCOME_BASE.code
-  TAG_SOCIAL_BASE = PayTagGateway::REF_INSURANCE_SOCIAL_BASE.code
-  TAG_HEALTH_BASE = PayTagGateway::REF_INSURANCE_HEALTH_BASE.code
+  TAG_ADVANCE_BASE = PayTagGateway::REF_TAX_ADVANCE_BASE.code
+  TAG_INCOME_BASE = PayTagGateway::REF_TAX_INCOME_BASE.code
 
   def initialize(tag_code, values)
     super(PayConceptGateway::REFCON_TAX_ADVANCE, tag_code)
@@ -20,58 +19,31 @@ class TaxAdvanceConcept < PayrollConcept
 
   def pending_codes
     [
-      TaxIncomeBaseTag.new,
-      InsuranceSocialBaseTag.new,
-      InsuranceHealthBaseTag.new
+      TaxAdvanceBaseTag.new
     ]
   end
 
+  def calc_category
+    CALC_CATEGORY_NETTO
+  end
+
   def evaluate(period, tag_config, results)
-    part_social_income = get_result_by(results, TAG_SOCIAL_BASE)
-    part_health_income = get_result_by(results, TAG_HEALTH_BASE)
-    result_income = get_result_by(results, TAG_AMOUNT_BASE)
+    result_income = get_result_by(results, TAG_INCOME_BASE)
+    result_advance = get_result_by(results, TAG_ADVANCE_BASE)
 
-    big_taxable_base = BigDecimal.new(result_income.income_base, 15)
-    big_social_base = BigDecimal.new(part_social_income.income_base, 15)
-    part_social_value = fix_insurance_round_up(
-        big_social_base*SocialSuperFactor(period)
-    )
-    big_health_base = BigDecimal.new(part_health_income.income_base, 15)
-    empl_health_value = fix_insurance_round_up(
-        big_health_base*HealthSuperFactor(period)
-    )
-    cont_health_value = fix_insurance_round_up(
-        big_health_base*HealthSuperFactor(period).div(3)
-    )
-    part_health_value = empl_health_value - cont_health_value
+    taxable_income = result_income.income_base
+    taxable_partial = result_advance.income_base
 
-    partial_tax_amount = big_taxable_base+part_social_income+part_health_income
-
-    payment_value = tax_adv_calculate(result_income, partial_tax_amount, period)
+    payment_value = tax_adv_calculate(taxable_income, taxable_partial, period)
 
     TaxAdvanceResult.new(@tag_code, @code, self, {payment: payment_value})
   end
 
   def tax_adv_calculate(tax_income, tax_base, period)
-    partial_tax_amount = rounded_base(tax_base, period.year)
-
     if tax_base <= 100
-      fix_tax_round_up(tax_base*tax_adv_bracket1(period.year))
+      fix_tax_round_up(big_multi(tax_base, tax_adv_bracket1(period.year)))
     else
-      tax_adv_calculate_month(tax_income, partial_tax_amount, period)
-    end
-  end
-
-  def rounded_base(tax_base, year)
-    amount_for_calc = [0, tax_base].max
-    if amount_for_calc > 100
-      near_round_up(amount_for_calc, 100)
-    else
-      if year >= 2011
-        big_tax_round_up(amount_for_calc)
-      else
-        big_tax_round_down(amount_for_calc)
-      end
+      tax_adv_calculate_month(tax_income, tax_base, period)
     end
   end
 
@@ -79,16 +51,22 @@ class TaxAdvanceConcept < PayrollConcept
     if tax_base <= 0
       0
     else
-      tax_base_down = near_round_down(tax_base)
+      tax_base_down = big_near_round_down(tax_base)
       if period.year < 2008
         0
       elsif period.year < 2013
-        big_tax_round_up(tax_base_down*tax_adv_bracket1(period.year))
+        fix_tax_round_up(
+            big_multi(tax_base_down, tax_adv_bracket1(period.year))
+        )
       else
-        tax_standard = big_tax_round_up(tax_base_down*tax_adv_bracket1(period.year))
+        tax_standard = fix_tax_round_up(
+            big_multi(tax_base_down, tax_adv_bracket1(period.year))
+        )
         max_sol_base = tax_sol_bracket_max(period.year)
-        eff_sol_base = BigDecimal.new([0,tax_income-max_sol_base].max, 15)
-        tax_solidary = big_tax_round_up(eff_sol_base*tax_sol_bracket(period.year))
+        eff_sol_base = [0,tax_income-max_sol_base].max
+        tax_solidary = fix_tax_round_up(
+            big_multi(eff_sol_base, tax_sol_bracket(period.year))
+        )
         tax_standard + tax_solidary
       end
     end
@@ -123,26 +101,6 @@ class TaxAdvanceConcept < PayrollConcept
       factor = 7.0
     else
       factor = 0.0
-    end
-    return BigDecimal.new(factor.fdiv(100), 15)
-  end
-
-  def SocialSuperFactor(period)
-    factor = 0.0
-    if (period.year<2009)
-      factor = 0
-    else
-      factor = 25
-    end
-    return BigDecimal.new(factor.fdiv(100), 15)
-  end
-
-  def HealthSuperFactor(period)
-    factor = 0.0
-    if (period.year<2009)
-      factor = 0
-    else
-      factor = 13.5
     end
     return BigDecimal.new(factor.fdiv(100), 15)
   end

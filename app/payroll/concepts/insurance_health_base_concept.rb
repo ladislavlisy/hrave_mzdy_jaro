@@ -14,8 +14,8 @@ class InsuranceHealthBaseConcept < PayrollConcept
     return new_concept
   end
 
-  def summary?
-    true
+  def calc_category
+    CALC_CATEGORY_GROSS
   end
 
   def evaluate(period, tag_config, results)

@@ -38,12 +38,43 @@ describe 'Payroll Process Calculations' do
       schedule_res[schedule_tag].week_schedule.should == [8,8,8,8,8,0,0]
     end
 
-    it 'returns hours in first seven days in month 0,8,8,8,8,0,0' do
+    it 'returns hours in first seven days in month 8,8,8,8,0,0,8' do
+      schedule_work_value = {hours_weekly: 40}
+      schedule_term_value = {date_from: nil, date_end: nil}
+      timesheet_value = {}
+
+      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_TIMESHEET_WORK, timesheet_value)
+
+      timesheet_result = @payroll_process.evaluate(result_tag)
+      #first week
+      timesheet_result[result_tag].month_schedule[0].should == 8
+      timesheet_result[result_tag].month_schedule[1].should == 8
+      timesheet_result[result_tag].month_schedule[2].should == 8
+      timesheet_result[result_tag].month_schedule[3].should == 8
+      timesheet_result[result_tag].month_schedule[4].should == 0
+      timesheet_result[result_tag].month_schedule[5].should == 0
+      timesheet_result[result_tag].month_schedule[6].should == 8
     end
   end
 
   describe 'Schedule Term' do
     it 'returns Date from	Date end' do
+      schedule_work_value = {hours_weekly: 40}
+      timesheet_value = {}
+
+      period = @payroll_process.period
+      date_test_beg = Date.new(period.year, period.month, 15)
+      date_test_end = Date.new(period.year, period.month, 24)
+      schedule_term_value = {date_from: date_test_beg, date_end: date_test_end}
+
+      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+
+      schedule_term_res = @payroll_process.evaluate(schedule_term_tag)
+      schedule_term_res[schedule_term_tag].day_ord_from.should == 15
+      schedule_term_res[schedule_term_tag].day_ord_end.should == 24
     end
   end
 

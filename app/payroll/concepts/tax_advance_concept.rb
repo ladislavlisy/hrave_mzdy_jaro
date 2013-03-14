@@ -40,7 +40,9 @@ class TaxAdvanceConcept < PayrollConcept
   end
 
   def tax_adv_calculate(tax_income, tax_base, period)
-    if tax_base <= 100
+    if tax_base <= 0
+      0
+    elsif tax_base <= 100
       fix_tax_round_up(big_multi(tax_base, tax_adv_bracket1(period.year)))
     else
       tax_adv_calculate_month(tax_income, tax_base, period)
@@ -51,16 +53,15 @@ class TaxAdvanceConcept < PayrollConcept
     if tax_base <= 0
       0
     else
-      tax_base_down = big_near_round_down(tax_base)
       if period.year < 2008
         0
       elsif period.year < 2013
         fix_tax_round_up(
-            big_multi(tax_base_down, tax_adv_bracket1(period.year))
+            big_multi(tax_base, tax_adv_bracket1(period.year))
         )
       else
         tax_standard = fix_tax_round_up(
-            big_multi(tax_base_down, tax_adv_bracket1(period.year))
+            big_multi(tax_base, tax_adv_bracket1(period.year))
         )
         max_sol_base = tax_sol_bracket_max(period.year)
         eff_sol_base = [0,tax_income-max_sol_base].max

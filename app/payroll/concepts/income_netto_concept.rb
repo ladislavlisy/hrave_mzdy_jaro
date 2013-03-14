@@ -16,7 +16,7 @@ class IncomeNettoConcept < PayrollConcept
 
   def pending_codes
     [
-      TaxAfterReliefTag.new,
+      TaxAdvanceFinalTag.new,
       TaxBonusChildTag.new,
       InsuranceSocialTag.new,
       InsuranceHealthTag.new

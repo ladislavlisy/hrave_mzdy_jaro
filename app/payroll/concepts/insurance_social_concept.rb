@@ -35,10 +35,14 @@ class InsuranceSocialConcept < PayrollConcept
   def evaluate(period, tag_config, results)
     result_income = get_result_by(results, TAG_AMOUNT_BASE)
 
-    payment_value = fix_insurance_round_up(
-        big_multi(result_income.income_base, social_insurance_factor(period, false))
-    )
+    payment_value = insurance_contribution(period, result_income.income_base)
     InsuranceSocialResult.new(@tag_code, @code, self, {payment: payment_value})
+  end
+
+  def insurance_contribution(period, income_base)
+    payment_value = fix_insurance_round_up(
+        big_multi(income_base, social_insurance_factor(period, false))
+    )
   end
 
   def social_insurance_factor(period, pens_pill)

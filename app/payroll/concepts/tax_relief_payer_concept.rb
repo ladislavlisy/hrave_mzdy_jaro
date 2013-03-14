@@ -24,6 +24,10 @@ class TaxReliefPayerConcept < PayrollConcept
     ]
   end
 
+  def calc_category
+    CALC_CATEGORY_NETTO
+  end
+
   def evaluate(period, tag_config, results)
     advance_base_value = get_result_by(results, TAG_ADVANCE)
     relief_claim_value = get_result_by(results, TAG_CLAIM_BASE)

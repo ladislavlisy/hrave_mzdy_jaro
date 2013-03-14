@@ -1,5 +1,41 @@
 require 'spec_helper'
 
+def get_result_income_base(results, result_ref)
+  result_select = results.select do |key, _|
+    key.code == result_ref.code
+  end
+  result_value = result_select.inject (0)  do |agr, item|
+    agr + item.last.income_base
+  end
+end
+
+def get_result_payment(results, result_ref)
+  result_select = results.select do |key, _|
+    key.code == result_ref.code
+  end
+  result_value = result_select.inject (0)  do |agr, item|
+    agr + item.last.payment
+  end
+end
+
+def get_result_after_reliefA(results, result_ref)
+  result_select = results.select do |key, _|
+    key.code == result_ref.code
+  end
+  result_value = result_select.inject (0)  do |agr, item|
+    agr + item.last.after_reliefA
+  end
+end
+
+def get_result_after_reliefC(results, result_ref)
+  result_select = results.select do |key, _|
+    key.code == result_ref.code
+  end
+  result_value = result_select.inject (0)  do |agr, item|
+    agr + item.last.after_reliefC
+  end
+end
+
 describe 'Payroll Process Calculations' do
 
   before(:each) do
@@ -188,10 +224,12 @@ describe 'Payroll Process Calculations' do
 
       schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
       schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
+      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
       salary_result = @payroll_process.evaluate(salary_amount_tag)
-      salary_result[salary_amount_tag].payment.should == 15000
+
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_SALARY_BASE)
+      result_value.should == 15000
     end
 
     it 'should return for Salary amount	20 000,- Salary value = 15 000,-' do
@@ -203,10 +241,12 @@ describe 'Payroll Process Calculations' do
       schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
       schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
       absence_hours_tag = @payroll_process.add_term(PayTagGateway::REF_HOURS_ABSENCE, absence_hours_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
+      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
       salary_result = @payroll_process.evaluate(salary_amount_tag)
-      salary_result[salary_amount_tag].payment.should == 15000
+
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_SALARY_BASE)
+      result_value.should == 15000
     end
   end
 
@@ -223,9 +263,10 @@ describe 'Payroll Process Calculations' do
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
-      result[result_tag].income_base.should == 15000
+
+      result_value = get_result_income_base(@payroll_process.get_results, PayTagGateway::REF_INSURANCE_HEALTH_BASE)
+      result_value.should == 15000
     end
   end
 
@@ -242,9 +283,10 @@ describe 'Payroll Process Calculations' do
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
-      result[result_tag].income_base.should == 15000
+
+      result_value = get_result_income_base(@payroll_process.get_results, PayTagGateway::REF_INSURANCE_SOCIAL_BASE)
+      result_value.should == 15000
     end
   end
 
@@ -261,9 +303,10 @@ describe 'Payroll Process Calculations' do
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
-      result[result_tag].income_base.should == 15000
+
+      result_value = get_result_income_base(@payroll_process.get_results, PayTagGateway::REF_TAX_INCOME_BASE)
+      result_value.should == 15000
     end
   end
 
@@ -280,9 +323,10 @@ describe 'Payroll Process Calculations' do
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
-      result[result_tag].payment.should == 675
+
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_INSURANCE_HEALTH)
+      result_value.should == 675
     end
   end
 
@@ -299,9 +343,10 @@ describe 'Payroll Process Calculations' do
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
-      result[result_tag].payment.should == 975
+
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_INSURANCE_SOCIAL)
+      result_value.should == 975
     end
   end
 
@@ -327,10 +372,10 @@ describe 'Payroll Process Calculations' do
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
 
-      result[result_tag].payment.should == 3750
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL)
+      result_value.should == 3750
     end
 
     it 'returns Employer Health Tax Base' do
@@ -346,10 +391,10 @@ describe 'Payroll Process Calculations' do
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
 
-      result[result_tag].payment.should == 1350
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_EMPLOYERS_HEALTH)
+      result_value.should == 1350
     end
 
     it 'returns tax claim payer relief' do
@@ -403,10 +448,10 @@ describe 'Payroll Process Calculations' do
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE_BASE, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
 
-      result[result_tag].income_base.should == 20100
+      result_value = get_result_income_base(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_BASE)
+      result_value.should == 20100
     end
 
     it 'returns Tax amount before relief' do
@@ -423,10 +468,10 @@ describe 'Payroll Process Calculations' do
       relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
 
-      result[result_tag].payment.should == 3015
+     result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE)
+     result_value.should == 3015
     end
 
     it 'returns Tax amount after relief with payer relief' do
@@ -442,11 +487,11 @@ describe 'Payroll Process Calculations' do
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
       relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
 
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_AFTER_RELIEF, empty_value)
-
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE_FINAL, empty_value)
       result = @payroll_process.evaluate(result_tag)
 
-      result[result_tag].payment.should == 945
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
+      result_value.should == 945
     end
 
     it 'returns Tax amount after relief with child relief' do
@@ -463,11 +508,32 @@ describe 'Payroll Process Calculations' do
       relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
       relief_child_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_payers_value)
 
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_AFTER_RELIEF, empty_value)
-
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE_FINAL, empty_value)
       result = @payroll_process.evaluate(result_tag)
 
-      result[result_tag].payment.should == 0
+      result_value = get_result_after_reliefA(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
+      result_value.should == 945
+    end
+
+    it 'returns Tax amount after relief with child relief' do
+      empty_value = {}
+
+      schedule_work_value = {hours_weekly: 40}
+      schedule_term_value = {date_from: nil, date_end: nil}
+      salary_amount_value = {amount_monthly: 15000}
+      relief_payers_value = {relief_code: 1}
+
+      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
+      relief_child_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_payers_value)
+
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE_FINAL, empty_value)
+      result = @payroll_process.evaluate(result_tag)
+
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
+      result_value.should == 0
     end
 
     it 'returns Tax bonus after relief with child relief' do
@@ -485,10 +551,10 @@ describe 'Payroll Process Calculations' do
       relief_child_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_payers_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_BONUS_CHILD, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
 
-      result[result_tag].payment.should == 0
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_BONUS_CHILD)
+      result_value.should == 0
     end
 
     it 'returns Tax bonus after relief with child relief ZTP' do
@@ -507,10 +573,10 @@ describe 'Payroll Process Calculations' do
       relief_child_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_child_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_BONUS_CHILD, empty_value)
-
       result = @payroll_process.evaluate(result_tag)
 
-      result[result_tag].payment.should == 989
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_BONUS_CHILD)
+      result_value.should == 989
     end
   end
 

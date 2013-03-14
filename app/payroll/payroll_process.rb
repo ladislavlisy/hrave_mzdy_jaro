@@ -58,6 +58,11 @@ class PayrollProcess
     @results.select { |key,_| key==pay_tag }
   end
 
+  #get term from Results by key of tag
+  def get_results
+    @results
+  end
+
   #evaluate and return result from Results by key of tag
   def evaluate(pay_tag)
     period_base = PayrollPeriod::NOW

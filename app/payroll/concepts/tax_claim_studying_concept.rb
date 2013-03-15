@@ -1,8 +1,8 @@
-class TaxClaimChildConcept < PayrollConcept
+class TaxClaimStudyingConcept < PayrollConcept
   attr_reader :relief_code
 
   def initialize(tag_code, values)
-    super(PayConceptGateway::REFCON_TAX_CLAIM_CHILD, tag_code)
+    super(PayConceptGateway::REFCON_TAX_CLAIM_STUDYING, tag_code)
     init_values(values)
   end
 
@@ -25,21 +25,14 @@ class TaxClaimChildConcept < PayrollConcept
   def relief_claim_amount(year, code)
     relief_amount = 0
     return relief_amount if code == 0
-    if year >= 2010
-      relief_amount = 967
-    elsif year == 2009
-      relief_amount = 890
+    if year >= 2009
+      relief_amount = 335
     elsif year == 2008
-      relief_amount = 890
+      relief_amount = 335
     elsif year >= 2006
-      relief_amount = 500
-    elsif year >= 2005
-      relief_amount = 500
+      relief_amount = 200
     else
       relief_amount = 0
-    end
-    if code == 2
-      return 2*relief_amount
     end
     return relief_amount
   end

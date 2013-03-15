@@ -56,7 +56,7 @@ class SalaryMonthlyConcept < PayrollConcept
     amount_factor = factorize_amount(amount_monthly, schedule_factor)
 
     payment_value = payment_from_amount(amount_factor, timesheet_hours, working_hours, absence_hours)
-    SalaryMonthlyResult.new(@tag_code, @code, self, {payment: payment_value})
+    PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
   end
 
   def schedule_factor(schedule_factor)

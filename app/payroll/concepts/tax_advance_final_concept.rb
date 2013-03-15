@@ -49,7 +49,7 @@ class TaxAdvanceFinalConcept < PayrollConcept
                                               relief_child_value.tax_relief)
     tax_advance_value = tax_advance_afterC
 
-    TaxAdvanceFinalResult.new(@tag_code, @code, self,
+    TaxAdvanceResult.new(@tag_code, @code, self,
                               {after_reliefA: tax_advance_afterA,
                                after_reliefC: tax_advance_afterC,
                                payment: tax_advance_value

@@ -36,7 +36,7 @@ class InsuranceSocialConcept < PayrollConcept
     result_income = get_result_by(results, TAG_AMOUNT_BASE)
 
     payment_value = insurance_contribution(period, result_income.income_base)
-    InsuranceSocialResult.new(@tag_code, @code, self, {payment: payment_value})
+    PaymentDeductionResult.new(@tag_code, @code, self, {payment: payment_value})
   end
 
   def insurance_contribution(period, income_base)

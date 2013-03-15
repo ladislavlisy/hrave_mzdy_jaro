@@ -21,6 +21,6 @@ class ScheduleWeeklyConcept < PayrollConcept
     hours_daily = @hours_weekly/5
     hours_week = [hours_daily,hours_daily,hours_daily,hours_daily,hours_daily,0,0]
 
-    ScheduleWeeklyResult.new(@tag_code, @code, self, {week_schedule: hours_week})
+    ScheduleResult.new(@tag_code, @code, self, {week_schedule: hours_week})
   end
 end

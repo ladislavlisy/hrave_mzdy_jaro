@@ -25,7 +25,7 @@ class IncomeGrossConcept < PayrollConcept
       agr + sum_term_for(tag_config, tag_code, term_key, term_result)
     end
 
-    IncomeGrossResult.new(@tag_code, @code, self, {amount: result_income})
+    AmountResult.new(@tag_code, @code, self, {amount: result_income})
   end
 
   def sum_term_for(tag_config, tag_code, result_key, result_item)

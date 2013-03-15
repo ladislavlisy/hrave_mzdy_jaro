@@ -43,7 +43,7 @@ class TaxAdvanceBaseConcept < PayrollConcept
 
     payment_value = tax_rounded_base(taxable_super, period)
 
-    TaxAdvanceBaseResult.new(@tag_code, @code, self, {income_base: payment_value})
+    IncomeBaseResult.new(@tag_code, @code, self, {income_base: payment_value})
   end
 
   def tax_rounded_base(tax_base, period)

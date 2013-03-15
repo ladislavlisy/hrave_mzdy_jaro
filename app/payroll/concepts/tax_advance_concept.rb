@@ -36,7 +36,7 @@ class TaxAdvanceConcept < PayrollConcept
 
     payment_value = tax_adv_calculate(taxable_income, taxable_partial, period)
 
-    TaxAdvanceResult.new(@tag_code, @code, self, {payment: payment_value})
+    PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
   end
 
   def tax_adv_calculate(tax_income, tax_base, period)

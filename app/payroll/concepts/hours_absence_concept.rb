@@ -28,6 +28,6 @@ class HoursAbsenceConcept < PayrollConcept
 
   def evaluate(period, tag_config, results)
     result_hours = hours
-    HoursAbsenceResult.new(@tag_code, @code, self, {hours: result_hours})
+    TermHoursResult.new(@tag_code, @code, self, {hours: result_hours})
   end
 end

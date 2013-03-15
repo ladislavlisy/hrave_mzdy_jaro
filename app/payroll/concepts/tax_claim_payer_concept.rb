@@ -19,7 +19,7 @@ class TaxClaimPayerConcept < PayrollConcept
 
   def evaluate(period, tag_config, results)
     relief_value = relief_claim_amount(period.year, relief_code)
-    TaxClaimPayerResult.new(@tag_code, @code, self, {tax_relief: relief_value})
+    TaxClaimResult.new(@tag_code, @code, self, {tax_relief: relief_value})
   end
 
   def relief_claim_amount(year, code)

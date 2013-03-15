@@ -1,4 +1,4 @@
-class ScheduleTermResult < PayrollResult
+class TermEffectResult < PayrollResult
   attr_reader :day_ord_from, :day_ord_end
 
   def initialize(tag_code, concept_code, concept_item, values)

@@ -1,4 +1,4 @@
-class TimesheetWorkResult < PayrollResult
+class TimesheetResult < PayrollResult
   attr_reader :month_schedule
 
   def initialize(tag_code, concept_code, concept_item, values)

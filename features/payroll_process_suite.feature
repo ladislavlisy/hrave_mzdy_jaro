@@ -8,18 +8,16 @@ Feature:
     And   Employee works in Weekly schedule 40 hours
     And   Employee has 0 hours of absence
     And   Employee Salary is CZK 15000 monthly
-    And   Employee is Regular Tax payer
-    And   Employee is Regular Health insurance payer
-    And   Employee is Regular Social insurance payer
-    And   Employee is not Regular Pension savings payer
-    And   Employee claims tax benefit on tax payer
-    And   Employee claims no tax benefit on child
-    And   Employee claims no tax benefit on disability 1
-    And   Employee claims no tax benefit on disability 2
-    And   Employee claims no tax benefit on disability 3
-    And   Employee claims no tax benefit on preparing by studying
-    And   Employee is Employer contribution for Health insurance payer
-    And   Employee is Employer contribution for Social insurance payer
+    And   YES Employee is Regular Tax payer
+    And   YES Employee is Regular Health insurance payer
+    And   YES Employee is Regular Social insurance payer
+    And   NO Employee is Regular Pension savings payer
+    And   YES Employee claims tax benefit on tax payer
+    And   NO Employee claims tax benefit on child
+    And   NO Employee claims tax benefit on disability
+    And   NO Employee claims tax benefit on preparing by studying
+    And   YES Employee is Employer contribution for Health insurance payer
+    And   YES Employee is Employer contribution for Social insurance payer
     When  Payroll process calculate results
     Then  Accounted tax income should be CZK 15000
     And   Premium insurance should be CZK 5100
@@ -30,6 +28,8 @@ Feature:
     And   Contribution to Social insurance should be CZK 975
     And   Tax advance before tax relief on payer should be CZK 3015
     And   Tax relief on payer should be CZK 2070
+    And   Tax relief on disability should be CZK 0
+    And   Tax relief on studying should be CZK 0
     And   Tax advance after relief on payer should be CZK 945
     And   Tax relief on child should be CZK 0
     And   Tax advance after relief on child should be CZK 945

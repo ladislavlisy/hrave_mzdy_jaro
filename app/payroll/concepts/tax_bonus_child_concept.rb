@@ -48,7 +48,7 @@ class TaxBonusChildConcept < PayrollConcept
                                 relief_child_value.tax_relief,
                                 claims_child_value.tax_relief)
 
-    TaxBonusChildResult.new(@tag_code, @code, self, {payment: tax_advance_value})
+    PaymentResult.new(@tag_code, @code, self, {payment: tax_advance_value})
   end
 
   def bonus_after_relief(tax_advance, relief_payer, relief_child, claims_child)

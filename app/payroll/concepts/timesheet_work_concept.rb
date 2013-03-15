@@ -39,7 +39,7 @@ class TimesheetWorkConcept < PayrollConcept
     hours_calendar = timesheet_period.map do |x, day|
       hours_from_calendar(day_ord_from, day_ord_end, day, x)
     end
-    TimesheetWorkResult.new(@tag_code, @code, self, {month_schedule: hours_calendar})
+    TimesheetResult.new(@tag_code, @code, self, {month_schedule: hours_calendar})
   end
 
   def hours_from_calendar(day_ord_from, day_ord_end, day_ordinal, work_hours)

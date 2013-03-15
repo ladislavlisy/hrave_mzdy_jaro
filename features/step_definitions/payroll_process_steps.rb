@@ -124,59 +124,49 @@ And /^Employee is Regular Tax payer$/ do
   my_payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, empty_value)
 end
 
-And /^Employee is Regular Health insurance payer$/ do
+And /^YES Employee is Regular Health insurance payer$/ do
   empty_value = {}
   my_payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, empty_value)
   my_payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, empty_value)
 end
 
-And /^Employee is Regular Social insurance payer$/ do
+And /^YES Employee is Regular Social insurance payer$/ do
   empty_value = {}
   my_payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, empty_value)
   my_payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, empty_value)
 end
 
-And /^Employee is not Regular Pension savings payer$/ do
-  empty_value = {}
-  # my_payroll_process.add_term(PayTagGateway::REF_SAVINGS_PENSION_BASE, empty_value)
+And /^NO Employee is Regular Pension savings payer$/ do
+  interest_value = {interest_code: 0}
+  my_payroll_process.add_term(PayTagGateway::REF_SAVINGS_PENSIONS, interest_value)
 end
 
-And /^Employee claims tax benefit on tax payer$/ do
+And /^YES Employee claims tax benefit on tax payer$/ do
   relief_value = {relief_code: 1}
   my_payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_value)
 end
 
-And /^Employee claims no tax benefit on child$/ do
+And /^NO Employee claims tax benefit on child$/ do
   relief_value = {relief_code: 0}
   my_payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_value)
 end
 
-And /^Employee claims no tax benefit on disability 1$/ do
+And /^NO Employee claims tax benefit on disability$/ do
   relief_value = {relief_code: 0}
-  # my_payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_DISABILITY_1, relief_value)
+  my_payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_DISABILITY, relief_value)
 end
 
-And /^Employee claims no tax benefit on disability 2$/ do
+And /^NO Employee claims tax benefit on preparing by studying$/ do
   relief_value = {relief_code: 0}
-  # my_payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_DISABILITY_2, relief_value)
+  my_payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_STUDYING, relief_value)
 end
 
-And /^Employee claims no tax benefit on disability 3$/ do
-  relief_value = {relief_code: 0}
-  # my_payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_DISABILITY_3, relief_value)
-end
-
-And /^Employee claims no tax benefit on preparing by studying$/ do
-  relief_value = {relief_code: 0}
-  # my_payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_STUDYING, relief_value)
-end
-
-And /^Employee is Employer contribution for Health insurance payer$/ do
+And /^YES Employee is Employer contribution for Health insurance payer$/ do
   empty_value = {}
   my_payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, empty_value)
 end
 
-And /^Employee is Employer contribution for Social insurance payer$/ do
+And /^YES Employee is Employer contribution for Social insurance payer$/ do
   empty_value = {}
   my_payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, empty_value)
 end
@@ -229,6 +219,16 @@ end
 
 And /^Tax relief on payer should be (#{CAPTURE_MONEY})$/ do |amount|
   result_value = get_result_tax_relief(PayTagGateway::REF_TAX_RELIEF_PAYER)
+  result_value.should == amount
+end
+
+And /^Tax relief on disability should be (#{CAPTURE_MONEY})$/ do |amount|
+  result_value = get_result_after_reliefA(PayTagGateway::REF_TAX_RELIEF_DISABILITY)
+  result_value.should == amount
+end
+
+And /^Tax relief on studying should be (#{CAPTURE_MONEY})$/ do |amount|
+  result_value = get_result_after_reliefA(PayTagGateway::REF_TAX_RELIEF_STUDYING)
   result_value.should == amount
 end
 

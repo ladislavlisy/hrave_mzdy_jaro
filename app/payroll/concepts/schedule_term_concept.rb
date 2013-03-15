@@ -31,6 +31,6 @@ class ScheduleTermConcept < PayrollConcept
     day_term_from =  1 if (@date_from.nil? || @date_from < period_date_beg)
     day_term_end  = 31 if (@date_end.nil? || @date_end > period_date_end)
 
-    ScheduleTermResult.new(@tag_code, @code, self, {day_ord_from: day_term_from, day_ord_end: day_term_end})
+    TermEffectResult.new(@tag_code, @code, self, {day_ord_from: day_term_from, day_ord_end: day_term_end})
   end
 end

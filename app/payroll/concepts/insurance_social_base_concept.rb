@@ -25,7 +25,7 @@ class InsuranceSocialBaseConcept < PayrollConcept
       agr + sum_term_for(tag_config, tag_code, term_key, term_result)
     end
 
-    InsuranceSocialBaseResult.new(@tag_code, @code, self, {income_base: result_income})
+    IncomeBaseResult.new(@tag_code, @code, self, {income_base: result_income})
   end
 
   def sum_term_for(tag_config, tag_code, result_key, result_item)

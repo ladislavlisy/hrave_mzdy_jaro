@@ -41,7 +41,7 @@ class TaxEmployersHealthConcept < PayrollConcept
     cont_payment_value = fix_insurance_round_up(big_div(empl_payment_value, 3))
     payment_value = empl_payment_value - cont_payment_value
 
-    TaxEmployersHealthResult.new(@tag_code, @code, self, {payment: payment_value})
+    PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
   end
 
   def health_insurance_factor(period)

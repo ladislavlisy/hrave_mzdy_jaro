@@ -1,9 +1,9 @@
-class HoursAbsenceResult < PayrollResult
-  attr_reader :hours
+class IncomeBaseResult < PayrollResult
+  attr_reader :income_base
 
   def initialize(tag_code, concept_code, concept_item, values)
     super(tag_code, concept_code, concept_item)
 
-    @hours = values[:hours]
+    @income_base = values[:income_base]
   end
 end

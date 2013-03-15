@@ -1,9 +1,9 @@
-class TaxIncomeBaseResult < PayrollResult
-  attr_reader :income_base
+class ScheduleResult < PayrollResult
+  attr_reader :week_schedule
 
   def initialize(tag_code, concept_code, concept_item, values)
     super(tag_code, concept_code, concept_item)
 
-    @income_base = values[:income_base]
+    @week_schedule = values[:week_schedule]
   end
 end

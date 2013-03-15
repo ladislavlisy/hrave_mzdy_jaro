@@ -33,6 +33,6 @@ class HoursWorkingConcept < PayrollConcept
     result_timesheet = get_result_by(results, TAG_TIMESHEET_WORK)
 
     result_hours = result_timesheet.hours + hours
-    HoursWorkingResult.new(@tag_code, @code, self, {hours: result_hours})
+    TermHoursResult.new(@tag_code, @code, self, {hours: result_hours})
   end
 end

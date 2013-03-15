@@ -1,12 +1,11 @@
-class TaxReliefChildConcept < PayrollConcept
+class TaxReliefStudyingConcept < PayrollConcept
   TAG_ADVANCE = PayTagGateway::REF_TAX_ADVANCE.code
   TAG_RELIEF_PAYER = PayTagGateway::REF_TAX_RELIEF_PAYER.code
   TAG_RELIEF_DISABILITY = PayTagGateway::REF_TAX_RELIEF_DISABILITY.code
-  TAG_RELIEF_STUDYING = PayTagGateway::REF_TAX_RELIEF_STUDYING.code
-  TAG_CLAIM_BASE = PayTagGateway::REF_TAX_CLAIM_CHILD.code
+  TAG_CLAIM_BASE = PayTagGateway::REF_TAX_CLAIM_STUDYING.code
 
   def initialize(tag_code, values)
-    super(PayConceptGateway::REFCON_TAX_RELIEF_CHILD, tag_code)
+    super(PayConceptGateway::REFCON_TAX_RELIEF_STUDYING, tag_code)
     init_values(values)
   end
 
@@ -25,8 +24,7 @@ class TaxReliefChildConcept < PayrollConcept
       TaxAdvanceTag.new,
       TaxReliefPayerTag.new,
       TaxReliefDisabilityTag.new,
-      TaxReliefStudyingTag.new,
-      TaxClaimChildTag.new
+      TaxClaimStudyingTag.new
     ]
   end
 
@@ -39,11 +37,9 @@ class TaxReliefChildConcept < PayrollConcept
     relief_claim_value = get_result_by(results, TAG_CLAIM_BASE)
     relief_payer_value = get_result_by(results, TAG_RELIEF_PAYER)
     relief_disab_value = get_result_by(results, TAG_RELIEF_DISABILITY)
-    relief_study_value = get_result_by(results, TAG_RELIEF_STUDYING)
 
     tax_relief_value = relief_payer_value.tax_relief +
-                       relief_disab_value.tax_relief +
-                       relief_study_value.tax_relief
+                       relief_disab_value.tax_relief
     tax_claims_value = relief_claim_value.tax_relief
 
     relief_value = relief_amount(advance_base_value.payment,

@@ -32,7 +32,7 @@ class TimesheetPeriodConcept < PayrollConcept
     week_hours = result_schedule_work.week_schedule
 
     hours_calendar = month_calendar_days(week_hours, period)
-    TimesheetPeriodResult.new(@tag_code, @code, self, {month_schedule: hours_calendar})
+    TimesheetResult.new(@tag_code, @code, self, {month_schedule: hours_calendar})
   end
 
   def month_calendar_days(week_hours, period)

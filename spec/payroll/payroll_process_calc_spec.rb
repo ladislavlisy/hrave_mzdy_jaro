@@ -9,6 +9,15 @@ def get_result_income_base(results, result_ref)
   end
 end
 
+def get_result_employee_base(results, result_ref)
+  result_select = results.select do |key, _|
+    key.code == result_ref.code
+  end
+  result_value = result_select.inject (0)  do |agr, item|
+    agr + item.last.employee_base
+  end
+end
+
 def get_result_payment(results, result_ref)
   result_select = results.select do |key, _|
     key.code == result_ref.code
@@ -254,6 +263,8 @@ describe 'Payroll Process Calculations' do
     it 'returns Insurance base amount' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
@@ -262,7 +273,7 @@ describe 'Payroll Process Calculations' do
       schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, empty_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
       result = @payroll_process.evaluate(result_tag)
 
       result_value = get_result_income_base(@payroll_process.get_results, PayTagGateway::REF_INSURANCE_HEALTH_BASE)
@@ -277,12 +288,13 @@ describe 'Payroll Process Calculations' do
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
+      interest_value = {interest_code: 1}
 
       schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
       schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, empty_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
       result = @payroll_process.evaluate(result_tag)
 
       result_value = get_result_income_base(@payroll_process.get_results, PayTagGateway::REF_INSURANCE_SOCIAL_BASE)
@@ -297,12 +309,13 @@ describe 'Payroll Process Calculations' do
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
+      interest_value = {interest_code: 1}
 
       schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
       schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
       salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, empty_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
       result = @payroll_process.evaluate(result_tag)
 
       result_value = get_result_income_base(@payroll_process.get_results, PayTagGateway::REF_TAX_INCOME_BASE)
@@ -314,15 +327,18 @@ describe 'Payroll Process Calculations' do
     it 'returns Insurance amount ' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, empty_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
       result = @payroll_process.evaluate(result_tag)
 
       result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_INSURANCE_HEALTH)
@@ -334,15 +350,18 @@ describe 'Payroll Process Calculations' do
     it 'returns Insurance amount' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, empty_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, interest_value)
       result = @payroll_process.evaluate(result_tag)
 
       result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_INSURANCE_SOCIAL)
@@ -359,42 +378,48 @@ describe 'Payroll Process Calculations' do
     #Tax bonus:	0 Kč
     #Net income:	12 405 Kč
 
-    it 'returns Employer Social Tax Base' do
-      empty_value = {}
-
-      schedule_work_value = {hours_weekly: 40}
-      schedule_term_value = {date_from: nil, date_end: nil}
-      salary_amount_value = {amount_monthly: 15000}
-      relief_payers_value = {relief_code: 1}
-
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
-
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, empty_value)
-      result = @payroll_process.evaluate(result_tag)
-
-      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL)
-      result_value.should == 3750
-    end
-
     it 'returns Employer Health Tax Base' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, empty_value)
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
       result = @payroll_process.evaluate(result_tag)
 
       result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_EMPLOYERS_HEALTH)
       result_value.should == 1350
+    end
+
+    it 'returns Employer Social Tax Base' do
+      empty_value = {}
+
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+
+      schedule_work_value = {hours_weekly: 40}
+      schedule_term_value = {date_from: nil, date_end: nil}
+      salary_amount_value = {amount_monthly: 15000}
+      relief_payers_value = {relief_code: 1}
+
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+
+      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
+      result = @payroll_process.evaluate(result_tag)
+
+      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL)
+      result_value.should == 3750
     end
 
     it 'returns tax claim payer relief' do
@@ -495,14 +520,23 @@ describe 'Payroll Process Calculations' do
     it 'returns tax claim child relief' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_payers_value)
 
@@ -514,14 +548,21 @@ describe 'Payroll Process Calculations' do
     it 'returns rounded base for tax advance' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE_BASE, empty_value)
       result = @payroll_process.evaluate(result_tag)
@@ -533,18 +574,27 @@ describe 'Payroll Process Calculations' do
     it 'returns Tax amount before relief' do
      empty_value = {}
 
-      schedule_work_value = {hours_weekly: 40}
-      schedule_term_value = {date_from: nil, date_end: nil}
-      salary_amount_value = {amount_monthly: 15000}
-      relief_payers_value = {relief_code: 1}
+     interest_value = {interest_code: 1}
+     @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
+     @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+     @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
+     @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+     @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, interest_value)
+     @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
+     @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
-      relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
+     schedule_work_value = {hours_weekly: 40}
+     schedule_term_value = {date_from: nil, date_end: nil}
+     salary_amount_value = {amount_monthly: 15000}
+     relief_payers_value = {relief_code: 1}
 
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE, empty_value)
-      result = @payroll_process.evaluate(result_tag)
+     @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+     @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+     @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+     @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
+
+     result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE, empty_value)
+     result = @payroll_process.evaluate(result_tag)
 
      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE)
      result_value.should == 3015
@@ -553,15 +603,24 @@ describe 'Payroll Process Calculations' do
     it 'returns Tax amount after relief with payer relief' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
-      relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE_FINAL, empty_value)
       result = @payroll_process.evaluate(result_tag)
@@ -573,16 +632,25 @@ describe 'Payroll Process Calculations' do
     it 'returns Tax amount after relief with child relief' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
-      relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
-      relief_child_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_payers_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_payers_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE_FINAL, empty_value)
       result = @payroll_process.evaluate(result_tag)
@@ -636,17 +704,26 @@ describe 'Payroll Process Calculations' do
     it 'returns Tax bonus after relief with child relief ZTP' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
       relief_child_value = {relief_code: 2}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
-      relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
-      relief_child_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_child_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_child_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_BONUS_CHILD, empty_value)
       result = @payroll_process.evaluate(result_tag)
@@ -660,15 +737,24 @@ describe 'Payroll Process Calculations' do
     it 'returns Income amount' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
-      relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_INCOME_GROSS, empty_value)
 
@@ -682,15 +768,24 @@ describe 'Payroll Process Calculations' do
     it 'returns Income amount' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
-      relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_INCOME_NETTO, empty_value)
 
@@ -702,17 +797,26 @@ describe 'Payroll Process Calculations' do
     it 'returns Netto Income amount with bonus' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
       relief_child_value = {relief_code: 2}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
-      relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
-      relief_child_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_child_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_child_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_INCOME_NETTO, empty_value)
 

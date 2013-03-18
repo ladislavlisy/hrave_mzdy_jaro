@@ -7,6 +7,7 @@ class InsuranceSocialConcept < PayrollConcept
   end
 
   def init_values(values)
+    @interest_code = values[:interest_code] || 0
   end
 
   def dup_with_value(code, values)
@@ -33,9 +34,15 @@ class InsuranceSocialConcept < PayrollConcept
   end
 
   def evaluate(period, tag_config, results)
-    result_income = get_result_by(results, TAG_AMOUNT_BASE)
+    payment_income = 0
+    if !interest?
+      payment_income = 0
+    else
+      result_income = get_result_by(results, TAG_AMOUNT_BASE)
+      payment_income = [0,result_income.employee_base].max
+    end
 
-    payment_value = insurance_contribution(period, result_income.income_base)
+    payment_value = insurance_contribution(period, payment_income)
     PaymentDeductionResult.new(@tag_code, @code, self, {payment: payment_value})
   end
 
@@ -43,6 +50,10 @@ class InsuranceSocialConcept < PayrollConcept
     payment_value = fix_insurance_round_up(
         big_multi(income_base, social_insurance_factor(period, false))
     )
+  end
+
+  def interest?
+    @interest_code!=0
   end
 
   def social_insurance_factor(period, pens_pill)

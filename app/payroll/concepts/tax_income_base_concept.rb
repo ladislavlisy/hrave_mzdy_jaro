@@ -5,6 +5,8 @@ class TaxIncomeBaseConcept < PayrollConcept
   end
 
   def init_values(values)
+    @interest_code = values[:interest_code] || 0
+    @declare_code  = values[:declare_code] || 0
   end
 
   def dup_with_value(code, values)
@@ -19,13 +21,19 @@ class TaxIncomeBaseConcept < PayrollConcept
   end
 
   def evaluate(period, tag_config, results)
-    result_income = results.inject(0) do |agr, term_item|
-      term_key    = term_item.first
-      term_result = term_item.last
-      agr + sum_term_for(tag_config, tag_code, term_key, term_result)
+    result_income = 0
+    if !interest?
+      result_income = 0
+    else
+      result_income = results.inject(0) do |agr, term_item|
+        term_key    = term_item.first
+        term_result = term_item.last
+        agr + sum_term_for(tag_config, tag_code, term_key, term_result)
+      end
     end
 
-    IncomeBaseResult.new(@tag_code, @code, self, {income_base: result_income})
+    result_value = {income_base: result_income, interest_code: @interest_code, declare_code: @declare_code}
+    IncomeBaseResult.new(@tag_code, @code, self, result_value)
   end
 
   def sum_term_for(tag_config, tag_code, result_key, result_item)
@@ -36,5 +44,13 @@ class TaxIncomeBaseConcept < PayrollConcept
       end
     end
     return 0
+  end
+
+  def interest?
+    @interest_code!=0
+  end
+
+  def declared?
+    @declare_code!=0
   end
 end

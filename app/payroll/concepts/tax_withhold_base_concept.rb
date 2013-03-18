@@ -1,10 +1,10 @@
-class TaxAdvanceBaseConcept < PayrollConcept
+class TaxWithholdBaseConcept < PayrollConcept
   TAG_AMOUNT_BASE = PayTagGateway::REF_TAX_INCOME_BASE.code
   TAG_SOCIAL_BASE = PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL.code
   TAG_HEALTH_BASE = PayTagGateway::REF_TAX_EMPLOYERS_HEALTH.code
 
   def initialize(tag_code, values)
-    super(PayConceptGateway::REFCON_TAX_ADVANCE_BASE, tag_code)
+    super(PayConceptGateway::REFCON_TAX_WITHHOLD_BASE, tag_code)
     init_values(values)
   end
 
@@ -55,29 +55,19 @@ class TaxAdvanceBaseConcept < PayrollConcept
 
   def tax_rounded_base(period, tax_decl, tax_income, tax_base)
     if tax_decl
-      advance_rounded_base(period, tax_decl, tax_base)
+      0
     else
       if tax_income > tax_withhold_max(period.year)
-        advance_rounded_base(period, tax_decl, tax_base)
-      else
         0
+      else
+        withhold_rounded_base(period, tax_decl, tax_base)
       end
     end
   end
 
-  def advance_rounded_base(period, tax_decl, tax_base)
-    year = period.year
-
+  def withhold_rounded_base(period, tax_decl, tax_base)
     amount_for_calc = [0, tax_base].max
-    if amount_for_calc > 100
-      big_near_round_up(amount_for_calc, 100)
-    else
-      if year >= 2011
-        big_tax_round_up(amount_for_calc)
-      else
-        big_tax_round_down(amount_for_calc)
-      end
-    end
+    big_tax_round_down(amount_for_calc)
   end
 
   def tax_withhold_max(year)

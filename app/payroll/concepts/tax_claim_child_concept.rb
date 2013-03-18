@@ -25,8 +25,10 @@ class TaxClaimChildConcept < PayrollConcept
   def relief_claim_amount(year, code)
     relief_amount = 0
     return relief_amount if code == 0
-    if year >= 2010
-      relief_amount = 967
+    if year >= 2012
+      relief_amount = 1117
+    elsif year >= 2010
+        relief_amount = 967
     elsif year == 2009
       relief_amount = 890
     elsif year == 2008

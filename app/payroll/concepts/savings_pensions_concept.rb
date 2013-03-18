@@ -34,32 +34,34 @@ class SavingsPensionsConcept < PayrollConcept
   end
 
   def evaluate(period, tag_config, results)
-    result_income = get_result_by(results, TAG_AMOUNT_BASE)
+    payment_income = 0
+    if !interest?
+      payment_income = 0
+    else
+      result_income = get_result_by(results, TAG_AMOUNT_BASE)
+      payment_income = result_income.income_base
+    end
 
-    payment_value = insurance_contribution(period, result_income.income_base)
+    payment_value = insurance_contribution(period, payment_income)
     PaymentDeductionResult.new(@tag_code, @code, self, {payment: payment_value})
   end
 
   def insurance_contribution(period, income_base)
     payment_value = fix_insurance_round_up(
-        big_multi(income_base, pension_savings_factor(period, interest?()))
+        big_multi(income_base, pension_savings_factor(period))
     )
   end
 
   def interest?
-    @interest_code==1
+    @interest_code!=0
   end
 
-  def pension_savings_factor(period, pens_pill)
+  def pension_savings_factor(period)
     factor = 0.0
     if (period.year<2013)
       factor = 0.0
     else
-      if pens_pill
-        factor = 3.0
-      else
-        factor = 0.0
-      end
+      factor = 3.0
     end
     return BigDecimal.new(factor.fdiv(100), 15)
   end

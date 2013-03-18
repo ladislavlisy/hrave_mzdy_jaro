@@ -13,8 +13,8 @@ Feature:
     And   YES Employee is Regular Social insurance payer
     And   NO Employee is Regular Pension savings payer
     And   YES Employee claims tax benefit on tax payer
-    And   NO Employee claims tax benefit on child
-    And   NO Employee claims tax benefit on disability
+    And   Employee claims tax benefit on 0 child
+    And   NO:NO:NO Employee claims tax benefit on disability
     And   NO Employee claims tax benefit on preparing by studying
     And   YES Employee is Employer contribution for Health insurance payer
     And   YES Employee is Employer contribution for Social insurance payer
@@ -28,8 +28,6 @@ Feature:
     And   Contribution to Social insurance should be CZK 975
     And   Tax advance before tax relief on payer should be CZK 3015
     And   Tax relief on payer should be CZK 2070
-    And   Tax relief on disability should be CZK 0
-    And   Tax relief on studying should be CZK 0
     And   Tax advance after relief on payer should be CZK 945
     And   Tax relief on child should be CZK 0
     And   Tax advance after relief on child should be CZK 945

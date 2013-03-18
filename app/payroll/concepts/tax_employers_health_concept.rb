@@ -7,6 +7,7 @@ class TaxEmployersHealthConcept < PayrollConcept
   end
 
   def init_values(values)
+    @interest_code = values[:interest_code] || 0
   end
 
   def dup_with_value(code, values)
@@ -33,15 +34,40 @@ class TaxEmployersHealthConcept < PayrollConcept
   end
 
   def evaluate(period, tag_config, results)
-    result_income = get_result_by(results, TAG_AMOUNT_BASE)
+    employer_income = 0
+    employee_income = 0
+    if !interest?
+      employer_income = 0
+      employee_income = 0
+    else
+      result_income = get_result_by(results, TAG_AMOUNT_BASE)
+      employer_income = [0,result_income.employer_base].max
+      employee_income = [0,result_income.employee_base].max
+    end
 
-    empl_payment_value = big_insurance_round_up(
-        big_multi(result_income.income_base, health_insurance_factor(period))
-    )
-    cont_payment_value = fix_insurance_round_up(big_div(empl_payment_value, 3))
-    payment_value = empl_payment_value - cont_payment_value
+    payment_value = insurance_payment(period, employer_income, employee_income)
 
     PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
+  end
+
+  def insurance_payment(period, employer_income, employee_income)
+    employer_base = [employer_income, employee_income].max
+    employee_self = [0, employee_income - employer_income].max
+    employee_base = [0, employer_base - employee_self].max
+
+    health_factor = health_insurance_factor(period)
+
+    suma_payment_value = fix_insurance_round_up(
+        big_multi(employer_base, health_factor)
+    )
+    empl_payment_value = fix_insurance_round_up(
+        big_multi(employee_self, health_factor) + big_div(big_multi(employee_base, health_factor), 3)
+    )
+    cont_payment_value = suma_payment_value - empl_payment_value
+  end
+
+  def interest?
+    @interest_code!=0
   end
 
   def health_insurance_factor(period)

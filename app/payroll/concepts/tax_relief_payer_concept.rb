@@ -1,6 +1,8 @@
 class TaxReliefPayerConcept < PayrollConcept
   TAG_ADVANCE = PayTagGateway::REF_TAX_ADVANCE.code
-  TAG_CLAIM_BASE = PayTagGateway::REF_TAX_CLAIM_PAYER.code
+  TAG_CLAIM_PAYER = PayTagGateway::REF_TAX_CLAIM_PAYER.code
+  TAG_CLAIM_DISAB = PayTagGateway::REF_TAX_CLAIM_DISABILITY.code
+  TAG_CLAIM_STUDY = PayTagGateway::REF_TAX_CLAIM_STUDYING.code
 
   def initialize(tag_code, values)
     super(PayConceptGateway::REFCON_TAX_RELIEF_PAYER, tag_code)
@@ -20,7 +22,9 @@ class TaxReliefPayerConcept < PayrollConcept
   def pending_codes
     [
       TaxAdvanceTag.new,
-      TaxClaimPayerTag.new
+      TaxClaimPayerTag.new,
+      TaxClaimDisabilityTag.new,
+      TaxClaimStudyingTag.new
     ]
   end
 
@@ -30,14 +34,23 @@ class TaxReliefPayerConcept < PayrollConcept
 
   def evaluate(period, tag_config, results)
     advance_base_value = get_result_by(results, TAG_ADVANCE)
-    relief_claim_value = get_result_by(results, TAG_CLAIM_BASE)
+    relief_claim_payer = get_result_by(results, TAG_CLAIM_PAYER)
+    relief_claim_disab = get_result_by(results, TAG_CLAIM_DISAB)
+    relief_claim_study = get_result_by(results, TAG_CLAIM_STUDY)
+
+    tax_relief_value = 0
+    tax_claims_value = relief_claim_payer.tax_relief +
+                       relief_claim_disab.tax_relief +
+                       relief_claim_study.tax_relief
     relief_value = relief_amount(advance_base_value.payment,
-                                relief_claim_value.tax_relief)
+                                 tax_relief_value,
+                                 tax_claims_value)
 
     TaxReliefResult.new(@tag_code, @code, self, {tax_relief: relief_value})
   end
 
-  def relief_amount(tax_advance, tax_claims)
-    tax_claims - [0, tax_claims - tax_advance].max
+  def relief_amount(tax_advance, tax_relief, tax_claims)
+    tax_after_relief = tax_advance - tax_relief
+    tax_claims - [0, tax_claims - tax_after_relief].max
   end
 end

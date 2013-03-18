@@ -33,17 +33,26 @@ describe 'Payroll Process Calculations' do
     it 'returns Netto Income amount' do
       empty_value = {}
 
+      interest_value = {interest_code: 1}
+      @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL_BASE, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_INSURANCE_SOCIAL, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_HEALTH, interest_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL, interest_value)
+
       schedule_work_value = {hours_weekly: 40}
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
       relief_child_value = {relief_code: 2}
 
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
-      relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
-      relief_child_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_child_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
+      @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
+      @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_child_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_INCOME_NETTO, empty_value)
 

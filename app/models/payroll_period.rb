@@ -14,4 +14,9 @@ class PayrollPeriod < ActiveRecord::Base
   def month
     code%100
   end
+
+  def description
+    calendar_day = Date.new(year, month, 1)
+    calendar_day.to_formatted_s(:month_name_and_year)
+  end
 end

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<payslips>
+  <payslip>
+    <employee>
+      <personnel_number>00012</personnel_number>
+      <common_name>Ladislav Lisy</common_name>
+      <department>IT crowd</department>
+    </employee>
+    <employer>
+      <common_name>Hrave Mzdy - effortlessly, promptly, clearly Ltd.</common_name>
+    </employer>
+    <results>
+      <period>January 2013</period>
+      <result>
+        <reference period_base="0" code="10001" code_order="1"/>
+        <item tag_name="TAG_SCHEDULE_WORK" category="CONCEPT_SCHEDULE_WEEKLY">
+          <title>Working schedule</title>
+          <description>Working schedule</description>
+          <group vgrp_pos="VPAYGRP_SCHEDULE"/>
+          <spec_value hours_weekly="40">40 hours</spec_value>
+          <value week_schedule="[8, 8, 8, 8, 8, 0, 0]">40 hours</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="10002" code_order="1"/>
+        <item tag_name="TAG_SCHEDULE_TERM" category="CONCEPT_SCHEDULE_TERM">
+          <title>Working Schedule Terms</title>
+          <description>Working Schedule Terms</description>
+          <group vgrp_pos="VPAYGRP_SCHEDULE"/>
+          <spec_value date_from="" date_end=""/>
+          <value day_ord_from="1" day_ord_end="31">1 - 31</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="10003" code_order=""/>
+        <item tag_name="TAG_TIMESHEET_PERIOD" category="CONCEPT_TIMESHEET_PERIOD">
+          <title>Job Timesheet hours</title>
+          <description>Job Timesheet hours</description>
+          <group vgrp_pos="VPAYGRP_SCHEDULE"/>
+          <value month_schedule="[8, 8, 8, 8, 0, 0, 8, 8, 8, 8, 8, 0, 0, 8, 8, 8, 8, 8, 0, 0, 8, 8, 8, 8, 8, 0, 0, 8, 8, 8, 8]">
+            184 hours
+          </value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="10004" code_order=""/>
+        <item tag_name="TAG_TIMESHEET_WORK" category="CONCEPT_TIMESHEET_WORK">
+          <title>Working Timesheet hours</title>
+          <description>Working Timesheet hours</description>
+          <group vgrp_pos="VPAYGRP_SCHEDULE"/>
+          <value month_schedule="[8, 8, 8, 8, 0, 0, 8, 8, 8, 8, 8, 0, 0, 8, 8, 8, 8, 8, 0, 0, 8, 8, 8, 8, 8, 0, 0, 8, 8, 8, 8]">
+            184 hours
+          </value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="10005" code_order=""/>
+        <item tag_name="TAG_HOURS_WORKING" category="CONCEPT_HOURS_WORKING">
+          <title>Working hours</title>
+          <description>Working hours</description>
+          <group vgrp_pos="VPAYGRP_SCHEDULE"/>
+          <spec_value hours="0">0 hours</spec_value>
+          <value hours="184">184 hours</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="10006" code_order=""/>
+        <item tag_name="TAG_HOURS_ABSENCE" category="CONCEPT_HOURS_ABSENCE">
+          <title>Absence hours</title>
+          <description>Absence hours</description>
+          <group vgrp_pos="VPAYGRP_SCHEDULE"/>
+          <spec_value hours="0">0 hours</spec_value>
+          <value hours="0">0 hours</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="10101" code_order="1"/>
+        <item tag_name="TAG_SALARY_BASE" category="CONCEPT_SALARY_MONTHLY">
+          <title>Base Salary</title>
+          <description>Base Salary</description>
+          <group vgrp_pos="VPAYGRP_PAYMENTS"/>
+          <spec_value amount_monthly="15000">15000 CZK</spec_value>
+          <value payment="15000.0">15000.0 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30010" code_order="1"/>
+        <item tag_name="TAG_TAX_CLAIM_PAYER" category="CONCEPT_TAX_CLAIM_PAYER">
+          <title>Tax benefit claim - payer</title>
+          <description>Tax benefit claim - payer</description>
+          <group vgrp_pos="VPAYGRP_TAX_SOURCE"/>
+          <spec_value relief_code="1"/>
+          <value tax_relief="2070">2070 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30011" code_order=""/>
+        <item tag_name="TAG_TAX_CLAIM_DISABILITY" category="CONCEPT_TAX_CLAIM_DISABILITY">
+          <title>Tax benefit claim - disability</title>
+          <description>Tax benefit claim - disability</description>
+          <group vgrp_pos="VPAYGRP_TAX_SOURCE"/>
+          <spec_value relief_code_1="0" relief_code_2="0" relief_code_3="0"/>
+          <value tax_relief="0">0 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30014" code_order=""/>
+        <item tag_name="TAG_TAX_CLAIM_STUDYING" category="CONCEPT_TAX_CLAIM_STUDYING">
+          <title>Tax benefit claim - studying</title>
+          <description>Tax benefit claim - studying</description>
+          <group vgrp_pos="VPAYGRP_TAX_SOURCE"/>
+          <spec_value relief_code="0"/>
+          <value tax_relief="0">0 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30019" code_order=""/>
+        <item tag_name="TAG_TAX_CLAIM_CHILD" category="CONCEPT_TAX_CLAIM_CHILD">
+          <title>Tax benefit claim - child</title>
+          <description>Tax benefit claim - child</description>
+          <group vgrp_pos="VPAYGRP_TAX_SOURCE"/>
+          <spec_value relief_code="0"/>
+          <value tax_relief="0">0 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30001" code_order="1"/>
+        <item tag_name="TAG_TAX_INCOME_BASE" category="CONCEPT_TAX_INCOME_BASE">
+          <title>Taxable income</title>
+          <description>Taxable income</description>
+          <group vgrp_pos="VPAYGRP_TAX_INCOME"/>
+          <spec_value interest_code="1" declare_code="0"/>
+          <value income_base="15000.0" employee_base="0" employer_base="0" declare_code="0" interest_code="1"
+                 minimum_asses="0">15000.0 CZK
+          </value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30002" code_order="1"/>
+        <item tag_name="TAG_INSURANCE_HEALTH_BASE" category="CONCEPT_INSURANCE_HEALTH_BASE">
+          <title>Health insurance base</title>
+          <description>Assessment base for Health insurance</description>
+          <group vgrp_pos="VPAYGRP_INS_INCOME"/>
+          <spec_value interest_code="1" minimum_asses="0"/>
+          <value income_base="15000.0" employee_base="15000.0" employer_base="15000.0" declare_code="0"
+                 interest_code="1" minimum_asses="0">15000.0 CZK
+          </value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30003" code_order="1"/>
+        <item tag_name="TAG_INSURANCE_SOCIAL_BASE" category="CONCEPT_INSURANCE_SOCIAL_BASE">
+          <title>Social insurance base</title>
+          <description>Assessment base for Social insurance</description>
+          <group vgrp_pos="VPAYGRP_INS_INCOME"/>
+          <spec_value interest_code="1"/>
+          <value income_base="15000.0" employee_base="15000.0" employer_base="15000.0" declare_code="0"
+                 interest_code="1" minimum_asses="0">15000.0 CZK
+          </value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30005" code_order="1"/>
+        <item tag_name="TAG_INSURANCE_HEALTH" category="CONCEPT_INSURANCE_HEALTH">
+          <title>Health insurance</title>
+          <description>Health insurance contribution</description>
+          <group vgrp_pos="VPAYGRP_INS_RESULT"/>
+          <spec_value interest_code="1" minimum_asses="0"/>
+          <value payment="675">675 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30006" code_order="1"/>
+        <item tag_name="TAG_INSURANCE_SOCIAL" category="CONCEPT_INSURANCE_SOCIAL">
+          <title>Social insurance</title>
+          <description>Social insurance contribution</description>
+          <group vgrp_pos="VPAYGRP_INS_RESULT"/>
+          <spec_value interest_code="1"/>
+          <value payment="975">975 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30008" code_order="1"/>
+        <item tag_name="TAG_TAX_EMPLOYERS_HEALTH" category="CONCEPT_TAX_EMPLOYERS_HEALTH">
+          <title>Tax employer’s Health insurance</title>
+          <description>Tax employer’s Health insurance</description>
+          <group vgrp_pos="VPAYGRP_TAX_INCOME"/>
+          <spec_value interest_code="1"/>
+          <value payment="1350">1350 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30009" code_order="1"/>
+        <item tag_name="TAG_TAX_EMPLOYERS_SOCIAL" category="CONCEPT_TAX_EMPLOYERS_SOCIAL">
+          <title>Tax employer’s Social insurance</title>
+          <description>Tax employer’s Social insurance</description>
+          <group vgrp_pos="VPAYGRP_TAX_INCOME"/>
+          <spec_value interest_code="1"/>
+          <value payment="3750">3750 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30030" code_order=""/>
+        <item tag_name="TAG_TAX_ADVANCE_BASE" category="CONCEPT_TAX_ADVANCE_BASE">
+          <title>Tax advance base</title>
+          <description>Tax advance base</description>
+          <group vgrp_pos="VPAYGRP_TAX_INCOME"/>
+          <value income_base="20100.0" employee_base="0" employer_base="0" declare_code="0" interest_code="0"
+                 minimum_asses="0">20100.0 CZK
+          </value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30031" code_order=""/>
+        <item tag_name="TAG_TAX_ADVANCE" category="CONCEPT_TAX_ADVANCE">
+          <title>Tax advance</title>
+          <description>Tax advance</description>
+          <group vgrp_pos="VPAYGRP_TAX_SOURCE"/>
+          <value payment="3015">3015 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30020" code_order=""/>
+        <item tag_name="TAG_TAX_RELIEF_PAYER" category="CONCEPT_TAX_RELIEF_PAYER">
+          <title>Tax relief - payer</title>
+          <description>Tax relief - payer (§ 35ba)</description>
+          <group vgrp_pos="VPAYGRP_TAX_SOURCE"/>
+          <value tax_relief="2070">2070 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30029" code_order=""/>
+        <item tag_name="TAG_TAX_RELIEF_CHILD" category="CONCEPT_TAX_RELIEF_CHILD">
+          <title>Tax relief - child</title>
+          <description>Tax relief - child (§ 35c)</description>
+          <group vgrp_pos="VPAYGRP_TAX_SOURCE"/>
+          <value tax_relief="0">0 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30033" code_order=""/>
+        <item tag_name="TAG_TAX_BONUS_CHILD" category="CONCEPT_TAX_BONUS_CHILD">
+          <title>Tax bonus</title>
+          <description>Tax bonus</description>
+          <group vgrp_pos="VPAYGRP_TAX_RESULT"/>
+          <value payment="0">0 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30034" code_order=""/>
+        <item tag_name="TAG_TAX_ADVANCE_FINAL" category="CONCEPT_TAX_ADVANCE_FINAL">
+          <title>Tax advance after relief</title>
+          <description>Tax advance after relief</description>
+          <group vgrp_pos="VPAYGRP_TAX_RESULT"/>
+          <value payment="945" after_reliefA="945" after_reliefC="945">945 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30035" code_order=""/>
+        <item tag_name="TAG_TAX_WITHHOLD_BASE" category="CONCEPT_TAX_WITHHOLD_BASE">
+          <title>Withholding Tax base</title>
+          <description>Withholding Tax base</description>
+          <group vgrp_pos="VPAYGRP_TAX_INCOME"/>
+          <value income_base="0" employee_base="0" employer_base="0" declare_code="0" interest_code="0"
+                 minimum_asses="0">0 CZK
+          </value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="30036" code_order=""/>
+        <item tag_name="TAG_TAX_WITHHOLD" category="CONCEPT_TAX_WITHHOLD">
+          <title>Withholding Tax</title>
+          <description>Withholding Tax</description>
+          <group vgrp_pos="VPAYGRP_TAX_RESULT"/>
+          <value payment="0">0 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="90001" code_order="1"/>
+        <item tag_name="TAG_INCOME_GROSS" category="CONCEPT_INCOME_GROSS">
+          <title>Gross income</title>
+          <description>Gross income</description>
+          <group vgrp_pos="VPAYGRP_SUMMARY"/>
+          <value amount="15000.0">15000.0 CZK</value>
+        </item>
+      </result>
+      <result>
+        <reference period_base="0" code="90002" code_order="1"/>
+        <item tag_name="TAG_INCOME_NETTO" category="CONCEPT_INCOME_NETTO">
+          <title>Net income</title>
+          <description>Net income</description>
+          <group vgrp_pos="VPAYGRP_SUMMARY"/>
+          <value amount="12405.0">12405.0 CZK</value>
+        </item>
+      </result>
+    </results>
+  </payslip>
+</payslips>

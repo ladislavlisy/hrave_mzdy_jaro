@@ -35,4 +35,14 @@ class HoursWorkingConcept < PayrollConcept
     result_hours = result_timesheet.hours + hours
     TermHoursResult.new(@tag_code, @code, self, {hours: result_hours})
   end
+
+  def export_xml(xml_builder)
+    attributes = {}
+    attributes[:hours] = @hours
+    xml_builder.spec_value(xml_value, attributes)
+  end
+
+  def xml_value
+    "#{hours} hours"
+  end
 end

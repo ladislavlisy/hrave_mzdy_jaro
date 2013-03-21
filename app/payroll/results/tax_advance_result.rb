@@ -14,4 +14,16 @@ class TaxAdvanceResult < PayrollResult
   def deduction
     @payment
   end
+
+  def export_xml_result(xml_element)
+    attributes = {}
+    attributes[:payment] = @payment
+    attributes[:after_reliefA] = @after_reliefA
+    attributes[:after_reliefC] = @after_reliefC
+    xml_element.value(xml_value, attributes)
+  end
+
+  def xml_value
+    "#{payment} CZK"
+  end
 end

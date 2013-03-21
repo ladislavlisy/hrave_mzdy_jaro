@@ -6,4 +6,14 @@ class TaxReliefResult < PayrollResult
 
     @tax_relief = values[:tax_relief]
   end
+
+  def export_xml_result(xml_element)
+    attributes = {}
+    attributes[:tax_relief] = @tax_relief
+    xml_element.value(xml_value, attributes)
+  end
+
+  def xml_value
+    "#{tax_relief} CZK"
+  end
 end

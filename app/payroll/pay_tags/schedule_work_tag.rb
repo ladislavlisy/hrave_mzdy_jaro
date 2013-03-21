@@ -21,4 +21,12 @@ class ScheduleWorkTag < PayrollTag
   def initialize
     super(PayTagGateway::REF_SCHEDULE_WORK, PayConceptGateway::REFCON_SCHEDULE_WEEKLY)
   end
+
+  def title
+    'Working schedule'
+  end
+
+  def description
+    'Working schedule'
+  end
 end

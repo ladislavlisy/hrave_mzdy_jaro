@@ -6,4 +6,14 @@ class TermHoursResult < PayrollResult
 
     @hours = values[:hours]
   end
+
+  def export_xml_result(xml_element)
+    attributes = {}
+    attributes[:hours] = @hours
+    xml_element.value(xml_value, attributes)
+  end
+
+  def xml_value
+    "#{hours} hours"
+  end
 end

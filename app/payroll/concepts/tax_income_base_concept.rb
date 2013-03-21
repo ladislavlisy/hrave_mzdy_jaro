@@ -53,4 +53,11 @@ class TaxIncomeBaseConcept < PayrollConcept
   def declared?
     @declare_code!=0
   end
+
+  def export_xml(xml_builder)
+    attributes = {}
+    attributes[:interest_code] = @interest_code
+    attributes[:declare_code]  = @declare_code
+    xml_builder.spec_value(attributes)
+  end
 end

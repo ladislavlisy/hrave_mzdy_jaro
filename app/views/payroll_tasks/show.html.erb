@@ -1,4 +1,11 @@
 <h1>Hravé Mzdy</h1>
+<section id="payslip">
+  <%= yield :payslip %>
+  <section id="payroll_results">
+    <header><h1 class="ir" id="results">Payroll Results</h1></header>
+    <%= render partial: 'payroll/results' %>
+  </section>
+</section>
 <p>
   This is a show page for the
   <a href="http://hravemzdy.org/">Hravé Mzdy</a>

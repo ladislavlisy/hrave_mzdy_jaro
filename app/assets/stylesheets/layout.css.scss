@@ -178,6 +178,10 @@ div.container {
   padding: 0 20px;
 }
 
+section#content {
+  padding: 20px 25% 20px 25%;
+}
+
 footer#page_footer {
   background-color: #4384D1;
   border-bottom: 10px solid #1e3409;
@@ -208,12 +212,3 @@ footer#page_footer {
   }
 }
 
-section#content {
-  float: left;
-  padding: 20px 20px 20px 20px;
-}
-section#sidebar {
-  float: right;
-  margin-right: -20px;
-  width: 300px;
-}

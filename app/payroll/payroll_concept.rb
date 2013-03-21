@@ -23,6 +23,13 @@ class PayrollConcept < CodeNameRefer
     @tag_code = code
   end
 
+  def description
+    name
+  end
+
+  def export_xml(xml_builder)
+  end
+
   def init_pending_codes(pending_codes)
     @tag_pending_codes = pending_codes.dup
   end

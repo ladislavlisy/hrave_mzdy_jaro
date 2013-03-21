@@ -1,6 +1,9 @@
 class PayTagGateway
   attr_reader :models
 
+  TAG_UNKNOWN = 0
+  REF_UNKNOWN = CodeNameRefer.new(TAG_UNKNOWN, :TAG_UNKNOWN.id2name)
+
   #Work Shift Schedule
   TAG_SCHEDULE_WORK = 10001
   REF_SCHEDULE_WORK = CodeNameRefer.new(TAG_SCHEDULE_WORK, :TAG_SCHEDULE_WORK.id2name)
@@ -60,10 +63,6 @@ class PayTagGateway
 
   TAG_TAX_RELIEF_PAYER = 30020
   REF_TAX_RELIEF_PAYER = CodeNameRefer.new(TAG_TAX_RELIEF_PAYER, :TAG_TAX_RELIEF_PAYER.id2name)
-  TAG_TAX_RELIEF_DISABILITY = 30021
-  REF_TAX_RELIEF_DISABILITY = CodeNameRefer.new(TAG_TAX_RELIEF_DISABILITY, :TAG_TAX_RELIEF_DISABILITY.id2name)
-  TAG_TAX_RELIEF_STUDYING = 30022
-  REF_TAX_RELIEF_STUDYING = CodeNameRefer.new(TAG_TAX_RELIEF_STUDYING, :TAG_TAX_RELIEF_STUDYING.id2name)
   TAG_TAX_RELIEF_CHILD = 30029
   REF_TAX_RELIEF_CHILD = CodeNameRefer.new(TAG_TAX_RELIEF_CHILD, :TAG_TAX_RELIEF_CHILD.id2name)
 
@@ -90,6 +89,7 @@ class PayTagGateway
   def initialize
     load_pay_tags
     @models = Hash.new
+    @models[TAG_UNKNOWN] = UnknownTag.new
   end
 
   def tag_for(tag_code_name)
@@ -117,6 +117,15 @@ class PayTagGateway
       models[term_tag.code] = base_tag
     else
       base_tag = models[term_tag.code]
+    end
+    base_tag
+  end
+
+  def find_tag(tag_code)
+    if models.include?(tag_code)
+      base_tag = models[tag_code]
+    else
+      base_tag = models[TAG_UNKNOWN]
     end
     base_tag
   end

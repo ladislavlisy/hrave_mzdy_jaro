@@ -135,4 +135,11 @@ class InsuranceHealthBaseConcept < PayrollConcept
       3250
     end
   end
+
+  def export_xml(xml_builder)
+    attributes = {}
+    attributes[:interest_code] = @interest_code
+    attributes[:minimum_asses] = @minimum_asses
+    xml_builder.spec_value(attributes)
+  end
 end

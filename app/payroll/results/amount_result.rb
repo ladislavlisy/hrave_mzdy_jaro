@@ -6,4 +6,14 @@ class AmountResult < PayrollResult
 
     @amount = values[:amount]
   end
+
+  def export_xml_result(xml_element)
+    attributes = {}
+    attributes[:amount] = @amount
+    xml_element.value(xml_value, attributes)
+  end
+
+  def xml_value
+    "#{amount} CZK"
+  end
 end

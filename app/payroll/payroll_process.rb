@@ -15,6 +15,14 @@ class PayrollProcess
     @results = Hash.new
   end
 
+  def find_tag(tag_code)
+    tags.find_tag(tag_code)
+  end
+
+  def find_concept(concept_code)
+    concepts.find_concept(concept_code)
+  end
+
   #add fetched term
   def ins_term(period_base, term_refer, code_order, term_values)
     ins_term_to_hash(@terms, period_base, term_refer, code_order, term_values)

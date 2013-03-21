@@ -4,12 +4,20 @@
       <w>bigdecimal</w>
       <w>disab</w>
       <w>empl</w>
+      <w>hgroup</w>
+      <w>hgrp</w>
+      <w>horz</w>
+      <w>hpaygrp</w>
       <w>netto</w>
       <w>pendings</w>
       <w>refcon</w>
       <w>solidary</w>
       <w>suma</w>
       <w>timesheet</w>
+      <w>vert</w>
+      <w>vgroup</w>
+      <w>vgrp</w>
+      <w>vpaygrp</w>
     </words>
   </dictionary>
 </component>

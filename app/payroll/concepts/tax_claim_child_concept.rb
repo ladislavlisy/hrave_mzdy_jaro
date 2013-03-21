@@ -45,4 +45,10 @@ class TaxClaimChildConcept < PayrollConcept
     end
     return relief_amount
   end
+
+  def export_xml(xml_builder)
+    attributes = {}
+    attributes[:relief_code] = @relief_code
+    xml_builder.spec_value(attributes)
+  end
 end

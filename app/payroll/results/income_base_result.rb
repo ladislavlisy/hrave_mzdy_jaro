@@ -25,4 +25,20 @@ class IncomeBaseResult < PayrollResult
   def minimum_assessment?
     @minimum_asses!=0
   end
+
+  def export_xml_result(xml_element)
+    attributes = {}
+    attributes[:income_base]   = @income_base
+    attributes[:employee_base] = @employee_base
+    attributes[:employer_base] = @employer_base
+    attributes[:declare_code]  = @declare_code
+    attributes[:interest_code] = @interest_code
+    attributes[:minimum_asses] = @minimum_asses
+
+    xml_element.value(xml_value, attributes)
+  end
+
+  def xml_value
+    "#{income_base} CZK"
+  end
 end

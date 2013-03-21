@@ -23,4 +23,14 @@ class ScheduleWeeklyConcept < PayrollConcept
 
     ScheduleResult.new(@tag_code, @code, self, {week_schedule: hours_week})
   end
+
+  def export_xml(xml_builder)
+    attributes = {}
+    attributes[:hours_weekly] = hours_weekly
+    xml_builder.spec_value(xml_value, attributes)
+  end
+
+  def xml_value
+    "#{hours_weekly} hours"
+  end
 end

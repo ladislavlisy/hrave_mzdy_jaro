@@ -87,4 +87,12 @@ class TaxClaimDisabilityConcept < PayrollConcept
     end
     relief_amount
   end
+
+  def export_xml(xml_builder)
+    attributes = {}
+    attributes[:relief_code_1] = @relief_code_1
+    attributes[:relief_code_2] = @relief_code_2
+    attributes[:relief_code_3] = @relief_code_3
+    xml_builder.spec_value(attributes)
+  end
 end

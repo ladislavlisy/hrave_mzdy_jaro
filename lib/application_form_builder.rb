@@ -28,7 +28,8 @@ class ApplicationFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def text_field_item(attribute, *args)
-    field = template.text_field_tag(attribute, object.send(attribute), *args)
+    field = text_field(attribute, *args)
+    #template.text_field_tag(attribute, object.send(attribute), *args)
     field_item(attribute) do
       template.concat field
       template.concat error_span(attribute)
@@ -36,14 +37,16 @@ class ApplicationFormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def email_field_item(attribute, *args)
-    field = template.email_field_tag(attribute, object.send(attribute), *args)
+    field = email_field(attribute, *args)
+    #template.email_field_tag(attribute, object.send(attribute), *args)
     field_item(attribute) do
       template.concat field
     end
   end
 
   def number_field_item(attribute, *args)
-    field = template.number_field_tag(attribute, object.send(attribute), *args)
+    field = number_field(attribute, *args)
+    #template.number_field_tag(attribute, object.send(attribute), *args)
     field_item(attribute) do
       template.concat field
     end
@@ -51,7 +54,8 @@ class ApplicationFormBuilder < ActionView::Helpers::FormBuilder
 
   def select_field_item(attribute, coll_select, coll_key, coll_name, *args)
     collection = template.options_from_collection_for_select(coll_select, coll_key, coll_name)
-    field = template.select_tag(attribute, collection, *args)
+    field = select(attribute, collection, *args)
+    #template.select_tag(attribute, collection, *args)
     field_item(attribute) do
       template.concat field
     end

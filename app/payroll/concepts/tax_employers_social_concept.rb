@@ -61,4 +61,10 @@ class TaxEmployersSocialConcept < PayrollConcept
     end
     return BigDecimal.new(factor.fdiv(100), 15)
   end
+
+  def export_xml(xml_builder)
+    attributes = {}
+    attributes[:interest_code] = @interest_code
+    xml_builder.spec_value(attributes)
+  end
 end

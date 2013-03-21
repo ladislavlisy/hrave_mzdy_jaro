@@ -33,4 +33,11 @@ class ScheduleTermConcept < PayrollConcept
 
     TermEffectResult.new(@tag_code, @code, self, {day_ord_from: day_term_from, day_ord_end: day_term_end})
   end
+
+  def export_xml(xml_builder)
+    attributes = {}
+    attributes[:date_from] = @date_from
+    attributes[:date_end]  = @date_end
+    xml_builder.spec_value(attributes)
+  end
 end

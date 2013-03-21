@@ -6,6 +6,14 @@ class PayrollTag < CodeNameRefer
     @concept = concept
   end
 
+  def title
+    name
+  end
+
+  def description
+    name
+  end
+
   def concept_code
     concept.code
   end

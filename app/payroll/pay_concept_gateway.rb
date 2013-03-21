@@ -1,6 +1,9 @@
 class PayConceptGateway
   attr_reader :models
 
+  CONCEPT_UNKNOWN = 0
+  REFCON_UNKNOWN = CodeNameRefer.new(CONCEPT_UNKNOWN, :CONCEPT_UNKNOWN.id2name)
+
   CONCEPT_SALARY_MONTHLY = 100
   REFCON_SALARY_MONTHLY = CodeNameRefer.new(CONCEPT_SALARY_MONTHLY, :CONCEPT_SALARY_MONTHLY.id2name)
   CONCEPT_SCHEDULE_WEEKLY = 200
@@ -79,6 +82,7 @@ class PayConceptGateway
   def initialize
     load_concepts
     @models = Hash.new
+    @models[CONCEPT_UNKNOWN] = UnknownConcept.new
   end
 
   def concept_for(tag_code, concept_name, values)
@@ -106,6 +110,15 @@ class PayConceptGateway
       models[term_tag.concept_code] = base_concept
     else
       base_concept = models[term_tag.concept_code]
+    end
+    base_concept
+  end
+
+  def find_concept(concept_code)
+    if models.include?(concept_code)
+      base_concept = models[concept_code]
+    else
+      base_concept = models[CONCEPT_UNKNOWN]
     end
     base_concept
   end

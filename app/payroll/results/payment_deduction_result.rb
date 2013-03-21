@@ -10,4 +10,14 @@ class PaymentDeductionResult < PayrollResult
   def deduction
     @payment
   end
+
+  def export_xml_result(xml_element)
+    attributes = {}
+    attributes[:payment] = @payment
+    xml_element.value(xml_value, attributes)
+  end
+
+  def xml_value
+    "#{payment} CZK"
+  end
 end

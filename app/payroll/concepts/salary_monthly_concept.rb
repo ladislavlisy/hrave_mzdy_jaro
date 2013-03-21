@@ -71,4 +71,14 @@ class SalaryMonthlyConcept < PayrollConcept
     salaried_hours = [0, working_hours-absence_hours].max
     payment_value = big_multi_and_div(salaried_hours, big_amount, timesheet_hours)
   end
+
+  def export_xml(xml_builder)
+    attributes = {}
+    attributes[:amount_monthly] = @amount_monthly
+    xml_builder.spec_value(xml_value, attributes)
+  end
+
+  def xml_value
+    "#{amount_monthly} CZK"
+  end
 end

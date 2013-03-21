@@ -92,4 +92,10 @@ class InsuranceSocialBaseConcept < PayrollConcept
       0
     end
   end
+
+  def export_xml(xml_builder)
+    attributes = {}
+    attributes[:interest_code] = @interest_code
+    xml_builder.spec_value(attributes)
+  end
 end

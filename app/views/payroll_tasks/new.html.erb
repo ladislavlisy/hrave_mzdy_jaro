@@ -1,18 +1,20 @@
-<%= form_for(@payroll_task) do |f| %>
-  <%= field_set_tag 'Payroll details' do %>
-    <ol>
-      <%= f.text_field_item :description %>
-      <%= f.select_field_item(:payroll_period,
-                              PayrollPeriod.all, :code, :name,
-                              :prompt => "Select payroll period...") %>
-    </ol>
-  <% end %>
-  <%= field_set_tag do %>
-    <%= f.submit "Calculate payroll" %>
-  <% end %>
-<% end %>
-<p>
-  This is a start page for the
-  <a href="http://hravemzdy.org/">Hravé Mzdy</a>
-  payroll application.
-</p>
+<section class="content_form">
+    <%= form_for(@payroll_task) do |f| %>
+      <%= field_set_tag 'Payroll details' do %>
+        <ol>
+          <%= f.text_field_item :description %>
+          <%= f.select_field_item(:payroll_period,
+                                  PayrollPeriod.all, :code, :name,
+                                  :prompt => "Select payroll period...") %>
+        </ol>
+      <% end %>
+      <%= field_set_tag do %>
+        <%= f.submit "Calculate payroll" %>
+      <% end %>
+    <% end %>
+    <p>
+      This is a start page for the
+      <a href="http://hravemzdy.org/">Hravé Mzdy</a>
+      payroll application.
+    </p>
+</section>

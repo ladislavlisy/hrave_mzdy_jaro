@@ -179,7 +179,16 @@ div.container {
 }
 
 section#content {
+  padding: 20px 25px 20px 25px;
+}
+
+section#content_form {
   padding: 20px 25% 20px 25%;
+}
+
+section#pyg_app_reference {
+  padding: 0px 0px 0px 0px;
+  clear: both;
 }
 
 footer#page_footer {

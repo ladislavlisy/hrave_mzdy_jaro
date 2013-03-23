@@ -1,3 +1,5 @@
+require_relative '../results/schedule_result'
+
 class ScheduleWeeklyConcept < PayrollConcept
   attr_reader :hours_weekly
 
@@ -21,7 +23,7 @@ class ScheduleWeeklyConcept < PayrollConcept
     hours_daily = @hours_weekly/5
     hours_week = [hours_daily,hours_daily,hours_daily,hours_daily,hours_daily,0,0]
 
-    ScheduleResult.new(@tag_code, @code, self, {week_schedule: hours_week})
+    return ScheduleResult.new(@tag_code, @code, self, {week_schedule: hours_week})
   end
 
   def export_xml(xml_builder)
@@ -31,6 +33,10 @@ class ScheduleWeeklyConcept < PayrollConcept
   end
 
   def xml_value
+    "#{hours_weekly} hours"
+  end
+
+  def export_value_result
     "#{hours_weekly} hours"
   end
 end

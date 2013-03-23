@@ -10,30 +10,10 @@ describe 'Payroll Process Calculations' do
   end
 
   describe 'Payroll Debug Test' do
-    it 'returns Gross Income amount' do
-      empty_value = {}
-
-      schedule_work_value = {hours_weekly: 40}
-      schedule_term_value = {date_from: nil, date_end: nil}
-      salary_amount_value = {amount_monthly: 15000}
-      relief_payers_value = {relief_code: 1}
-
-      schedule_work_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
-      schedule_term_tag = @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
-      salary_amount_tag = @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
-      relief_payers_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
-
-      result_tag = @payroll_process.add_term(PayTagGateway::REF_INCOME_GROSS, empty_value)
-
-      result = @payroll_process.evaluate(result_tag)
-
-      result[result_tag].amount.should == 15000
-    end
-
     it 'returns Netto Income amount' do
       empty_value = {}
 
-      interest_value = {interest_code: 1}
+      interest_value = {interest_code: 1, declare_code: 1}
       @payroll_process.add_term(PayTagGateway::REF_TAX_INCOME_BASE, interest_value)
       @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH_BASE, interest_value)
       @payroll_process.add_term(PayTagGateway::REF_INSURANCE_HEALTH, interest_value)
@@ -46,19 +26,54 @@ describe 'Payroll Process Calculations' do
       schedule_term_value = {date_from: nil, date_end: nil}
       salary_amount_value = {amount_monthly: 15000}
       relief_payers_value = {relief_code: 1}
-      relief_child_value = {relief_code: 2}
+      relief_child_value = {relief_code: 1}
 
       @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_WORK, schedule_work_value)
       @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
       @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
       @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
       @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_child_value)
+      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_child_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_INCOME_NETTO, empty_value)
 
       result = @payroll_process.evaluate(result_tag)
 
-      result[result_tag].amount.should == (13350+989)
+      @payroll_names = PayNameGateway.new
+      @payroll_names.load_models
+
+      employer_name  = 'Hrave Mzdy - effortlessly, promptly, clearly Ltd.'
+      employee_dept  = 'IT crowd'
+      employee_name  = 'Ladislav Lisy'
+      employee_numb  = '00012'
+
+      payroll_period      = @payroll_process.period
+      payroll_description = payroll_period.description
+
+      @payroll_export = PayrollResultsExporter.new(employer_name, employee_dept,
+                                                   employee_name, employee_numb,
+                                                   @payroll_process)
+
+      @res_schedule = @payroll_export.get_source_schedule_export
+      @res_payments   = @payroll_export.get_source_payments_export
+      @res_tax_income = @payroll_export.get_source_tax_income_export
+      @res_ins_income = @payroll_export.get_source_ins_income_export
+      @res_tax_source = @payroll_export.get_source_tax_source_export
+      @res_tax_result = @payroll_export.get_source_tax_result_export
+      @res_ins_result = @payroll_export.get_source_ins_result_export
+      @res_summary    = @payroll_export.get_source_summary_export
+
+      @res_column_left1  = @res_schedule + @res_payments
+      @res_column_left2  = @res_tax_income + @res_ins_income
+      @res_column_right1 = @res_tax_source.dup
+      @res_column_right2 = @res_tax_result + @res_ins_result
+
+      @res_column_left1.each_with_index do |payroll_result, index|
+        payroll_result[:title].should_not be_nil
+        payroll_result[:value].should_not be_nil
+      end
+
+      @res_schedule.count.should_not == 0
     end
   end
 end

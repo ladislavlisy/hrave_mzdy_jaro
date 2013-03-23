@@ -1,3 +1,5 @@
+require_relative '../results/income_base_result'
+
 class TaxWithholdBaseConcept < PayrollConcept
   TAG_AMOUNT_BASE = PayTagGateway::REF_TAX_INCOME_BASE.code
   TAG_SOCIAL_BASE = PayTagGateway::REF_TAX_EMPLOYERS_SOCIAL.code
@@ -27,7 +29,7 @@ class TaxWithholdBaseConcept < PayrollConcept
   end
 
   def calc_category
-    CALC_CATEGORY_NETTO
+    PayrollConcept::CALC_CATEGORY_NETTO
   end
 
   def evaluate(period, tag_config, results)

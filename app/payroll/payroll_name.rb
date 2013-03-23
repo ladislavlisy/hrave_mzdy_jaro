@@ -14,4 +14,12 @@ class PayrollName < CodeNameRefer
   def get_groups
     @xml_groups
   end
+
+  def match_vgroup?(group_code)
+    @xml_groups[:vgrp_pos] == group_code
+  end
+
+  def match_hgroup?(group_code)
+    @xml_groups[:hgrp_pos] == group_code
+  end
 end

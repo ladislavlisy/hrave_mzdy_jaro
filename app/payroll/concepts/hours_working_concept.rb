@@ -1,3 +1,5 @@
+require_relative '../results/term_hours_result'
+
 class HoursWorkingConcept < PayrollConcept
   attr_reader :hours
 
@@ -26,7 +28,7 @@ class HoursWorkingConcept < PayrollConcept
   end
 
   def calc_category
-    CALC_CATEGORY_TIMES
+    PayrollConcept::CALC_CATEGORY_TIMES
   end
 
   def evaluate(period, tag_config, results)
@@ -43,6 +45,10 @@ class HoursWorkingConcept < PayrollConcept
   end
 
   def xml_value
+    "#{hours} hours"
+  end
+
+  def export_value_result
     "#{hours} hours"
   end
 end

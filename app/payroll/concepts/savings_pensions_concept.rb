@@ -1,3 +1,5 @@
+require_relative '../results/payment_deduction_result'
+
 class SavingsPensionsConcept < PayrollConcept
   TAG_AMOUNT_BASE = PayTagGateway::REF_INSURANCE_SOCIAL_BASE.code
 
@@ -30,7 +32,7 @@ class SavingsPensionsConcept < PayrollConcept
   end
 
   def calc_category
-    CALC_CATEGORY_NETTO
+    PayrollConcept::CALC_CATEGORY_NETTO
   end
 
   def evaluate(period, tag_config, results)

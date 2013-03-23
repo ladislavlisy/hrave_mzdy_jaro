@@ -16,4 +16,8 @@ class AmountResult < PayrollResult
   def xml_value
     "#{amount} CZK"
   end
+
+  def export_value_result
+    "#{amount} CZK"
+  end
 end

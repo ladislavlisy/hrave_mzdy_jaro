@@ -1,3 +1,5 @@
+require_relative '../results/timesheet_result'
+
 class TimesheetPeriodConcept < PayrollConcept
   TAG_SCHEDULE_WORK = PayTagGateway::REF_SCHEDULE_WORK.code
 
@@ -23,7 +25,7 @@ class TimesheetPeriodConcept < PayrollConcept
   end
 
   def calc_category
-    CALC_CATEGORY_TIMES
+    PayrollConcept::CALC_CATEGORY_TIMES
   end
 
   def evaluate(period, tag_config, results)

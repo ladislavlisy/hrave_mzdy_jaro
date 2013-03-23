@@ -1,3 +1,5 @@
+require_relative '../results/tax_relief_result'
+
 class TaxReliefPayerConcept < PayrollConcept
   TAG_ADVANCE = PayTagGateway::REF_TAX_ADVANCE.code
   TAG_CLAIM_PAYER = PayTagGateway::REF_TAX_CLAIM_PAYER.code
@@ -29,7 +31,7 @@ class TaxReliefPayerConcept < PayrollConcept
   end
 
   def calc_category
-    CALC_CATEGORY_NETTO
+    PayrollConcept::CALC_CATEGORY_NETTO
   end
 
   def evaluate(period, tag_config, results)

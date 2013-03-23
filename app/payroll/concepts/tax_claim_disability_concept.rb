@@ -1,3 +1,5 @@
+require_relative '../results/tax_claim_result'
+
 class TaxClaimDisabilityConcept < PayrollConcept
   attr_reader :relief_code_1
   attr_reader :relief_code_2

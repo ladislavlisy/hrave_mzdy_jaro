@@ -1,17 +1,17 @@
 #require 'bigdecimal'
 
-TERM_BEG_FINISHED = 32
-TERM_END_FINISHED =  0
-
-CALC_CATEGORY_START  = 0
-CALC_CATEGORY_TIMES  = 0
-CALC_CATEGORY_AMOUNT = 0
-CALC_CATEGORY_GROSS  = 1
-CALC_CATEGORY_NETTO  = 2
-CALC_CATEGORY_FINAL  = 9
-
 class PayrollConcept < CodeNameRefer
   attr_reader :tag_code, :tag_pending_codes
+
+  TERM_BEG_FINISHED = 32
+  TERM_END_FINISHED =  0
+
+  CALC_CATEGORY_START  = 0
+  CALC_CATEGORY_TIMES  = 0
+  CALC_CATEGORY_AMOUNT = 0
+  CALC_CATEGORY_GROSS  = 1
+  CALC_CATEGORY_NETTO  = 2
+  CALC_CATEGORY_FINAL  = 9
 
   def initialize(code_refer, tag_code)
     super(code_refer.code, code_refer.name)
@@ -28,6 +28,9 @@ class PayrollConcept < CodeNameRefer
   end
 
   def export_xml(xml_builder)
+  end
+
+  def export_value_result
   end
 
   def init_pending_codes(pending_codes)

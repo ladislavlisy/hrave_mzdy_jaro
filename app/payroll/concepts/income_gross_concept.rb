@@ -1,3 +1,5 @@
+require_relative '../results/amount_result'
+
 class IncomeGrossConcept < PayrollConcept
   def initialize(tag_code, values)
     super(PayConceptGateway::REFCON_INCOME_GROSS, tag_code)
@@ -15,7 +17,7 @@ class IncomeGrossConcept < PayrollConcept
   end
 
   def calc_category
-    CALC_CATEGORY_FINAL
+    PayrollConcept::CALC_CATEGORY_FINAL
   end
 
   def evaluate(period, tag_config, results)

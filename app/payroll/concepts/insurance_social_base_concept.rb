@@ -1,3 +1,5 @@
+require_relative '../results/income_base_result'
+
 class InsuranceSocialBaseConcept < PayrollConcept
   def initialize(tag_code, values)
     super(PayConceptGateway::REFCON_INSURANCE_SOCIAL_BASE, tag_code)
@@ -16,7 +18,7 @@ class InsuranceSocialBaseConcept < PayrollConcept
   end
 
   def calc_category
-    CALC_CATEGORY_GROSS
+    PayrollConcept::CALC_CATEGORY_GROSS
   end
 
   def evaluate(period, tag_config, results)

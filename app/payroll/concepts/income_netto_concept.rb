@@ -1,3 +1,5 @@
+require_relative '../results/amount_result'
+
 class IncomeNettoConcept < PayrollConcept
   def initialize(tag_code, values)
     super(PayConceptGateway::REFCON_INCOME_NETTO, tag_code)
@@ -25,7 +27,7 @@ class IncomeNettoConcept < PayrollConcept
   end
 
   def calc_category
-    CALC_CATEGORY_FINAL
+    PayrollConcept::CALC_CATEGORY_FINAL
   end
 
   def evaluate(period, tag_config, results)

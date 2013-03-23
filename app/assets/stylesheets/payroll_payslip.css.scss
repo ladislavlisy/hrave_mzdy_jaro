@@ -1,0 +1,155 @@
+section#payroll_results {
+  background-color: #8dd3f5;
+  border-radius: 10px;
+  color: #4384D1;
+  font: {
+    size: 0.8em;
+    weight: normal;
+  }
+  line-height: 1.3em;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 40px;
+  padding-top: 10px;
+
+  header {
+    background-color: #6da4bc;
+    border-bottom: 5px solid #4384D1;
+    margin: 10px -10px;
+    padding: 5px 10px 0 10px;
+    h1#results {
+      background: transparent url('/assets/txt-payroll-results.png')
+      no-repeat scroll top left;
+      margin: 5px 0 0 0;
+      padding: 0;
+      text-indent: -9999px;
+    }
+  }
+}
+
+TABLE
+  {
+  width: 100%;
+}
+TABLE TD
+  {
+  padding: 0;
+  border: 0;
+  vertical-align: top;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+TR.pyg_label TD
+  {
+  font-size: xx-small;
+  font-style: italic;
+  padding-left: 8px;
+}
+TD.pyg_idx_left
+  {
+  width: 15%;
+  padding-left: 14px;
+}
+TD.pyg_idx_right
+  {
+  width: 18%;
+  padding-left: 14px;
+}
+TD.pyg_idx_center
+  {
+  width: 66%;
+  padding-left: 14px;
+}
+TD.pyg_col2_title
+  {
+  width: 66%;
+  text-align: left;
+  font-style: italic;
+  padding-left: 8px;
+}
+TD.pyg_col2_value
+  {
+  width: 33%;
+  text-align: right;
+  padding-right: 8px;
+}
+section#pyg_section_header
+{
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 3px;
+  border: 1px solid #e1e1e1;
+}
+section#pyg_section_left1
+{
+  width: 48%;
+  float: left;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 3px;
+  border: 1px solid #e1e1e1;
+}
+section#pyg_section_left2
+{
+  width: 48%;
+  float: left;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 3px;
+  border: 1px solid #e1e1e1;
+}
+section#pyg_section_right1
+{
+  width: 48%;
+  float: right;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 3px;
+  border: 1px solid #e1e1e1;
+}
+section#pyg_section_right2
+{
+  width: 48%;
+  float: right;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 3px;
+  border: 1px solid #e1e1e1;
+}
+section#pyg_section_footer
+{
+  width: 100%;
+  clear: both;
+}
+section#pyg_section_left3
+{
+  width: 48%;
+  float: left;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 3px;
+  border: 1px solid #e1e1e1;
+}
+section#pyg_section_right3
+{
+  width: 48%;
+  float: right;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 3px;
+  border: 1px solid #e1e1e1;
+}

@@ -24,44 +24,104 @@ class PayrollResultsExporter
     @payroll_result = payroll.get_results
   end
 
-  def export_xml
-    builder = Builder::XmlMarkup.new(indent: 2)
-    builder.instruct! :xml, version: "1.0", encoding: "UTF-8"
+  #VPAYGRP_SCHEDULE   = 'VPAYGRP_SCHEDULE'
+  #VPAYGRP_PAYMENTS   = 'VPAYGRP_PAYMENTS'
+  #VPAYGRP_TAX_SOURCE = 'VPAYGRP_TAX_SOURCE'
+  #VPAYGRP_TAX_RESULT = 'VPAYGRP_TAX_RESULT'
+  #VPAYGRP_INS_RESULT = 'VPAYGRP_INS_RESULT'
+  #VPAYGRP_TAX_INCOME = 'VPAYGRP_TAX_INCOME'
+  #VPAYGRP_INS_INCOME = 'VPAYGRP_INS_INCOME'
+  #VPAYGRP_SUMMARY    = 'VPAYGRP_SUMMARY'
 
-    payroll_description = payroll_period.description
-
-    builder.payslips do |xml_payslips|
-      xml_payslips.payslip do |xml_payslip|
-
-        xml_payslip.employee do |xml_employee|
-          xml_employee.personnel_number employee_numb
-          xml_employee.common_name      employee_name
-          xml_employee.department       employee_dept
-        end
-        xml_payslip.employer do |xml_employer|
-          xml_employer.common_name employer_name
-        end
-        xml_payslip.results do |xml_results|
-          xml_results.period payroll_description
-
-          payroll_result.each do |payroll_result|
-            tag_result = payroll_result.first
-            val_result = payroll_result.last
-            xml_results.result do |xml_result|
-              item_export_xml(payroll_config, payroll_names, tag_result, val_result, xml_result)
-            end
-          end
-        end
-      end
+  def get_source_schedule_export
+    payroll_result.inject ([]) do |agr, item|
+      tag_result = item.first
+      val_result = item.last
+      agr.concat(item_export(PayNameGateway::VPAYGRP_SCHEDULE,
+                             payroll_config, payroll_names,
+                             tag_result, val_result))
     end
-    builder.target!
   end
 
-  def item_export_xml(pay_config, pay_names, tag_refer, val_result, xml_element)
+  def get_source_payments_export
+    payroll_result.inject ([]) do |agr, item|
+      tag_result = item.first
+      val_result = item.last
+      agr.concat(item_export(PayNameGateway::VPAYGRP_PAYMENTS,
+                             payroll_config, payroll_names,
+                             tag_result, val_result))
+    end
+  end
+
+  def get_source_tax_source_export
+    payroll_result.inject ([]) do |agr, item|
+      tag_result = item.first
+      val_result = item.last
+      agr.concat(item_export(PayNameGateway::VPAYGRP_TAX_SOURCE,
+                             payroll_config, payroll_names,
+                             tag_result, val_result))
+    end
+  end
+
+  def get_source_tax_income_export
+    payroll_result.inject ([]) do |agr, item|
+      tag_result = item.first
+      val_result = item.last
+      agr.concat(item_export(PayNameGateway::VPAYGRP_TAX_INCOME,
+                             payroll_config, payroll_names,
+                             tag_result, val_result))
+    end
+  end
+
+  def get_source_ins_income_export
+    payroll_result.inject ([]) do |agr, item|
+      tag_result = item.first
+      val_result = item.last
+      agr.concat(item_export(PayNameGateway::VPAYGRP_INS_INCOME,
+                             payroll_config, payroll_names,
+                             tag_result, val_result))
+    end
+  end
+
+  def get_source_tax_result_export
+    payroll_result.inject ([]) do |agr, item|
+      tag_result = item.first
+      val_result = item.last
+      agr.concat(item_export(PayNameGateway::VPAYGRP_TAX_RESULT,
+                             payroll_config, payroll_names,
+                             tag_result, val_result))
+    end
+  end
+
+  def get_source_ins_result_export
+    payroll_result.inject ([]) do |agr, item|
+      tag_result = item.first
+      val_result = item.last
+      agr.concat(item_export(PayNameGateway::VPAYGRP_INS_RESULT,
+                             payroll_config, payroll_names,
+                             tag_result, val_result))
+    end
+  end
+
+  def get_source_summary_export
+    payroll_result.inject ([]) do |agr, item|
+      tag_result = item.first
+      val_result = item.last
+      agr.concat(item_export(PayNameGateway::VPAYGRP_SUMMARY,
+                             payroll_config, payroll_names,
+                             tag_result, val_result))
+    end
+  end
+
+  def item_export(grp_position, pay_config, pay_names, tag_refer, val_result)
     tag_item    = pay_config.find_tag(val_result.tag_code)
     tag_concept = pay_config.find_concept(val_result.concept_code)
     tag_name    = pay_names.find_name(tag_refer.code)
 
-    val_result.export_xml(tag_refer, tag_name, tag_item, tag_concept, xml_element)
+    if tag_name.match_vgroup?(grp_position)
+      [val_result.export_title_value(tag_refer, tag_name, tag_item, tag_concept)]
+    else
+      []
+    end
   end
 end

@@ -42,7 +42,7 @@ describe 'Payroll Process Export Test' do
     tag_employee_name = 'Ladislav Lisy'
     tag_employer_name = 'Hrave Mzdy - effortlessly, promptly, clearly Ltd.'
 
-    payroll_export = PayrollResultsExporter.new(tag_employer_name, tag_employee_dept,
+    payroll_export = PayrollResultsXmlExporter.new(tag_employer_name, tag_employee_dept,
                                                 tag_employee_name, tag_employee_numb,
                                                 @payroll_process)
 

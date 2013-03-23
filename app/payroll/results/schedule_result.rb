@@ -17,4 +17,9 @@ class ScheduleResult < PayrollResult
     sum_hours = week_schedule.inject (0) {|agr, item|  agr+item }
     "#{sum_hours} hours"
   end
+
+  def export_value_result
+    sum_hours = week_schedule.inject (0) {|agr, item|  agr+item }
+    "#{sum_hours} hours"
+  end
 end

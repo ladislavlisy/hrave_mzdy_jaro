@@ -41,4 +41,8 @@ class IncomeBaseResult < PayrollResult
   def xml_value
     "#{income_base} CZK"
   end
+
+  def export_value_result
+    "#{income_base} CZK"
+  end
 end

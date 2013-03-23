@@ -22,4 +22,12 @@ class TermEffectResult < PayrollResult
       'whole period'
     end
   end
+
+  def export_value_result
+    if (day_ord_from && day_ord_end)
+      "#{day_ord_from} - #{day_ord_end}"
+    else
+      'whole period'
+    end
+  end
 end

@@ -1,3 +1,5 @@
+require_relative '../results/tax_advance_result'
+
 class TaxAdvanceFinalConcept < PayrollConcept
   TAG_ADVANCE = PayTagGateway::REF_TAX_ADVANCE.code
   TAG_RELIEF_PAYER = PayTagGateway::REF_TAX_RELIEF_PAYER.code
@@ -20,19 +22,19 @@ class TaxAdvanceFinalConcept < PayrollConcept
 
   def pending_codes
     [
-        TaxAdvanceTag.new,
-        TaxReliefPayerTag.new,
-        TaxReliefChildTag.new
+      TaxAdvanceTag.new,
+      TaxReliefPayerTag.new,
+      TaxReliefChildTag.new
     ]
   end
 
   def calc_category
-    CALC_CATEGORY_NETTO
+    PayrollConcept::CALC_CATEGORY_NETTO
   end
 
   def summary_codes
     [
-        IncomeNettoTag.new
+      IncomeNettoTag.new
     ]
   end
 

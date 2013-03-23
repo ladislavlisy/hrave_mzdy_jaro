@@ -1,3 +1,5 @@
+require_relative '../results/term_effect_result'
+
 class ScheduleTermConcept < PayrollConcept
   attr_reader :date_from, :date_end
 
@@ -19,8 +21,8 @@ class ScheduleTermConcept < PayrollConcept
   end
 
   def evaluate(period, tag_config, results)
-    day_term_from = TERM_BEG_FINISHED
-    day_term_end  = TERM_END_FINISHED
+    day_term_from = PayrollConcept::TERM_BEG_FINISHED
+    day_term_end  = PayrollConcept::TERM_END_FINISHED
 
     period_date_beg = Date.new(period.year, period.month, 1)
     period_date_end = Date.new(period.year, period.month, Time.days_in_month(period.month, period.year))

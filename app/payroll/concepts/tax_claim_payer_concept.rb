@@ -1,3 +1,5 @@
+require_relative '../results/tax_claim_result'
+
 class TaxClaimPayerConcept < PayrollConcept
   attr_reader :relief_code
 

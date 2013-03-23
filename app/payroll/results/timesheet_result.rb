@@ -25,4 +25,9 @@ class TimesheetResult < PayrollResult
     sum_hours = month_schedule.inject (0) {|agr, item|  agr+item }
     "#{sum_hours} hours"
   end
+
+  def export_value_result
+    sum_hours = month_schedule.inject (0) {|agr, item|  agr+item }
+    "#{sum_hours} hours"
+  end
 end

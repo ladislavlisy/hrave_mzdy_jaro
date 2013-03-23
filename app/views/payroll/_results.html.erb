@@ -1,0 +1,105 @@
+<section id="payslip">
+  <section id="pyg_section_header">
+    <table>
+      <tr class="pyg_label">
+        <td class="pyg_idx_left">Personnel number</td>
+        <td class="pyg_idx_center">Person name</td>
+        <td class="pyg_idx_right">Period</td>
+      </tr>
+      <tr>
+        <td class="pyg_idx_left"><%= @employee_numb %></td>
+        <td class="pyg_idx_center"><%= @employee_name %></td>
+        <td class="pyg_idx_right"><%= @period_descr %></td>
+      </tr>
+      <tr class="pyg_label">
+        <td class="pyg_idx_left">Department</td>
+        <td class="pyg_idx_center">Company</td>
+        <td class="pyg_idx_right"></td>
+      </tr>
+      <tr>
+        <td class="pyg_idx_left"><%= @employee_dept %></td>
+        <td class="pyg_idx_center"><%= @employer_name %></td>
+        <td class="pyg_idx_right">Payslip</td>
+      </tr>
+    </table>
+  </section>
+
+  <section>
+    <section id="pyg_section_left1">
+      <table>
+        <% @res_column_left1.each_with_index do |payroll_result, index| %>
+            <% if index.odd? %>
+                <tr class="pay_tr_odd">
+            <% else %>
+                <tr class="pay_tr_even">
+            <% end %>
+            <td class="pyg_col2_title"><%= payroll_result[:title] %></td>
+            <td class="pyg_col2_value"><%= payroll_result[:value] %></td>
+            </tr>
+        <% end %>
+      </table>
+    </section>
+    <section id="pyg_section_right1">
+      <table>
+        <% @res_column_right1.each_with_index do |payroll_result, index| %>
+            <% if index.odd? %>
+                <tr class="pay_tr_odd">
+            <% else %>
+                <tr class="pay_tr_even">
+            <% end %>
+            <td class="pyg_col2_title"><%= payroll_result[:title] %></td>
+            <td class="pyg_col2_value"><%= payroll_result[:value] %></td>
+            </tr>
+        <% end %>
+      </table>
+    </section>
+  </section>
+
+  <section>
+    <section id="pyg_section_left2">
+      <table>
+        <% @res_column_left2.each_with_index do |payroll_result, index| %>
+            <% if index.odd? %>
+                <tr class="pay_tr_odd">
+            <% else %>
+                <tr class="pay_tr_even">
+            <% end %>
+            <td class="pyg_col2_title"><%= payroll_result[:title] %></td>
+            <td class="pyg_col2_value"><%= payroll_result[:value] %></td>
+            </tr>
+        <% end %>
+      </table>
+    </section>
+    <section id="pyg_section_right2">
+      <table>
+        <% @res_column_right2.each_with_index do |payroll_result, index| %>
+            <% if index.odd? %>
+                <tr class="pay_tr_odd">
+            <% else %>
+                <tr class="pay_tr_even">
+            <% end %>
+            <td class="pyg_col2_title"><%= payroll_result[:title] %></td>
+            <td class="pyg_col2_value"><%= payroll_result[:value] %></td>
+            </tr>
+        <% end %>
+      </table>
+    </section>
+  </section>
+
+  <section id="pyg_section_footer">
+    <% @res_summary.each_with_index do |payroll_result, index| %>
+        <% if index.odd? %>
+            <section id="pyg_section_right3">
+        <% else %>
+            <section id="pyg_section_left3">
+        <% end %>
+        <table>
+          <tr>
+            <td class="pyg_col2_title"><%= payroll_result[:title] %></td>
+            <td class="pyg_col2_value"><%= payroll_result[:value] %></td>
+          </tr>
+        </table>
+        </section>
+    <% end %>
+    </section>
+</section>

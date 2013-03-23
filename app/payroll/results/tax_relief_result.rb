@@ -16,4 +16,8 @@ class TaxReliefResult < PayrollResult
   def xml_value
     "#{tax_relief} CZK"
   end
+
+  def export_value_result
+    "#{tax_relief} CZK"
+  end
 end

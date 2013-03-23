@@ -26,6 +26,9 @@ class PayrollResult
   def export_xml_result(xml_builder)
   end
 
+  def export_value_result
+  end
+
   def export_xml_names(tag_name, tag_item, tag_concept, xml_element)
     attributes = {}
     attributes[:tag_name] = tag_item.name
@@ -43,5 +46,9 @@ class PayrollResult
   def export_xml(tag_refer, tag_name, tag_item, tag_concept, xml_element)
     export_xml_tag_refer(tag_refer, xml_element)
     export_xml_names(tag_name, tag_item, tag_concept, xml_element)
+  end
+
+  def export_title_value(tag_refer, tag_name, tag_item, tag_concept)
+    return {title: tag_name.title, value: export_value_result}
   end
 end

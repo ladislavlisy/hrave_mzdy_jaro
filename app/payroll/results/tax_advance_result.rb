@@ -26,4 +26,8 @@ class TaxAdvanceResult < PayrollResult
   def xml_value
     "#{payment} CZK"
   end
+
+  def export_value_result
+    "#{payment} CZK"
+  end
 end

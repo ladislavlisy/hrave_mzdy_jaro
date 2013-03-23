@@ -1,3 +1,5 @@
+require_relative '../results/payment_result'
+
 class TaxAdvanceConcept < PayrollConcept
   TAG_ADVANCE_BASE = PayTagGateway::REF_TAX_ADVANCE_BASE.code
   TAG_INCOME_BASE = PayTagGateway::REF_TAX_INCOME_BASE.code
@@ -24,7 +26,7 @@ class TaxAdvanceConcept < PayrollConcept
   end
 
   def calc_category
-    CALC_CATEGORY_NETTO
+    PayrollConcept::CALC_CATEGORY_NETTO
   end
 
   def evaluate(period, tag_config, results)
@@ -34,22 +36,22 @@ class TaxAdvanceConcept < PayrollConcept
     taxable_income = result_income.income_base
     taxable_partial = result_advance.income_base
 
-    payment_value = tax_adv_calculate(taxable_income, taxable_partial, period)
+    payment_value = tax_adv_calculate(period, taxable_income, taxable_partial)
 
     PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
   end
 
-  def tax_adv_calculate(tax_income, tax_base, period)
+  def tax_adv_calculate(period, tax_income, tax_base)
     if tax_base <= 0
       0
     elsif tax_base <= 100
       fix_tax_round_up(big_multi(tax_base, tax_adv_bracket1(period.year)))
     else
-      tax_adv_calculate_month(tax_income, tax_base, period)
+      tax_adv_calculate_month(period, tax_income, tax_base)
     end
   end
 
-  def tax_adv_calculate_month(tax_income, tax_base, period)
+  def tax_adv_calculate_month(period, tax_income, tax_base)
     if tax_base <= 0
       0
     else
@@ -73,7 +75,7 @@ class TaxAdvanceConcept < PayrollConcept
     end
   end
 
-  def tax_wth_calculate_month(tax_income, tax_base, period)
+  def tax_wth_calculate_month(period, tax_income, tax_base)
     if tax_base <= 0
       0
     else

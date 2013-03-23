@@ -1,3 +1,5 @@
+require_relative '../results/payment_result'
+
 class SalaryMonthlyConcept < PayrollConcept
   attr_reader :amount_monthly
 
@@ -39,7 +41,7 @@ class SalaryMonthlyConcept < PayrollConcept
   end
 
   def calc_category
-    CALC_CATEGORY_AMOUNT
+    PayrollConcept::CALC_CATEGORY_AMOUNT
   end
 
   def evaluate(period, tag_config, results)
@@ -79,6 +81,10 @@ class SalaryMonthlyConcept < PayrollConcept
   end
 
   def xml_value
+    "#{amount_monthly} CZK"
+  end
+
+  def export_value_result
     "#{amount_monthly} CZK"
   end
 end

@@ -16,4 +16,8 @@ class TermHoursResult < PayrollResult
   def xml_value
     "#{hours} hours"
   end
+
+  def export_value_result
+    "#{hours} hours"
+  end
 end

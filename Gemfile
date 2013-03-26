@@ -4,10 +4,12 @@ gem 'rails', '3.2.8'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-gem 'sqlite3'
+group :production do
+  gem 'pg'
+end
 
 group :test do
+  gem 'sqlite3'
   gem 'spork-rails', '~> 3.2.0'
   gem 'rspec-rails', '~> 2.11.0'
   gem 'cucumber-rails', '~> 1.3.0', require: false
@@ -19,6 +21,7 @@ group :test do
 end
 
 group :development do
+  gem 'sqlite3'
   gem 'annotate', '~> 2.5.0'
   gem 'rspec-rails', '~> 2.11.0'
 end

@@ -1,7 +1,8 @@
 header#page_header {
   background-color: #4384d1;
   background-image: -webkit-gradient(linear, center bottom, center top, color-stop(79px, transparent), color-stop(79px, #abced4), color-stop(81px, #abced4), color-stop(81px, transparent)), -webkit-gradient(linear, color-stop(.1em, #eee), color-stop(.1em, transparent));
-  background-image: linear-gradient(90deg, #4384d1, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+  background-image: -webkit-linear-gradient(90deg, #4384d1, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+  background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
   background-size: 100% 1em;
   color: #fff;
   font-size: 0.9em;

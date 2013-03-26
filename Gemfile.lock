@@ -103,6 +103,7 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
+    pg (0.14.1)
     polyglot (0.3.3)
     prawn (1.0.0.rc2)
       afm
@@ -194,6 +195,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.0.0)
   jquery-rails
   kendoui-rails
+  pg
   prawn (~> 1.0.0.rc2)
   rails (= 3.2.8)
   rspec-rails (~> 2.11.0)

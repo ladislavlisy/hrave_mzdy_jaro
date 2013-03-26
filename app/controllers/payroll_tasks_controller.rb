@@ -194,9 +194,6 @@ class PayrollTasksController < ApplicationController
                               relief_code_2: @payroll_task.tax_disab2,
                               relief_code_3: @payroll_task.tax_disab3})
 
-    payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER,
-                             {relief_code: @payroll_task.tax_payer})
-
     if (@payroll_task.tax_child1 == 1)
       payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD,
                                {relief_code: @payroll_task.tax_payer})

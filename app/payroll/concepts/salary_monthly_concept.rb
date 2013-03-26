@@ -85,6 +85,7 @@ class SalaryMonthlyConcept < PayrollConcept
   end
 
   def export_value_result
-    "#{amount_monthly} CZK"
+    format_amount = amount_monthly.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1 ")
+    "#{format_amount} CZK"
   end
 end

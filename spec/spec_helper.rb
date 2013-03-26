@@ -46,6 +46,10 @@ Spork.prefork do
     #     --seed 1234
     config.order = "random"
   end
+  RSpec.configure do |config|
+    config.include(EmailSpec::Helpers)
+    config.include(EmailSpec::Matchers)
+    end
 end
 
 Spork.each_run do

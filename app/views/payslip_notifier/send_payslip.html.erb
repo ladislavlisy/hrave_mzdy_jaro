@@ -1,0 +1,20 @@
+<h2>Hrave Mzdy Notification</h2>
+
+<p>Hi there at #{@payroll_process.company_name}!</p>
+<p>
+payroll results for #{@payroll_process.employee_name} has been sent to you.
+</p>
+
+<h3>Here's a payslip in Payslip-#{@payroll_process.employee_numb}.pdf.</h3>
+<dl>
+  <dt>Company name</dt>
+  <dd>#{@payroll_process.employer_name}</dd>
+  <dt>Employee name</dt>
+  <dd>#{@payroll_process.employee_name}</dd>
+  <dt>Payroll period</dt>
+  <dd>#{@payroll_process.period.description}</dd>
+</dl>
+
+<p class="footnote">
+Thank you for using #{link_to 'Hrave Mzdy, simple payroll for happiness', root_url}.
+</p>

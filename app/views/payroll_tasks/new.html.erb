@@ -1,12 +1,58 @@
-<section class="content_form">
+<section id="content_form">
     <%= form_for(@payroll_task) do |f| %>
       <%= field_set_tag 'Payroll details' do %>
         <ol>
           <%= f.text_field_item :description %>
           <%= f.select_field_item(:payroll_period,
-                                  PayrollPeriod.all, :code, :name,
+                                  PayrollPeriod.all, :code, :name, 'field_start_row',
                                   :prompt => "Select payroll period...") %>
+          <%= f.number_field_item :empl_salary %>
         </ol>
+      <% end %>
+      <%= field_set_tag 'Payslip detail' do %>
+          <ol>
+            <%= f.text_field_item :employer_name %>
+            <%= f.text_field_item :employee_name, 'field_start_row' %>
+            <%= f.text_field_item :employee_numb %>
+            <%= f.text_field_item :department %>
+          </ol>
+      <% end %>
+      <%= field_set_tag 'Tax payer declaration' do %>
+          <ol>
+            <%= f.check_box_item :tax_declare, 'Tax declaration' %>
+            <%= f.check_box_item :tax_payer, 'Claim tax payer benefit' %>
+            <%= f.check_box_item :tax_study, 'Claim studying benefit' %>
+          </ol>
+      <% end %>
+      <%= field_set_tag 'Tax disability benefit' do %>
+          <ol>
+            <%= f.check_box_item :tax_disab1, 'Claim disability 1 benefit' %>
+            <%= f.check_box_item :tax_disab2, 'Claim disability 2 benefit' %>
+            <%= f.check_box_item :tax_disab3, 'Claim disability 3 benefit' %>
+          </ol>
+      <% end %>
+      <%= field_set_tag 'Tax child benefit' do %>
+          <ol>
+            <%= f.check_box_item :tax_child1, 'Claim 1. child benefit' %>
+            <%= f.check_box_item :tax_child2, 'Claim 2. child benefit' %>
+            <%= f.check_box_item :tax_child3, 'Claim 3. child benefit' %>
+            <%= f.check_box_item :tax_child4, 'Claim 4. child benefit' %>
+            <%= f.check_box_item :tax_child5, 'Claim 5. child benefit' %>
+          </ol>
+      <% end %>
+      <%= field_set_tag 'Insurance claim' do %>
+          <ol>
+            <%= f.check_box_item :ins_health, 'Claim health insurance' %>
+            <%= f.check_box_item :min_health, 'Claim health minimum base' %>
+            <%= f.check_box_item :ins_social, 'Claim social insurance' %>
+          </ol>
+      <% end %>
+      <%= field_set_tag 'Contact for results' do %>
+          <ol>
+            <%= f.text_field_item :company_name %>
+            <%= f.text_field_item :payrolee_name, 'field_start_row' %>
+            <%= f.text_field_item :payrolee_mail %>
+          </ol>
       <% end %>
       <%= field_set_tag do %>
         <%= f.submit "Calculate payroll" %>

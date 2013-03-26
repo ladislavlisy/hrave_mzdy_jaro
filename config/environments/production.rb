@@ -64,4 +64,21 @@ HraveMzdyJaro::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
+
+  # ActionMailer Config
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.delivery_method = :smtp
+  # change to true to allow email to be sent during development
+  config.action_mailer.perform_deliveries = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.smtp_settings = {
+      address: "smtp.gmail.com",
+      port: 587,
+      domain: "www.hravemzdy.cz",
+      authentication: "plain",
+      enable_starttls_auto: true,
+      user_name: ENV["hrave.mzdy@gmail.cz"],
+      password: ENV["GMAIL_PASSWORD"]
+  }
 end

@@ -1,7 +1,16 @@
-<h1>Hravé Mzdy</h1>
 <%= button_to "Start payroll task", :new_payroll_task, method: 'get', id: 'start_payroll_task' %>
+<%= link_to(content_tag(:canvas, "Canvas is not supported in your browser ! :(",
+                :id => "start_tpbtag", :width => "162", :height => "88"),
+            :new_payroll_task, method: 'get', title: "Start payroll task") %>
 <p>
   This is a home page for the
   <a href="http://hravemzdy.org/">Hravé Mzdy</a>
   payroll application.
 </p>
+<script>
+    $(function(){
+        var srcbtag = "<%= image_path("brandtag.png") %>";
+        var plbtag = document.getElementById('start_tpbtag');
+        kresliBrandTag(plbtag, srcbtag);
+    });
+</script>

@@ -1,27 +1,9 @@
 #require 'builder'
 
-class PayrollResultsXmlExporter
-  attr_reader :employer_name
-  attr_reader :employee_dept
-  attr_reader :employee_name
-  attr_reader :employee_numb
-  attr_reader :payroll_names
-  attr_reader :payroll_config
-  attr_reader :payroll_period
-  attr_reader :payroll_result
+class PayrollResultsXmlExporter < PayrollResultsExporter
 
   def initialize(company, department, person, person_number, payroll)
-    @payroll_names  = PayNameGateway.new
-    @payroll_names.load_models
-
-    @employer_name  = company
-    @employee_dept  = department
-    @employee_name  = person
-    @employee_numb  = person_number
-
-    @payroll_config = payroll
-    @payroll_period = payroll.period
-    @payroll_result = payroll.get_results
+    super(company, department, person, person_number, payroll)
   end
 
   def export_xml

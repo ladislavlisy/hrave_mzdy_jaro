@@ -15,7 +15,7 @@ group :test do
   gem 'database_cleaner', '~> 0.8.0'
   gem 'annotate', '~> 2.5.0'
   gem 'factory_girl_rails', '~> 4.0.0'
-
+  gem 'email_spec'
 end
 
 group :development do
@@ -37,6 +37,7 @@ end
 
 gem 'jquery-rails'
 gem 'kendoui-rails'
+gem 'prawn', '~> 1.0.0.rc2'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

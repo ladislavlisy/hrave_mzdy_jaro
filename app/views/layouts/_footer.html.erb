@@ -1,8 +1,21 @@
 <footer id="page_footer">
+  <div id="footer_main">
+    <div id="footer_middle_column">
+      <%= content_tag(:canvas, "Canvas is not supported in your browser ! :(",
+                      :id => "footer_wallpaper", :width => "1024", :height => "460") %>
+    </div>
+  </div>
   <ul>
     <li><%= link_to "About Hravé Mzdy", "/pages/about" %></li>
     <li><%= link_to "Help", "/pages/help" %></li>
     <li><%= link_to "File a Bug", "#" %></li>
+    <li>Simple Payroll for Pussycats</li>
   </ul>
-  <p>&copy; 2013 Hravé Mzdy s.r.o. All Funny Things Reserved.</p>
+  <p>&copy; 2013 Hravé Mzdy s.r.o. All Funny and Happy Things Reserved.</p>
+  <script>
+      $(function(){
+          var platno = document.getElementById('footer_wallpaper');
+          kresliTapetu(platno);
+      });
+  </script>
 </footer>

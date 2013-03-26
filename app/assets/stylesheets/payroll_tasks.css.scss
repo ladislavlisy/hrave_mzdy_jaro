@@ -40,7 +40,7 @@ form#new_payroll_task ol li {
   border-radius: 5px;
   line-height: 30px;
   list-style: none;
-  padding: 5px 10px;
+  padding: 5px 20px 5px 10px;
   margin-bottom: 2px;
 }
 
@@ -50,7 +50,7 @@ form#new_payroll_task ol ol li {
   float: left;
 }
 
-form#new_payroll_task label {
+orm#new_payroll_task label {
   float: left;
   font-size: 13px;
   width: 110px;
@@ -59,7 +59,7 @@ form#new_payroll_task label {
 form#new_payroll_task fieldset fieldset label {
   background: none no-repeat left 50%;
   line-height: 20px;
-  padding:  0 0 0 30px;
+  padding:  0 0 0 20px;
   width: auto;
 }
 
@@ -76,7 +76,7 @@ form#new_payroll_task select {
   font: italic 13px Georgia, "Times New Roman", Times, serif;
   outline: none;
   padding: 5px;
-  width: 200px;
+  width: 150px;
 }
 
 form#new_payroll_task input:not([type=submit]):focus,

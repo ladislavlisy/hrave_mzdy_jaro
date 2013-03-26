@@ -7,6 +7,10 @@ HraveMzdyJaro::Application.routes.draw do
 
   get "pages/help"
 
+  resources :payroll_tasks do
+    get 'download', on: :member
+  end
+
   root :to => 'pages#home'
 
 

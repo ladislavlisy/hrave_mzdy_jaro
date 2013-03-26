@@ -23,12 +23,13 @@ input#start_payroll_task {
 }
 
 input#start_payroll_task {
-  width: 235px;
-  height: 52px;
+  width: 230px;
+  height: 230px;
   padding: 10px 15px;
   -webkit-box-shadow: 0px 0px 5px #999;
   -moz-box-shadow: 0px 0px 5px #999;
   border: 1px solid #556f8c;
+  border-radius: 115px;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#718DA9), color-stop(100%,#415079));
   background: -moz-linear-gradient(top, #718DA9 0%, #415079 100%);
 }
@@ -36,3 +37,15 @@ input#start_payroll_task {
 input#start_payroll_task :hover {
   cursor: pointer;
 }
+#start_tpbtag
+  {
+  width: 140px;
+  height: 76px;
+  position: relative;
+  margin-top: -140px;
+  margin-left: -70px;
+  top: -140px;
+  left: 50%;
+  z-index: 0;
+}
+

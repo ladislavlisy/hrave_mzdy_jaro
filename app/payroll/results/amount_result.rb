@@ -18,6 +18,7 @@ class AmountResult < PayrollResult
   end
 
   def export_value_result
-    "#{amount} CZK"
+    format_amount = amount.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1 ")
+    "#{format_amount} CZK"
   end
 end

@@ -1,8 +1,11 @@
 header#page_header {
-  background: #6da4bc;
+  background-color: #4384d1;
+  background-image: -webkit-gradient(linear, center bottom, center top, color-stop(79px, transparent), color-stop(79px, #abced4), color-stop(81px, #abced4), color-stop(81px, transparent)), -webkit-gradient(linear, color-stop(.1em, #eee), color-stop(.1em, transparent));
+  background-image: linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px), linear-gradient(#eee .1em, transparent .1em);
+  background-size: 100% 1em;
   color: #fff;
   font-size: 0.9em;
-  height: 230px;
+  height: 160px;
   margin-bottom: 10px;
   overflow: hidden;
   padding: 10px 20px;
@@ -20,29 +23,28 @@ header#page_header {
   }
 }
 
-div#middle_column
-  {
-  margin-left: 50px ;
-  margin-right: 50px ;
+div#middle_column {
+  margin-left: 50px;
+  margin-right: 50px;
 }
-div#container
-  {
+
+div#container {
   min-width: 780px;
   max-width: 960px;
   margin-left: auto;
   margin-right: auto;
 }
-div#main
-  {
+
+div#main {
   /*background-color: #CCC;*/
   position: relative;
 }
-div#middle_column
-  {
+
+div#middle_column {
   margin: 0 50px;
 }
-#tapeta
-  {
+
+#wallpaper {
   border-top-right-radius: 25px;
   border-top-left-radius: 25px;
   width: 100%;
@@ -52,8 +54,8 @@ div#middle_column
   top: 0;
   z-index: -1;
 }
-#tplogo
-  {
+
+#tplogo {
   width: 388px;
   height: 76px;
   position: absolute;
@@ -61,8 +63,8 @@ div#middle_column
   top: 10px;
   z-index: 0;
 }
-#tpbtag
-  {
+
+#tpbtag {
   width: 140px;
   height: 76px;
   position: absolute;
@@ -70,24 +72,17 @@ div#middle_column
   top: 10px;
   z-index: 0;
 }
-.ribbon
-  {
+
+.ribbon {
   background-image: url(#tpbtag);
   background-image: url(#tplogo);
-  background-image: url(#tapeta);
-  /*background: #f8f8f6;
-border: 5px solid #f2f3ef;
-border-radius: 15px 15px 0px 0px;
-box-shadow: 0 0 6px #C6C9BC;*/
   margin: 0px;
   padding: 70px 35px 30px;
-  /*30 ~ 35
-padding: px, posun ribbon*/
   z-index: 1;
   position: relative;
 }
-.ribbon H3
-  {
+
+.ribbon H3 {
   position: relative;
   /*ribbon_width+ribbon_padding+ribbon_border*/
   height: 34px;
@@ -102,18 +97,16 @@ padding: px, posun ribbon*/
   color: #9A9DA0;
   background-color: rgba(61, 176, 208, 0.8);
   background-color: rgba(141, 211, 245, 0.8);
-  /*background-color: #b0d03d;
-text-shadow: 1px 1px 0px #7d9d1c;*/
   box-shadow: 0px 0px 3px #999;
   text-align: center;
   z-index: 2;
 }
-div.left_folded_back, DIV.right_folded_back
-  {
+
+div.left_folded_back, DIV.right_folded_back {
   top: 40px;
 }
-span.left
-  {
+
+span.left {
   position: absolute;
   width: 0;
   height: 0;
@@ -126,8 +119,8 @@ span.left
   /*border-color: #5d6c1d #5d6c1d transparent transparent;*/
   z-index: 1;
 }
-div.left_folded_back
-  {
+
+div.left_folded_back {
   border-color: rgba(46, 159, 190, 0.8) rgba(46, 159, 190, 0.8) rgba(46, 159, 190, 0.8) transparent;
   border-color: rgba(97, 174, 211, 0.8) rgba(97, 174, 211, 0.8) rgba(97, 174, 211, 0.8) transparent;
   /*border-color: #9fbe2e #9fbe2e #9fbe2e transparent;*/
@@ -142,8 +135,8 @@ div.left_folded_back
   /*10 ~ 15*/
   z-index: 0;
 }
-span.right
-  {
+
+span.right {
   position: absolute;
   width: 0;
   height: 0;
@@ -156,8 +149,8 @@ span.right
   /*border-color: #5d6c1d transparent transparent #5d6c1d;*/
   z-index: 1;
 }
-div.right_folded_back
-  {
+
+div.right_folded_back {
   border-color: rgba(46, 159, 190, 0.8) transparent rgba(46, 159, 190, 0.8) rgba(46, 159, 190, 0.8);
   border-color: rgba(97, 174, 211, 0.8) transparent rgba(97, 174, 211, 0.8) rgba(97, 174, 211, 0.8);
   /*border-color: #9fbe2e transparent #9fbe2e #9fbe2e;*/
@@ -183,12 +176,35 @@ section#content {
 }
 
 section#content_form {
-  padding: 20px 25% 20px 25%;
+  padding: 20px 5% 20px 5%;
 }
 
 section#pyg_app_reference {
   padding: 0px 0px 0px 0px;
   clear: both;
+}
+
+div#footer_middle_column {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+div#footer_main {
+  /*background-color: #CCC;*/
+  position: relative;
+  padding: 0px 30px 30px 30px;
+  margin: 0 50px;
+}
+
+#footer_wallpaper {
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  width: 100%;
+  height: 230px;
+  position: absolute;
+  left: 0;
+  top: 100px;
+  z-index: -1;
 }
 
 footer#page_footer {

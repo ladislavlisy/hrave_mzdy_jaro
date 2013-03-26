@@ -4,6 +4,11 @@
   <%= render partial: 'payroll/results' %>
 </section>
 <section id="pyg_app_reference">
+  <div>
+    <%= button_to "Download results", download_payroll_task_path(@payroll_task),
+                  :method => :get,
+                  :id => 'download_payroll_task' %>
+  </div>
   <p>
     This is a show page for the
     <a href="http://hravemzdy.org/">Hravé Mzdy</a>

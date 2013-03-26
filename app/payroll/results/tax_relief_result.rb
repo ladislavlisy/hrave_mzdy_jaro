@@ -18,6 +18,7 @@ class TaxReliefResult < PayrollResult
   end
 
   def export_value_result
-    "#{tax_relief} CZK"
+    format_amount = tax_relief.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1 ")
+    "#{format_amount} CZK"
   end
 end

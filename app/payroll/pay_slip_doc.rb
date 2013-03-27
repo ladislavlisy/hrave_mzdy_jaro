@@ -1,3 +1,5 @@
+require 'Prawn'
+
 class PaySlipDoc
   def initialize(payslip_logo, payslip_text, period_desc, empl_name, empl_numb, empl_dept, empl_comp,
       column_left1, column_left2, column_right1, column_right2, row_summary)
@@ -24,8 +26,6 @@ class PaySlipDoc
 end
 
 =begin
-require 'Prawn'
-
 class PaySlipDoc < Prawn::Document
   def initialize(payslip_logo, payslip_text, period_desc, empl_name, empl_numb, empl_dept, empl_comp,
       column_left1, column_left2, column_right1, column_right2, row_summary)

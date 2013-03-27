@@ -219,5 +219,53 @@ form#new_payroll_task input[type=submit]:hover {
   cursor: pointer;
 }
 
+input#again_payroll_task {
+  background: #5e768d;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #546a7f), color-stop(100%, #5e768d));
+  background: -moz-linear-gradient(top, #546a7f 0%, #5e768d 100%);
+  border: none;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 1px 0px #f2f2f2;
+  -moz-box-shadow: 0px 1px 0px #f2f2f2;
+  font-family: sans-serif;
+  font-size: 16px;
+  color: #f2f2f2;
+  text-transform: uppercase;
+  text-shadow: 0px -1px 0px #334f71;
+  outline: none;
+  padding: 5px 20px 0 20px;
+  width: 300px;
+  height: 35px;
+  display:block;
+  margin:0 auto;
+}
+
+input#again_payroll_task {
+  width: 230px;
+  height: 230px;
+  padding: 10px 15px;
+  -webkit-box-shadow: 0px 0px 5px #999;
+  -moz-box-shadow: 0px 0px 5px #999;
+  border: 1px solid #556f8c;
+  border-radius: 115px;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#718DA9), color-stop(100%,#415079));
+  background: -moz-linear-gradient(top, #718DA9 0%, #415079 100%);
+}
+
+input#again_payroll_task :hover {
+  cursor: pointer;
+}
+#again_tpbtag
+  {
+  width: 140px;
+  height: 76px;
+  position: relative;
+  margin-top: -140px;
+  margin-left: -70px;
+  top: -160px;
+  left: 50%;
+  z-index: 0;
+}
+
 
 

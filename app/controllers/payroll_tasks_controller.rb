@@ -11,20 +11,20 @@ class PayrollTasksController < ApplicationController
   def new
     @title = "Start a new payroll task"
     @payroll_task = PayrollTask.new
-    @payroll_task.tax_declare    = 1
-    @payroll_task.tax_payer      = 1
-    @payroll_task.tax_study      = 0
-    @payroll_task.tax_disab1     = 0
-    @payroll_task.tax_disab2     = 0
-    @payroll_task.tax_disab3     = 0
-    @payroll_task.tax_child1     = 0
-    @payroll_task.tax_child2     = 0
-    @payroll_task.tax_child3     = 0
-    @payroll_task.tax_child4     = 0
-    @payroll_task.tax_child5     = 0
-    @payroll_task.ins_health     = 1
-    @payroll_task.ins_social     = 1
-    @payroll_task.min_health     = 1
+    @payroll_task.tax_payer   = 1
+    @payroll_task.tax_declare = 1
+    @payroll_task.tax_study   = 0
+    @payroll_task.tax_disab1  = 0
+    @payroll_task.tax_disab2  = 0
+    @payroll_task.tax_disab3  = 0
+    @payroll_task.tax_child1  = 0
+    @payroll_task.tax_child2  = 0
+    @payroll_task.tax_child3  = 0
+    @payroll_task.tax_child4  = 0
+    @payroll_task.tax_child5  = 0
+    @payroll_task.ins_health  = 1
+    @payroll_task.ins_social  = 1
+    @payroll_task.min_health  = 1
   end
 
   def create

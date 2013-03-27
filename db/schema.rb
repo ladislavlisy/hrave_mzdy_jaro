@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130126105057) do
+ActiveRecord::Schema.define(:version => 20130127204047) do
 
   create_table "payroll_periods", :id => false, :force => true do |t|
     t.integer  "code"

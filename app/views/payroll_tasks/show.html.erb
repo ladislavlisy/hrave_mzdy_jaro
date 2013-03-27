@@ -5,9 +5,10 @@
 </section>
 <section id="pyg_app_reference">
   <div>
-    <%= button_to "Download results", download_payroll_task_path(@payroll_task),
-                  :method => :get,
-                  :id => 'download_payroll_task' %>
+    <%= button_to "Start again", :new_payroll_task, method: 'get', id: 'again_payroll_task' %>
+    <%= link_to(content_tag(:canvas, "Canvas is not supported in your browser ! :(",
+                            :id => "again_tpbtag", :width => "162", :height => "88"),
+                :new_payroll_task, method: 'get', title: "Start again") %>
   </div>
   <p>
     This is a show page for the
@@ -15,3 +16,10 @@
     payroll application.
   </p>
 </section>
+<script>
+    $(function(){
+        var srcbtag = "<%= image_path("brandtag.png") %>";
+        var plbtag = document.getElementById('again_tpbtag');
+        kresliBrandTag(plbtag, srcbtag);
+    });
+</script>

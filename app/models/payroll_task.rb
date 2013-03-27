@@ -5,6 +5,7 @@ class PayrollTask < ActiveRecord::Base
             :numericality => { :greater_than => 200001 }
   validates :description, :presence => true,
             :length     => { :maximum => 250 }
+
   attr_accessible :payroll_period, :period_code, :description, :task_end, :task_start
   attr_accessible :company_name, :payrolee_name, :payrolee_mail
   attr_accessible :employee_name, :employer_name, :employee_numb, :department

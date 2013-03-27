@@ -1,3 +1,29 @@
+class PaySlipDoc
+  def initialize(payslip_logo, payslip_text, period_desc, empl_name, empl_numb, empl_dept, empl_comp,
+      column_left1, column_left2, column_right1, column_right2, row_summary)
+
+    @payslip_logo = payslip_logo
+    @payslip_text = payslip_text
+    @period = period_desc
+    @payslip_header1 = []
+    @payslip_header1 << ['Personnel number', 'Person name', 'Period']
+    @payslip_header1 << [empl_numb, empl_name, period_desc]
+    @payslip_header2 = []
+    @payslip_header2 << ['Department', 'Company', '']
+    @payslip_header2 << [empl_dept, empl_comp, 'Payslip']
+
+    @column_left1  = column_left1.map  {|x| [x[:title], x[:value]]}
+    @column_left2  = column_left2.map  {|x| [x[:title], x[:value]]}
+    @column_right1 = column_right1.map {|x| [x[:title], x[:value]]}
+    @column_right2 = column_right2.map {|x| [x[:title], x[:value]]}
+    @row_summary   = row_summary.map   {|x| [x[:title], x[:value]]}
+  end
+
+  def save_as(file_name)
+  end
+end
+
+=begin
 require 'Prawn'
 
 class PaySlipDoc < Prawn::Document
@@ -149,3 +175,4 @@ class PaySlipDoc < Prawn::Document
     render_file(file_name)
   end
 end
+=end

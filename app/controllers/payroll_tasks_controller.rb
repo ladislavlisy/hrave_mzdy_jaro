@@ -1,4 +1,4 @@
-require 'Prawn'
+#require 'Prawn'
 #require 'payroll_concept'
 #require 'payroll_result'
 #require 'payroll_name'

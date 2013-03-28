@@ -11,9 +11,9 @@
                 :new_payroll_task, method: 'get', title: "Start again") %>
   </div>
   <p>
-    This is a show page for the
-    <a href="http://hravemzdy.org/">Hravé Mzdy</a>
-    payroll application.
+    This is a show pdf report for
+    <%= link_to('this payslip ', download_payroll_task_path(@payroll_task)) %>
+    the above shown.
   </p>
 </section>
 <script>

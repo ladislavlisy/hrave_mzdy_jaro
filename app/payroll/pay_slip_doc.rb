@@ -1,3 +1,4 @@
+=begin
 class PaySlipDoc
   def initialize(payslip_logo, payslip_text, period_desc, empl_name, empl_numb, empl_dept, empl_comp,
       column_left1, column_left2, column_right1, column_right2, row_summary)
@@ -22,8 +23,8 @@ class PaySlipDoc
   def save_as(file_name)
   end
 end
+=end
 
-=begin
 require 'Prawn'
 
 class PaySlipDoc < Prawn::Document
@@ -175,4 +176,3 @@ class PaySlipDoc < Prawn::Document
     render_file(file_name)
   end
 end
-=end

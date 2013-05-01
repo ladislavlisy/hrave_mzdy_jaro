@@ -34,80 +34,42 @@ class PayrollResultsExporter
   #VPAYGRP_SUMMARY    = 'VPAYGRP_SUMMARY'
 
   def get_source_schedule_export
-    payroll_result.inject ([]) do |agr, item|
-      tag_result = item.first
-      val_result = item.last
-      agr.concat(item_export(PayNameGateway::VPAYGRP_SCHEDULE,
-                             payroll_config, payroll_names,
-                             tag_result, val_result))
-    end
+    get_result_export(PayNameGateway::VPAYGRP_SCHEDULE)
   end
 
   def get_source_payments_export
-    payroll_result.inject ([]) do |agr, item|
-      tag_result = item.first
-      val_result = item.last
-      agr.concat(item_export(PayNameGateway::VPAYGRP_PAYMENTS,
-                             payroll_config, payroll_names,
-                             tag_result, val_result))
-    end
+    get_result_export(PayNameGateway::VPAYGRP_PAYMENTS)
   end
 
   def get_source_tax_source_export
-    payroll_result.inject ([]) do |agr, item|
-      tag_result = item.first
-      val_result = item.last
-      agr.concat(item_export(PayNameGateway::VPAYGRP_TAX_SOURCE,
-                             payroll_config, payroll_names,
-                             tag_result, val_result))
-    end
+    get_result_export(PayNameGateway::VPAYGRP_TAX_SOURCE)
   end
 
   def get_source_tax_income_export
-    payroll_result.inject ([]) do |agr, item|
-      tag_result = item.first
-      val_result = item.last
-      agr.concat(item_export(PayNameGateway::VPAYGRP_TAX_INCOME,
-                             payroll_config, payroll_names,
-                             tag_result, val_result))
-    end
+    get_result_export(PayNameGateway::VPAYGRP_TAX_INCOME)
   end
 
   def get_source_ins_income_export
-    payroll_result.inject ([]) do |agr, item|
-      tag_result = item.first
-      val_result = item.last
-      agr.concat(item_export(PayNameGateway::VPAYGRP_INS_INCOME,
-                             payroll_config, payroll_names,
-                             tag_result, val_result))
-    end
+    get_result_export(PayNameGateway::VPAYGRP_INS_INCOME)
   end
 
   def get_source_tax_result_export
-    payroll_result.inject ([]) do |agr, item|
-      tag_result = item.first
-      val_result = item.last
-      agr.concat(item_export(PayNameGateway::VPAYGRP_TAX_RESULT,
-                             payroll_config, payroll_names,
-                             tag_result, val_result))
-    end
+    get_result_export(PayNameGateway::VPAYGRP_TAX_RESULT)
   end
 
   def get_source_ins_result_export
-    payroll_result.inject ([]) do |agr, item|
-      tag_result = item.first
-      val_result = item.last
-      agr.concat(item_export(PayNameGateway::VPAYGRP_INS_RESULT,
-                             payroll_config, payroll_names,
-                             tag_result, val_result))
-    end
+    get_result_export(PayNameGateway::VPAYGRP_INS_RESULT)
   end
 
   def get_source_summary_export
+    get_result_export(PayNameGateway::VPAYGRP_SUMMARY)
+  end
+
+  def get_result_export(grp_position)
     payroll_result.inject ([]) do |agr, item|
       tag_result = item.first
       val_result = item.last
-      agr.concat(item_export(PayNameGateway::VPAYGRP_SUMMARY,
+      agr.concat(item_export(grp_position,
                              payroll_config, payroll_names,
                              tag_result, val_result))
     end

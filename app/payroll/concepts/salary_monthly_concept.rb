@@ -49,7 +49,7 @@ class SalaryMonthlyConcept < PayrollConcept
     result_working = get_result_by(results, TAG_HOURS_WORKING)
     result_absence = get_result_by(results, TAG_HOURS_ABSENCE)
 
-    schedule_factor = schedule_factor(1.0)
+    schedule_factor = big_decimal_cast(1.0)
 
     timesheet_hours = result_timesheet.hours
     working_hours = result_working.hours
@@ -59,10 +59,6 @@ class SalaryMonthlyConcept < PayrollConcept
 
     payment_value = payment_from_amount(amount_factor, timesheet_hours, working_hours, absence_hours)
     PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
-  end
-
-  def schedule_factor(schedule_factor)
-    BigDecimal.new(schedule_factor, 15)
   end
 
   def factorize_amount(amount, schedule_factor)

@@ -18,6 +18,7 @@ class PayNameGateway
     load_pay_names
     @models = Hash.new
     @models[TAG_UNKNOWN] = UnknownName.new
+    load_models
   end
 
   def load_models

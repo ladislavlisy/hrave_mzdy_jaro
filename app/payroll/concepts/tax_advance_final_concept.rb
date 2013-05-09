@@ -28,14 +28,14 @@ class TaxAdvanceFinalConcept < PayrollConcept
     ]
   end
 
-  def calc_category
-    PayrollConcept::CALC_CATEGORY_NETTO
-  end
-
   def summary_codes
     [
       IncomeNettoTag.new
     ]
+  end
+
+  def calc_category
+    PayrollConcept::CALC_CATEGORY_NETTO
   end
 
   def evaluate(period, tag_config, results)

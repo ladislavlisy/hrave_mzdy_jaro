@@ -3,8 +3,11 @@ class ScheduleResult < PayrollResult
 
   def initialize(tag_code, concept_code, concept_item, values)
     super(tag_code, concept_code, concept_item)
+    setup_values(values)
+  end
 
-    @week_schedule = values[:week_schedule]
+  def setup_values(values)
+     @week_schedule = values[:week_schedule]
   end
 
   def export_xml_result(xml_element)

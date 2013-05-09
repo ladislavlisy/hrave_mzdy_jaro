@@ -3,8 +3,11 @@ class PaymentDeductionResult < PayrollResult
 
   def initialize(tag_code, concept_code, concept_item, values)
     super(tag_code, concept_code, concept_item)
+    setup_values(values)
+  end
 
-    @payment = values[:payment]
+  def setup_values(values)
+     @payment = values[:payment]
   end
 
   def deduction

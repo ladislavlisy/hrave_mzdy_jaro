@@ -127,7 +127,7 @@ class PayConceptGateway
     empty_values = {}
     empty_concept = concept_for(term_tag.code, term_tag.concept_name, empty_values)
     empty_pending = rec_pending_codes(empty_concept.pending_codes)
-    empty_concept.init_pending_codes(empty_pending)
+    empty_concept.set_pending_codes(empty_pending)
     return empty_concept
   end
 

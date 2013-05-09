@@ -149,7 +149,7 @@ class PayrollProcess
   end
 
   def get_new_order_from(orders_sorted)
-    last_code_order = orders_sorted.inject(0) { |agr, x| x-agr > 1 ? agr : x }
+    last_code_order = orders_sorted.inject(0) { |agr, x| ((x > agr) && (x - agr) > 1) ? agr : x }
     (last_code_order + 1)
   end
 

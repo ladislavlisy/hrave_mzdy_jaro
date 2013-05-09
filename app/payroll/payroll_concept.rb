@@ -33,7 +33,7 @@ class PayrollConcept < CodeNameRefer
   def export_value_result
   end
 
-  def init_pending_codes(pending_codes)
+  def set_pending_codes(pending_codes)
     @tag_pending_codes = pending_codes.dup
   end
 
@@ -90,6 +90,9 @@ class PayrollConcept < CodeNameRefer
   def big_div(op1, op2)
     big_op1 = BigDecimal.new(op1, 15)
     big_op2 = BigDecimal.new(op2, 15)
+    if (big_op2 == 0)
+      return BigDecimal(0, 15)
+    end
     return big_op1/big_op2
   end
 
@@ -97,6 +100,9 @@ class PayrollConcept < CodeNameRefer
     big_op1 = BigDecimal.new(op1, 15)
     big_op2 = BigDecimal.new(op2, 15)
     big_div = BigDecimal.new(div, 15)
+    if (big_div == 0)
+      return BigDecimal(0, 15)
+    end
     return big_op1*big_op2/big_div
   end
 
@@ -146,5 +152,9 @@ class PayrollConcept < CodeNameRefer
 
   def big_near_round_down(value_dec, nearest=100)
     big_multi(round_down_to_big(big_div(value_dec, nearest)), nearest)
+  end
+
+  def big_decimal_cast(number)
+    BigDecimal.new(number, 15)
   end
 end

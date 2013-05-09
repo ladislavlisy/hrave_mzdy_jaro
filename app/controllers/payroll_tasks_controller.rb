@@ -11,6 +11,9 @@ class PayrollTasksController < ApplicationController
   def new
     @title = "Start a new payroll task"
     @payroll_task = PayrollTask.new
+    @payroll_task.period_code    = 201301
+    @payroll_task.payroll_period = PayrollPeriod.find_by_code(@payroll_task.period_code)
+    @payroll_task.description    = "Happy a new payroll!"
     @payroll_task.tax_payer   = 1
     @payroll_task.tax_declare = 1
     @payroll_task.tax_study   = 0
@@ -61,10 +64,16 @@ class PayrollTasksController < ApplicationController
     @payroll_task.ins_social     = payroll_data[:ins_social]
     @payroll_task.min_health     = payroll_data[:min_health]
 
+    if @payroll_task.period_code.nil?
+      @payroll_task.period_code  = 201301
+    end
     if @payroll_task.empl_salary == 0
       @payroll_task.empl_salary  = 20000
     end
 
+    if @payroll_task.description.empty?
+      @payroll_task.description   = 'Happy a new payroll!'
+    end
     if @payroll_task.company_name.empty?
       @payroll_task.company_name   = 'Sample company'
     end
@@ -98,7 +107,6 @@ class PayrollTasksController < ApplicationController
     @payroll_task = PayrollTask.find(params[:id])
 
     @payroll_names = PayNameGateway.new
-    @payroll_names.load_models
 
     payroll_period  = @payroll_task.payroll_period
     @period_descr   = payroll_period.description
@@ -134,7 +142,6 @@ class PayrollTasksController < ApplicationController
     @payroll_task = PayrollTask.find(params[:id])
 
     @payroll_names = PayNameGateway.new
-    @payroll_names.load_models
 
     payroll_period  = @payroll_task.payroll_period
     @period_descr   = payroll_period.description

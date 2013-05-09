@@ -20,10 +20,18 @@ class ScheduleWeeklyConcept < PayrollConcept
   end
 
   def evaluate(period, tag_config, results)
-    hours_daily = @hours_weekly/5
-    hours_week = [hours_daily,hours_daily,hours_daily,hours_daily,hours_daily,0,0]
+    hours_week = hours_for_one_week
 
     return ScheduleResult.new(@tag_code, @code, self, {week_schedule: hours_week})
+  end
+
+  def hours_for_one_day
+    hours_daily = @hours_weekly/5
+  end
+
+  def hours_for_one_week
+    hours_daily = hours_for_one_day
+    hours_week = [hours_daily,hours_daily,hours_daily,hours_daily,hours_daily,0,0]
   end
 
   def export_xml(xml_builder)

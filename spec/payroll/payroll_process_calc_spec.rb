@@ -585,7 +585,7 @@ describe 'Payroll Process Calculations' do
       result_value.should == 945
     end
 
-    it 'returns Tax amount after relief with child relief' do
+    it 'returns Tax amount after relief C with payer relief' do
       empty_value = {}
 
       interest_value = {interest_code: 1, declare_code: 1}
@@ -606,16 +606,19 @@ describe 'Payroll Process Calculations' do
       @payroll_process.add_term(PayTagGateway::REF_SCHEDULE_TERM, schedule_term_value)
       @payroll_process.add_term(PayTagGateway::REF_SALARY_BASE, salary_amount_value)
       @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_PAYER, relief_payers_value)
-      @payroll_process.add_term(PayTagGateway::REF_TAX_CLAIM_CHILD, relief_payers_value)
 
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE_FINAL, empty_value)
       result = @payroll_process.evaluate(result_tag)
 
-      result_value = get_result_after_reliefA(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
-      result_value.should == 945
+      resultA_value = get_result_after_reliefA(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
+      resultC_value = get_result_after_reliefC(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
+      resultF_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
+      resultA_value.should == 945
+      resultC_value.should == 945
+      resultF_value.should == 945
     end
 
-    it 'returns Tax amount after relief with child relief' do
+    it 'returns Tax amount after relief C with child relief' do
       empty_value = {}
 
       interest_value = {interest_code: 1, declare_code: 1}
@@ -641,8 +644,12 @@ describe 'Payroll Process Calculations' do
       result_tag = @payroll_process.add_term(PayTagGateway::REF_TAX_ADVANCE_FINAL, empty_value)
       result = @payroll_process.evaluate(result_tag)
 
-      result_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
-      result_value.should == 0
+      resultA_value = get_result_after_reliefA(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
+      resultC_value = get_result_after_reliefC(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
+      resultF_value = get_result_payment(@payroll_process.get_results, PayTagGateway::REF_TAX_ADVANCE_FINAL)
+      resultA_value.should == 945
+      resultC_value.should == 0
+      resultF_value.should == 0
     end
 
     it 'returns Tax bonus after relief with child relief' do

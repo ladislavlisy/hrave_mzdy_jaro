@@ -3,7 +3,10 @@ class TermEffectResult < PayrollResult
 
   def initialize(tag_code, concept_code, concept_item, values)
     super(tag_code, concept_code, concept_item)
+    setup_values(values)
+  end
 
+  def setup_values(values)
     @day_ord_from = values[:day_ord_from]
     @day_ord_end  = values[:day_ord_end]
   end

@@ -44,10 +44,17 @@ class TaxEmployersSocialConcept < PayrollConcept
       payment_income = [0,result_income.employer_base].max
     end
 
-    payment_value = fix_insurance_round_up(
-        big_multi(payment_income, social_insurance_factor(period))
-    )
+    payment_value = insurance_payment(period, payment_income)
+
     PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
+  end
+
+  def insurance_payment(period, payment_income)
+    social_factor = social_insurance_factor(period)
+
+    payment_value = fix_insurance_round_up(
+        big_multi(payment_income, social_factor)
+    )
   end
 
   def interest?

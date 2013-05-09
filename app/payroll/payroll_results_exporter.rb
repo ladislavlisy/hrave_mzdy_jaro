@@ -12,7 +12,6 @@ class PayrollResultsExporter
 
   def initialize(company, department, person, person_number, payroll)
     @payroll_names  = PayNameGateway.new
-    @payroll_names.load_models
 
     @employer_name  = company
     @employee_dept  = department

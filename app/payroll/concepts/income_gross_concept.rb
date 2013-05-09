@@ -31,7 +31,8 @@ class IncomeGrossConcept < PayrollConcept
   end
 
   def sum_term_for(tag_config, tag_code, result_key, result_item)
-    tag_config_item = tag_config.tag_from_models(result_key)
+    #TODO: test refactoring - no CodeNameRefer here in result_key
+    tag_config_item = tag_config.find_tag(result_key.code)
     if result_item.summary_for?(tag_code)
       if tag_config_item.income_gross?
         return result_item.payment

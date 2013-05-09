@@ -37,16 +37,16 @@ form#new_payroll_task {
   -moz-box-shadow: 0px 0px 8px #444;
   counter-reset: fieldsets;
   padding: 10px;
-  width: 1000px;
+  width: 780px;
   font-family: sans-serif;
 }
 
 h1 {
-  font-size: 35px;
+  font-size: 24px;
   color: #445668;
   text-transform: uppercase;
   text-align: center;
-  margin: 0 0 35px 0;
+  margin: 0 0 24px 0;
   text-shadow: 0px 1px 0px #f2f2f2;
 }
 
@@ -65,7 +65,7 @@ form#new_payroll_task > fieldset > legend:before {
 }
 
 form#new_payroll_task fieldset legend {
-  font-size: 18px;
+  font-size: 14px;
   color: #445668;
   text-transform: uppercase;
   text-align: center;
@@ -76,7 +76,7 @@ form#new_payroll_task fieldset legend {
 form#new_payroll_task ol li {
   list-style: none;
   float: left;
-  padding-right: 30px;
+  padding-right: 15px;
 
 }
 
@@ -95,23 +95,23 @@ form#new_payroll_task label {
   clear: left;
   margin: 11px 5px 0 0;
   text-align: left;
-  font-size: 16px;
+  font-size: 14px;
   color: #445668;
-  width: 150px;
+  width: 140px;
   text-transform: uppercase;
   text-shadow: 0px 1px 0px #f2f2f2;
 }
 
 form#new_payroll_task label.label_for_check {
   float: left;
-  font-size: 13px;
-  width: 220px;
+  font-size: 11px;
+  width: 150px;
 }
 
 form#new_payroll_task fieldset fieldset label {
   background: none no-repeat left 50%;
   line-height: 20px;
-  padding:  0 0 0 30px;
+  padding:  0 0 0 15px;
   width: auto;
 }
 
@@ -128,14 +128,14 @@ form#new_payroll_task select {
   -webkit-box-shadow: 0px 1px 0px #f2f2f2;
   -moz-box-shadow: 0px 1px 0px #f2f2f2;
   font-family: sans-serif;
-  font-size: 14px;
+  font-size: 11px;
   color: #f2f2f2;
   text-transform: uppercase;
   text-shadow: 0px -1px 0px #334f71;
   outline: none;
   padding: 5px 20px 0 20px;
-  width: 250px;
-  height: 32px;
+  width: 160px;
+  height: 24px;
   margin: 0 0 5px 0;
 }
 
@@ -150,13 +150,13 @@ form#new_payroll_task textarea {
   -webkit-box-shadow: 0px 1px 0px #f2f2f2;
   -moz-box-shadow: 0px 1px 0px #f2f2f2;
   font-family: sans-serif;
-  font-size: 14px;
+  font-size: 11px;
   color: #f2f2f2;
   text-transform: uppercase;
   text-shadow: 0px -1px 0px #334f71;
   outline: none;
   padding: 5px 20px 0 20px;
-  width: 210px;
+  width: 120px;
   height: 24px;
   margin: 0 0 5px 0;
 }

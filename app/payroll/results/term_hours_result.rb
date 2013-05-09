@@ -3,7 +3,10 @@ class TermHoursResult < PayrollResult
 
   def initialize(tag_code, concept_code, concept_item, values)
     super(tag_code, concept_code, concept_item)
+    setup_values(values)
+  end
 
+  def setup_values(values)
     @hours = values[:hours]
   end
 

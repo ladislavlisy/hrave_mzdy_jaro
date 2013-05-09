@@ -75,24 +75,6 @@ class TaxAdvanceConcept < PayrollConcept
     end
   end
 
-  def tax_wth_calculate_month(period, tax_income, tax_base)
-    if tax_base <= 0
-      0
-    else
-      if period.year < 2008
-        0
-      elsif period.year < 2013
-        fix_tax_round_up(
-            big_multi(tax_base, tax_adv_bracket1(period.year))
-        )
-      else
-        fix_tax_round_up(
-            big_multi(tax_base, tax_adv_bracket1(period.year))
-        )
-      end
-    end
-  end
-
   def tax_sol_bracket_max(year)
     if year >= 2013
       (4*25884)

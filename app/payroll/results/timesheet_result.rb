@@ -3,7 +3,10 @@ class TimesheetResult < PayrollResult
 
   def initialize(tag_code, concept_code, concept_item, values)
     super(tag_code, concept_code, concept_item)
+    setup_values(values)
+  end
 
+  def setup_values(values)
     @month_schedule = values[:month_schedule]
   end
 

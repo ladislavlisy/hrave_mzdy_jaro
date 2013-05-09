@@ -63,7 +63,7 @@ class SavingsPensionsConcept < PayrollConcept
     if (period.year<2013)
       factor = 0.0
     else
-      factor = 3.0
+      factor = 5.0
     end
     return BigDecimal.new(factor.fdiv(100), 15)
   end

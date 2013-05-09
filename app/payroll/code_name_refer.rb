@@ -6,4 +6,19 @@ class CodeNameRefer
     @name = name
   end
 
+  def ==(other)
+    @code == other.code
+  end
+
+  def <=>(other)
+    @code <=> other.code
+  end
+
+  def eql?(other)
+    @code == other.code
+  end
+
+  def hash
+    code_int = @code.hash
+  end
 end

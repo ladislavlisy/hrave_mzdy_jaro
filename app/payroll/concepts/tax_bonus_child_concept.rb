@@ -80,10 +80,13 @@ class TaxBonusChildConcept < PayrollConcept
   def max_min_bonus(year, tax_child_bonus)
     if tax_child_bonus < min_bonus_monthly(year)
       0
-    elsif tax_child_bonus > max_bonus_monthly(year)
-      max_bonus_monthly(year)
     else
-      tax_child_bonus
+      max_bonus_value = max_bonus_monthly(year)
+      if tax_child_bonus > max_bonus_value
+          max_bonus_value
+      else
+        tax_child_bonus
+      end
     end
   end
 

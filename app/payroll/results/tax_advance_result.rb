@@ -5,7 +5,10 @@ class TaxAdvanceResult < PayrollResult
 
   def initialize(tag_code, concept_code, concept_item, values)
     super(tag_code, concept_code, concept_item)
+    setup_values(values)
+  end
 
+  def setup_values(values)
     @payment       = values[:payment] || 0
     @after_reliefA = values[:after_reliefA] || 0
     @after_reliefC = values[:after_reliefC] || 0

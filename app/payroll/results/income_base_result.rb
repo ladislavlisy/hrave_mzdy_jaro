@@ -5,7 +5,10 @@ class IncomeBaseResult < PayrollResult
 
   def initialize(tag_code, concept_code, concept_item, values)
     super(tag_code, concept_code, concept_item)
+    setup_values(values)
+  end
 
+  def setup_values(values)
     @income_base = values[:income_base] || 0
     @employee_base = values[:employee_base] || 0
     @employer_base = values[:employer_base] || 0

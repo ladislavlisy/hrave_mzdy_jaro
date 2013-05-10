@@ -46,7 +46,12 @@ class TimesheetPeriodConcept < PayrollConcept
 
   def hours_from_week(week_hours, day_ordinal, calendar_beg_cwd)
     #calendar_day = Date.new(calendar_beg.year, calendar_beg.month, day_ordinal)
-    day_of_week = (day_ordinal%7)+(calendar_beg_cwd-1)
-    week_hours[day_of_week-1]
+    day_of_week = day_of_week_from_ordinal(day_ordinal, calendar_beg_cwd)
+    work_hours = week_hours[day_of_week-1]
+    return work_hours
+  end
+
+  def day_of_week_from_ordinal(day_ordinal, calendar_beg_cwd)
+    day_of_week = (((day_ordinal-1)+(calendar_beg_cwd-1))%7)+1
   end
 end

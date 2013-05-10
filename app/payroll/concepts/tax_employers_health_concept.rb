@@ -78,6 +78,8 @@ class TaxEmployersHealthConcept < PayrollConcept
       factor = 0.0
     elsif (period.year<2009)
       factor = 13.5
+    else
+      factor = 13.5
     end
     return BigDecimal.new(factor.fdiv(100), 15)
   end

@@ -36,20 +36,29 @@ class InsuranceHealthConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_NETTO
   end
 
-  def evaluate(period, tag_config, results)
+  def compute_result_value(period, employer_base, employee_base)
     employer_income = 0
     employee_income = 0
     if !interest?
       employer_income = 0
       employee_income = 0
     else
-      result_income = get_result_by(results, TAG_AMOUNT_BASE)
-      employer_income = [0,result_income.employer_base].max
-      employee_income = [0,result_income.employee_base].max
+      employer_income = [0,employer_base].max
+      employee_income = [0,employee_base].max
     end
 
-    cont_payment_value = insurance_contribution(period, employer_income, employee_income)
-    PaymentDeductionResult.new(@tag_code, @code, self, {payment: cont_payment_value})
+    insurance_contribution(period, employer_income, employee_income)
+  end
+
+  def evaluate(period, tag_config, results)
+    result_employer_base = employer_income_result(results, TAG_AMOUNT_BASE)
+    result_employee_base = employee_income_result(results, TAG_AMOUNT_BASE)
+
+    cont_payment_value = compute_result_value(period, result_employer_base, result_employee_base)
+
+    result_values = {payment: cont_payment_value}
+
+    PaymentDeductionResult.new(@tag_code, @code, self, result_values)
   end
 
   def insurance_contribution(period, employer_income, employee_income)

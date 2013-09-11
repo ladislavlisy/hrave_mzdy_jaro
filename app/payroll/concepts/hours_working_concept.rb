@@ -31,11 +31,18 @@ class HoursWorkingConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_TIMES
   end
 
-  def evaluate(period, tag_config, results)
-    result_timesheet = get_result_by(results, TAG_TIMESHEET_WORK)
+  def compute_result_value(timesheet_hours)
+    timesheet_hours + hours
+  end
 
-    result_hours = result_timesheet.hours + hours
-    TermHoursResult.new(@tag_code, @code, self, {hours: result_hours})
+  def evaluate(period, tag_config, results)
+    work_timesheet_hours = timesheet_hours_result(results, TAG_TIMESHEET_WORK)
+
+    result_hours = compute_result_value(work_timesheet_hours)
+
+    result_values = {hours: result_hours}
+
+    TermHoursResult.new(@tag_code, @code, self, result_values)
   end
 
   def export_xml(xml_builder)

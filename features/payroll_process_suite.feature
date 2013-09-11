@@ -9,7 +9,7 @@ Feature:
     And   Employee has 0 hours of absence
     And   Employee Salary is CZK 15000 monthly
     And   YES Employee is Regular Tax payer
-    And   YES Employee is Regular Health insurance payer
+    And   YES Employee is Regular Health insurance payer with YES
     And   YES Employee is Regular Social insurance payer
     And   NO Employee is Regular Pension savings payer
     And   YES Employee claims tax benefit on tax payer

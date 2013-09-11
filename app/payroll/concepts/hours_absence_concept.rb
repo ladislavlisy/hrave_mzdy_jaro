@@ -28,9 +28,16 @@ class HoursAbsenceConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_TIMES
   end
 
+  def compute_result_value
+    hours
+  end
+
   def evaluate(period, tag_config, results)
-    result_hours = hours
-    TermHoursResult.new(@tag_code, @code, self, {hours: result_hours})
+    result_hours = compute_result_value
+
+    result_values = {hours: result_hours}
+
+    TermHoursResult.new(@tag_code, @code, self, result_values)
   end
 
   def export_xml(xml_builder)

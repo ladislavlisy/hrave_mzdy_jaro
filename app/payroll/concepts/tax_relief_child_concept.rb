@@ -32,18 +32,20 @@ class TaxReliefChildConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_NETTO
   end
 
+  def compute_result_value(advance_base, relief_value, claims_value)
+    relief_amount(advance_base, relief_value, claims_value)
+  end
+
   def evaluate(period, tag_config, results)
-    advance_base_value = get_result_by(results, TAG_ADVANCE)
-    relief_payer_value = get_result_by(results, TAG_RELIEF_PAYER)
-    relief_claim_value = sum_relief_by(results, TAG_CLAIM_BASE)
+    tax_advance = tax_payment_result(results, TAG_ADVANCE)
+    tax_relief = tax_relief_result(results, TAG_RELIEF_PAYER)
+    relief_claim = sum_relief_by(results, TAG_CLAIM_BASE)
 
-    tax_relief_value = relief_payer_value.tax_relief
+    relief_value = compute_result_value(tax_advance, tax_relief, relief_claim)
 
-    relief_value = relief_amount(advance_base_value.payment,
-                                 tax_relief_value,
-                                 relief_claim_value)
+    result_values = {tax_relief: relief_value}
 
-    TaxReliefResult.new(@tag_code, @code, self, {tax_relief: relief_value})
+    TaxReliefResult.new(@tag_code, @code, self, result_values)
   end
 
   def sum_relief_by(results, pay_tag)

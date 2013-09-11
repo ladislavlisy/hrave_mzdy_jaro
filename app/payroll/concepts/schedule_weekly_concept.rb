@@ -19,18 +19,25 @@ class ScheduleWeeklyConcept < PayrollConcept
     return new_concept
   end
 
+  def compute_result_value(weekly_hours)
+    hours_daily = hours_weekly_to_one_day(weekly_hours)
+    hours_week = one_week_hours_from_daily_hours(hours_daily)
+    hours_week
+  end
+
   def evaluate(period, tag_config, results)
-    hours_week = hours_for_one_week
+    hours_week = compute_result_value(@hours_weekly)
 
-    return ScheduleResult.new(@tag_code, @code, self, {week_schedule: hours_week})
+    result_values = {week_schedule: hours_week}
+
+    ScheduleResult.new(@tag_code, @code, self, result_values)
   end
 
-  def hours_for_one_day
-    hours_daily = @hours_weekly/5
+  def hours_weekly_to_one_day(weekly_hours)
+    hours_daily = weekly_hours/5
   end
 
-  def hours_for_one_week
-    hours_daily = hours_for_one_day
+  def one_week_hours_from_daily_hours(hours_daily)
     hours_week = [hours_daily,hours_daily,hours_daily,hours_daily,hours_daily,0,0]
   end
 

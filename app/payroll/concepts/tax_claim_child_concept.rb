@@ -19,9 +19,16 @@ class TaxClaimChildConcept < PayrollConcept
     return new_concept
   end
 
+  def compute_result_value(year, relief_code)
+    relief_claim_amount(year, relief_code)
+  end
+
   def evaluate(period, tag_config, results)
-    relief_value = relief_claim_amount(period.year, relief_code)
-    TaxClaimResult.new(@tag_code, @code, self, {tax_relief: relief_value})
+    relief_value = compute_result_value(period.year, relief_code)
+
+    result_values = {tax_relief: relief_value}
+
+    TaxClaimResult.new(@tag_code, @code, self, result_values)
   end
 
   def relief_claim_amount(year, code)

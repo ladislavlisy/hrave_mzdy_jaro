@@ -12,5 +12,4 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require kendo/kendo.web.min
 //= require_tree .

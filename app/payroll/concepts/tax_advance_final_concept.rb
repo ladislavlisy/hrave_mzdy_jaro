@@ -38,24 +38,29 @@ class TaxAdvanceFinalConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_NETTO
   end
 
-  def evaluate(period, tag_config, results)
-    advance_base_value = get_result_by(results, TAG_ADVANCE)
-    relief_payer_value = get_result_by(results, TAG_RELIEF_PAYER)
-    relief_child_value = get_result_by(results, TAG_RELIEF_CHILD)
+  def compute_result_value_A(advance_base_value, relief_payer_value, relief_child_value)
+    advance_after_relief(advance_base_value, relief_payer_value, 0)
+  end
 
-    tax_advance_afterA = advance_after_relief(advance_base_value.payment,
-                                              relief_payer_value.tax_relief,
-                                              0)
-    tax_advance_afterC = advance_after_relief(advance_base_value.payment,
-                                              relief_payer_value.tax_relief,
-                                              relief_child_value.tax_relief)
+  def compute_result_value_C(advance_base_value, relief_payer_value, relief_child_value)
+    advance_after_relief(advance_base_value, relief_payer_value, relief_child_value)
+  end
+
+  def evaluate(period, tag_config, results)
+    advance_base = payment_result(results, TAG_ADVANCE)
+    relief_payer = tax_relief_result(results, TAG_RELIEF_PAYER)
+    relief_child = tax_relief_result(results, TAG_RELIEF_CHILD)
+
+    tax_advance_afterA = compute_result_value_A(advance_base, relief_payer, 0)
+    tax_advance_afterC = compute_result_value_C(advance_base, relief_payer, relief_child)
     tax_advance_value = tax_advance_afterC
 
-    TaxAdvanceResult.new(@tag_code, @code, self,
-                              {after_reliefA: tax_advance_afterA,
-                               after_reliefC: tax_advance_afterC,
-                               payment: tax_advance_value
-                              })
+    result_values = {
+        after_reliefA: tax_advance_afterA,
+        after_reliefC: tax_advance_afterC,
+        payment: tax_advance_value
+    }
+    TaxAdvanceResult.new(@tag_code, @code, self, result_values)
   end
 
   def advance_after_relief(tax_advance, relief_payer, relief_child)

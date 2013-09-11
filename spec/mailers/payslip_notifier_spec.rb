@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'email_spec'
 
 describe PayslipNotifier do
-  include
+
   before(:each) do
     period = FactoryGirl.build(:periodJan2013)
     payroll_tags = PayTagGateway.new

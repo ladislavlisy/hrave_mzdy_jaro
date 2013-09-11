@@ -21,8 +21,8 @@ class IncomeNettoConcept < PayrollConcept
       TaxAdvanceFinalTag.new,
       TaxWithholdTag.new,
       TaxBonusChildTag.new,
-      InsuranceSocialTag.new,
-      InsuranceHealthTag.new
+      InsuranceHealthTag.new,
+      InsuranceSocialTag.new
     ]
   end
 
@@ -30,14 +30,21 @@ class IncomeNettoConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_FINAL
   end
 
-  def evaluate(period, tag_config, results)
+  def compute_result_value(tag_config, results)
     result_income = results.inject(0) do |agr, term_item|
       term_key    = term_item.first
       term_result = term_item.last
       agr + sum_term_for(tag_config, tag_code, term_key, term_result)
     end
+    result_income
+  end
 
-    AmountResult.new(@tag_code, @code, self, {amount: result_income})
+  def evaluate(period, tag_config, results)
+    result_income = compute_result_value(tag_config, results)
+
+    result_values = {amount: result_income}
+
+    AmountResult.new(@tag_code, @code, self, result_values)
   end
 
   def sum_term_for(tag_config, tag_code, result_key, result_item)

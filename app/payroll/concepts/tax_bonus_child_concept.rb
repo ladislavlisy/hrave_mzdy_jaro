@@ -40,25 +40,34 @@ class TaxBonusChildConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_NETTO
   end
 
-  def evaluate(period, tag_config, results)
-    result_income = get_result_by(results, TAG_AMOUNT_BASE)
-    is_tax_interest = result_income.interest?
+  def compute_result_value(year, is_tax_interest, advance_base_value, relief_payer_value, relief_child_value, relief_claim_value)
     if !is_tax_interest
       tax_advance_value = 0
     else
-      advance_base_value = get_result_by(results, TAG_ADVANCE)
-      relief_payer_value = get_result_by(results, TAG_RELIEF_PAYER)
-      relief_child_value = get_result_by(results, TAG_RELIEF_CHILD)
-      relief_claim_value = sum_relief_by(results, TAG_CLAIMS_CHILD)
-
-      relief_bonus_value = bonus_after_relief(advance_base_value.payment,
-                                  relief_payer_value.tax_relief,
-                                  relief_child_value.tax_relief,
-                                  relief_claim_value)
-      tax_advance_value = max_min_bonus(period.year, relief_bonus_value)
+      relief_bonus_value = bonus_after_relief(advance_base_value,
+                                              relief_payer_value,
+                                              relief_child_value,
+                                              relief_claim_value)
+      tax_advance_value = max_min_bonus(year, relief_bonus_value)
     end
+    tax_advance_value
+  end
 
-    PaymentResult.new(@tag_code, @code, self, {payment: tax_advance_value})
+  def evaluate(period, tag_config, results)
+    is_tax_interest = interest_result(results, TAG_AMOUNT_BASE)
+
+    advance_base = payment_result(results, TAG_ADVANCE)
+    relief_payer = tax_relief_result(results, TAG_RELIEF_PAYER)
+    relief_child = tax_relief_result(results, TAG_RELIEF_CHILD)
+    relief_claim = sum_relief_by(results, TAG_CLAIMS_CHILD)
+
+    tax_advance_value = compute_result_value(period.year, is_tax_interest,
+                                             advance_base, relief_payer,
+                                             relief_child, relief_claim)
+
+    result_values = {payment: tax_advance_value}
+
+    PaymentResult.new(@tag_code, @code, self, result_values)
   end
 
   def sum_relief_by(results, pay_tag)

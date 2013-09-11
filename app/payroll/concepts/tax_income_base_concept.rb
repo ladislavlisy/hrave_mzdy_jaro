@@ -22,7 +22,7 @@ class TaxIncomeBaseConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_GROSS
   end
 
-  def evaluate(period, tag_config, results)
+  def compute_result_value(tag_config, results)
     result_income = 0
     if !interest?
       result_income = 0
@@ -33,9 +33,19 @@ class TaxIncomeBaseConcept < PayrollConcept
         agr + sum_term_for(tag_config, tag_code, term_key, term_result)
       end
     end
+    result_income
+  end
 
-    result_value = {income_base: result_income, interest_code: @interest_code, declare_code: @declare_code}
-    IncomeBaseResult.new(@tag_code, @code, self, result_value)
+  def evaluate(period, tag_config, results)
+    result_income = compute_result_value(tag_config, results)
+
+    result_values = {
+        income_base: result_income,
+        interest_code: @interest_code,
+        declare_code: @declare_code
+    }
+
+    IncomeBaseResult.new(@tag_code, @code, self, result_values)
   end
 
   def sum_term_for(tag_config, tag_code, result_key, result_item)

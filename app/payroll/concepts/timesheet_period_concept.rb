@@ -28,13 +28,18 @@ class TimesheetPeriodConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_TIMES
   end
 
+  def compute_result_value(period, week_schedule_hours)
+    month_calendar_days(week_schedule_hours, period)
+  end
+
   def evaluate(period, tag_config, results)
-    result_schedule_work = get_result_by(results, TAG_SCHEDULE_WORK)
+    week_hours = week_schedule_result(results, TAG_SCHEDULE_WORK)
 
-    week_hours = result_schedule_work.week_schedule
+    hours_calendar = compute_result_value(period, week_hours)
 
-    hours_calendar = month_calendar_days(week_hours, period)
-    TimesheetResult.new(@tag_code, @code, self, {month_schedule: hours_calendar})
+    result_values = {month_schedule: hours_calendar}
+
+    TimesheetResult.new(@tag_code, @code, self, result_values)
   end
 
   def month_calendar_days(week_hours, period)
@@ -42,16 +47,18 @@ class TimesheetPeriodConcept < PayrollConcept
     calendar_beg_cwd = calendar_beg.cwday
     date_count = Time.days_in_month(period.month, period.year)
     hours_calendar = (1..date_count).each.map { |x| hours_from_week(week_hours, x, calendar_beg_cwd) }
+    hours_calendar
   end
 
   def hours_from_week(week_hours, day_ordinal, calendar_beg_cwd)
     #calendar_day = Date.new(calendar_beg.year, calendar_beg.month, day_ordinal)
     day_of_week = day_of_week_from_ordinal(day_ordinal, calendar_beg_cwd)
     work_hours = week_hours[day_of_week-1]
-    return work_hours
+    work_hours
   end
 
   def day_of_week_from_ordinal(day_ordinal, calendar_beg_cwd)
     day_of_week = (((day_ordinal-1)+(calendar_beg_cwd-1))%7)+1
+    day_of_week
   end
 end

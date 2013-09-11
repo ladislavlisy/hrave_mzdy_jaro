@@ -21,7 +21,7 @@ class InsuranceSocialBaseConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_GROSS
   end
 
-  def evaluate(period, tag_config, results)
+  def compute_result_value(tag_config, results)
     result_income = 0
     if !interest?
       result_income = 0
@@ -32,16 +32,21 @@ class InsuranceSocialBaseConcept < PayrollConcept
         agr + sum_term_for(tag_config, tag_code, term_key, term_result)
       end
     end
+    result_income
+  end
+
+  def evaluate(period, tag_config, results)
+    result_income = compute_result_value(tag_config, results)
 
     employee_base = min_max_assessment_base(period, result_income)
     employer_base = max_assessment_base(period, result_income)
 
-    result_value = {income_base: result_income,
+    result_values = {income_base: result_income,
                     employee_base: employee_base,
                     employer_base: employer_base,
                     interest_code: @interest_code}
 
-    IncomeBaseResult.new(@tag_code, @code, self, result_value)
+    IncomeBaseResult.new(@tag_code, @code, self, result_values)
   end
 
   def sum_term_for(tag_config, tag_code, result_key, result_item)
@@ -60,17 +65,25 @@ class InsuranceSocialBaseConcept < PayrollConcept
   end
 
   def min_max_assessment_base(period, ins_base)
-    min_base = min_assessment_base(period, ins_base)
+    if !interest?
+      0
+    else
+      min_base = min_assessment_base(period, ins_base)
 
-    max_base = max_assessment_base(period, min_base)
+      max_base = max_assessment_base(period, min_base)
+    end
   end
 
   def max_assessment_base(period, income_base)
-    maximum_base = social_max_assessment(period.year)
-    if maximum_base==0
-      income_base
+    if !interest?
+      0
     else
-      [income_base, maximum_base].min
+      maximum_base = social_max_assessment(period.year)
+      if maximum_base==0
+        income_base
+      else
+        [income_base, maximum_base].min
+      end
     end
   end
 

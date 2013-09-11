@@ -30,18 +30,27 @@ class TimesheetWorkConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_TIMES
   end
 
-  def evaluate(period, tag_config, results)
-    result_schedule_term = get_result_by(results, TAG_SCHEDULE_TERM)
-    result_timesheet_period = get_result_by(results, TAG_TIMESHEET_PERIOD)
-    day_ord_from = result_schedule_term.day_ord_from
-    day_ord_end = result_schedule_term.day_ord_end
-
-    timesheet_period = result_timesheet_period.month_schedule.to_enum.with_index(1).to_a
+  def compute_result_value(month_schedule_hours, day_ord_from, day_ord_end)
+    timesheet_period = month_schedule_hours.to_enum.with_index(1).to_a
 
     hours_calendar = timesheet_period.map do |x, day|
       hours_from_calendar(day_ord_from, day_ord_end, day, x)
     end
-    TimesheetResult.new(@tag_code, @code, self, {month_schedule: hours_calendar})
+    hours_calendar
+  end
+
+  def evaluate(period, tag_config, results)
+    day_ord_from = day_from_result(results, TAG_SCHEDULE_TERM, PayrollConcept::TERM_BEG_FINISHED)
+
+    day_ord_end = day_end_result(results, TAG_SCHEDULE_TERM, PayrollConcept::TERM_END_FINISHED)
+
+    month_schedule = month_schedule_result(results, TAG_TIMESHEET_PERIOD)
+
+    hours_calendar = compute_result_value(month_schedule, day_ord_from, day_ord_end)
+
+    result_values = {month_schedule: hours_calendar}
+
+    TimesheetResult.new(@tag_code, @code, self, result_values)
   end
 
   def hours_from_calendar(day_ord_from, day_ord_end, day_ordinal, work_hours)

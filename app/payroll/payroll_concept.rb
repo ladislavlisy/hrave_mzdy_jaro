@@ -49,6 +49,141 @@ class PayrollConcept < CodeNameRefer
     CALC_CATEGORY_START
   end
 
+  def timesheet_hours_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      0
+    else
+      result_for_tag.hours
+    end
+  end
+
+  def term_hours_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      0
+    else
+      result_for_tag.hours
+    end
+  end
+
+  def employee_income_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      big_decimal_cast(0)
+    else
+      result_for_tag.employee_base
+    end
+  end
+
+  def employer_income_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      big_decimal_cast(0)
+    else
+      result_for_tag.employer_base
+    end
+  end
+
+  def income_base_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      big_decimal_cast(0)
+    else
+      result_for_tag.income_base
+    end
+  end
+
+  def payment_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      big_decimal_cast(0)
+    else
+      result_for_tag.payment
+    end
+  end
+
+  def tax_payment_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      big_decimal_cast(0)
+    else
+      result_for_tag.payment
+    end
+  end
+
+  def tax_claim_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      big_decimal_cast(0)
+    else
+      result_for_tag.tax_relief
+    end
+  end
+
+  def tax_relief_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      big_decimal_cast(0)
+    else
+      result_for_tag.tax_relief
+    end
+  end
+
+  def interest_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      false
+    else
+      result_for_tag.interest?
+    end
+  end
+
+  def declared_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      false
+    else
+      result_for_tag.declared?
+    end
+  end
+
+  def week_schedule_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+       Array.new(7) {0}
+    else
+      result_for_tag.week_schedule
+    end
+  end
+
+  def month_schedule_result(results, tag_code)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      Array.new(31) {0}
+    else
+      result_for_tag.month_schedule
+    end
+  end
+
+  def day_from_result(results, tag_code, default_value)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      default_value
+    else
+      result_for_tag.day_ord_from
+    end
+  end
+
+  def day_end_result(results, tag_code, default_value)
+    result_for_tag = get_result_by(results, tag_code)
+    if result_for_tag.nil?
+      default_value
+    else
+      result_for_tag.day_ord_end
+    end
+  end
+
   def <=>(concept_other)
     if count_pending_codes(tag_pending_codes, concept_other.tag_code)!=0
       return 1
@@ -78,7 +213,11 @@ class PayrollConcept < CodeNameRefer
   #get term from Results by key of tag
   def get_result_by(results, pay_tag)
     result_hash = results.select { |key,_| key.code==pay_tag }
-    result_hash.values[0]
+    if result_hash.empty?
+      nil
+    else
+      result_hash.values[0]
+    end
   end
 
   def big_multi(op1, op2)

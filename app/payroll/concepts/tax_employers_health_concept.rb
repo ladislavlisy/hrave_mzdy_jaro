@@ -35,21 +35,29 @@ class TaxEmployersHealthConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_NETTO
   end
 
-  def evaluate(period, tag_config, results)
+  def compute_result_value(period, employer_base, employee_base)
     employer_income = 0
     employee_income = 0
     if !interest?
       employer_income = 0
       employee_income = 0
     else
-      result_income = get_result_by(results, TAG_AMOUNT_BASE)
-      employer_income = [0,result_income.employer_base].max
-      employee_income = [0,result_income.employee_base].max
+      employer_income = [0,employer_base].max
+      employee_income = [0,employee_base].max
     end
 
-    payment_value = insurance_payment(period, employer_income, employee_income)
+    insurance_payment(period, employer_income, employee_income)
+  end
 
-    PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
+  def evaluate(period, tag_config, results)
+    employer_base = employer_income_result(results, TAG_AMOUNT_BASE)
+    employee_base = employee_income_result(results, TAG_AMOUNT_BASE)
+
+    payment_value = compute_result_value(period, employer_base, employee_base)
+
+    result_values = {payment: payment_value}
+
+    PaymentResult.new(@tag_code, @code, self, result_values)
   end
 
   def insurance_payment(period, employer_income, employee_income)
@@ -74,9 +82,9 @@ class TaxEmployersHealthConcept < PayrollConcept
 
   def health_insurance_factor(period)
     factor = 0.0
-    if (period.year<1993)
+    if (period.year < 2008)
       factor = 0.0
-    elsif (period.year<2009)
+    elsif (period.year < 2009)
       factor = 13.5
     else
       factor = 13.5

@@ -23,14 +23,20 @@ class TaxClaimDisabilityConcept < PayrollConcept
     return new_concept
   end
 
+  def compute_result_value(year, code_1, code_2, code_3)
+    relief_value_1 = relief1_claim_amount(year, code_1)
+    relief_value_2 = relief2_claim_amount(year, code_2)
+    relief_value_3 = relief3_claim_amount(year, code_3)
+
+    relief_value_1 + relief_value_2 + relief_value_3
+  end
+
   def evaluate(period, tag_config, results)
-    relief_value_1 = relief1_claim_amount(period.year, relief_code_1)
-    relief_value_2 = relief2_claim_amount(period.year, relief_code_2)
-    relief_value_3 = relief3_claim_amount(period.year, relief_code_3)
+    relief_value = compute_result_value(period.year, relief_code_1, relief_code_2, relief_code_3)
 
-    relief_value = relief_value_1 + relief_value_2 + relief_value_3
+    result_values = {tax_relief: relief_value}
 
-    TaxClaimResult.new(@tag_code, @code, self, {tax_relief: relief_value})
+    TaxClaimResult.new(@tag_code, @code, self, result_values)
   end
 
   def relief1_claim_amount(year, code)

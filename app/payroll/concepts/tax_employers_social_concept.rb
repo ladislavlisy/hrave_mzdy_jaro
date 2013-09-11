@@ -35,18 +35,24 @@ class TaxEmployersSocialConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_NETTO
   end
 
-  def evaluate(period, tag_config, results)
+  def compute_result_value(period, employer_base)
     payment_income = 0
     if !interest?
       payment_income = 0
     else
-      result_income = get_result_by(results, TAG_AMOUNT_BASE)
-      payment_income = [0,result_income.employer_base].max
+      payment_income = [0,employer_base].max
     end
+    insurance_payment(period, payment_income)
+  end
 
-    payment_value = insurance_payment(period, payment_income)
+  def evaluate(period, tag_config, results)
+    employer_base = employer_income_result(results, TAG_AMOUNT_BASE)
 
-    PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
+    payment_value = compute_result_value(period, employer_base)
+
+    result_values = {payment: payment_value}
+
+    PaymentResult.new(@tag_code, @code, self, result_values)
   end
 
   def insurance_payment(period, payment_income)
@@ -63,7 +69,7 @@ class TaxEmployersSocialConcept < PayrollConcept
 
   def social_insurance_factor(period)
     factor = 0.0
-    if (period.year<2009)
+    if (period.year < 2008)
       factor = 0
     else
       factor = 25

@@ -35,17 +35,25 @@ class SavingsPensionsConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_NETTO
   end
 
-  def evaluate(period, tag_config, results)
+  def compute_result_value(period, employee_base)
     payment_income = 0
     if !interest?
       payment_income = 0
     else
-      result_income = get_result_by(results, TAG_AMOUNT_BASE)
-      payment_income = result_income.income_base
+      payment_income = employee_base
     end
 
-    payment_value = insurance_contribution(period, payment_income)
-    PaymentDeductionResult.new(@tag_code, @code, self, {payment: payment_value})
+    insurance_contribution(period, payment_income)
+  end
+
+  def evaluate(period, tag_config, results)
+    result_employee_base = employee_income_result(results, TAG_AMOUNT_BASE)
+
+    payment_value = compute_result_value(period, result_employee_base)
+
+    result_values = {payment: payment_value}
+
+    PaymentDeductionResult.new(@tag_code, @code, self, result_values)
   end
 
   def insurance_contribution(period, income_base)

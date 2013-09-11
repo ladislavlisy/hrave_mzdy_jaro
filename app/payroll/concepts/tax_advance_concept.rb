@@ -29,16 +29,19 @@ class TaxAdvanceConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_NETTO
   end
 
+  def compute_result_value(period, taxable_income, taxable_partial)
+    tax_adv_calculate(period, taxable_income, taxable_partial)
+  end
+
   def evaluate(period, tag_config, results)
-    result_income = get_result_by(results, TAG_INCOME_BASE)
-    result_advance = get_result_by(results, TAG_ADVANCE_BASE)
+    taxable_income = income_base_result(results, TAG_INCOME_BASE)
+    taxable_partial = income_base_result(results, TAG_ADVANCE_BASE)
 
-    taxable_income = result_income.income_base
-    taxable_partial = result_advance.income_base
+    payment_value = compute_result_value(period, taxable_income, taxable_partial)
 
-    payment_value = tax_adv_calculate(period, taxable_income, taxable_partial)
+    result_values = {payment: payment_value}
 
-    PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
+    PaymentResult.new(@tag_code, @code, self, result_values)
   end
 
   def tax_adv_calculate(period, tax_income, tax_base)

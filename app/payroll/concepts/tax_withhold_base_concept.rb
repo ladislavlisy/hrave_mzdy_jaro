@@ -23,8 +23,8 @@ class TaxWithholdBaseConcept < PayrollConcept
   def pending_codes
     [
       TaxIncomeBaseTag.new,
-      TaxEmployersSocialTag.new,
-      TaxEmployersHealthTag.new
+      TaxEmployersHealthTag.new,
+      TaxEmployersSocialTag.new
     ]
   end
 
@@ -32,27 +32,29 @@ class TaxWithholdBaseConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_NETTO
   end
 
-  def evaluate(period, tag_config, results)
-    social_employer = get_result_by(results, TAG_SOCIAL_BASE)
-    health_employer = get_result_by(results, TAG_HEALTH_BASE)
-    result_income = get_result_by(results, TAG_AMOUNT_BASE)
-
-    is_tax_interest = result_income.interest?
-    is_tax_declared = result_income.declared?
+  def compute_result_value(period, is_tax_interest, is_tax_declared, taxable_health, taxable_social, taxable_base)
     if !is_tax_interest
       taxable_super = 0
     else
-      taxable_base = result_income.income_base
-      taxable_social = social_employer.payment
-      taxable_health = health_employer.payment
-
-      taxable_super = taxable_base+taxable_social+taxable_health
+      taxable_super = taxable_base+taxable_health+taxable_social
     end
+    tax_rounded_base(period, is_tax_declared, taxable_base, taxable_super)
+  end
 
-    payment_value = tax_rounded_base(period, is_tax_declared, taxable_base, taxable_super)
+  def evaluate(period, tag_config, results)
+    is_tax_interest = interest_result(results, TAG_AMOUNT_BASE)
+    is_tax_declared = declared_result(results, TAG_AMOUNT_BASE)
 
-    result_value = {income_base: payment_value}
-    IncomeBaseResult.new(@tag_code, @code, self, result_value)
+    taxable_health = payment_result(results, TAG_HEALTH_BASE)
+    taxable_social = payment_result(results, TAG_SOCIAL_BASE)
+    taxable_base = income_base_result(results, TAG_AMOUNT_BASE)
+
+    payment_value = compute_result_value(period, is_tax_interest, is_tax_declared,
+                                         taxable_health, taxable_social, taxable_base)
+
+    result_values = {income_base: payment_value}
+
+    IncomeBaseResult.new(@tag_code, @code, self, result_values)
   end
 
   def tax_rounded_base(period, tax_decl, tax_income, tax_base)

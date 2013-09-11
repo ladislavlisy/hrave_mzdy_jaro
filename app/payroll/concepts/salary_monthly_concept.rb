@@ -44,21 +44,23 @@ class SalaryMonthlyConcept < PayrollConcept
     PayrollConcept::CALC_CATEGORY_AMOUNT
   end
 
-  def evaluate(period, tag_config, results)
-    result_timesheet = get_result_by(results, TAG_TIMESHEET_PERIOD)
-    result_working = get_result_by(results, TAG_HOURS_WORKING)
-    result_absence = get_result_by(results, TAG_HOURS_ABSENCE)
-
+  def compute_result_value(timesheet_hours, working_hours, absence_hours)
     schedule_factor = big_decimal_cast(1.0)
-
-    timesheet_hours = result_timesheet.hours
-    working_hours = result_working.hours
-    absence_hours = result_absence.hours
-
     amount_factor = factorize_amount(amount_monthly, schedule_factor)
 
-    payment_value = payment_from_amount(amount_factor, timesheet_hours, working_hours, absence_hours)
-    PaymentResult.new(@tag_code, @code, self, {payment: payment_value})
+    payment_from_amount(amount_factor, timesheet_hours, working_hours, absence_hours)
+  end
+
+  def evaluate(period, tag_config, results)
+    timesheet_hours = timesheet_hours_result(results, TAG_TIMESHEET_PERIOD)
+    working_hours = term_hours_result(results, TAG_HOURS_WORKING)
+    absence_hours = term_hours_result(results, TAG_HOURS_ABSENCE)
+
+    payment_value = compute_result_value(timesheet_hours, working_hours, absence_hours)
+
+    result_values = {payment: payment_value}
+
+    PaymentResult.new(@tag_code, @code, self, result_values)
   end
 
   def factorize_amount(amount, schedule_factor)

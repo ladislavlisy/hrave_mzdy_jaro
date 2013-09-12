@@ -71,28 +71,28 @@ class PayrollTasksController < ApplicationController
       @payroll_task.empl_salary  = 20000
     end
 
-    if @payroll_task.description.empty?
+    if @payroll_task.description.nil? || @payroll_task.description.empty?
       @payroll_task.description   = 'Happy a new payroll!'
     end
-    if @payroll_task.company_name.empty?
+    if @payroll_task.company_name.nil? || @payroll_task.company_name.empty?
       @payroll_task.company_name   = 'Sample company'
     end
-    if @payroll_task.payrolee_name.empty?
+    if @payroll_task.payrolee_name.nil? || @payroll_task.payrolee_name.empty?
     @payroll_task.payrolee_name  = 'Happy accountant'
     end
-    if @payroll_task.payrolee_mail.empty?
+    if @payroll_task.payrolee_mail.nil? || @payroll_task.payrolee_mail.empty?
       @payroll_task.payrolee_mail  = 'hrave.mzdy@seznam.cz'
     end
-    if @payroll_task.employee_name.empty?
+    if @payroll_task.employee_name.nil? || @payroll_task.employee_name.empty?
       @payroll_task.employee_name  = 'Sample Employee'
     end
-    if @payroll_task.employer_name.empty?
+    if @payroll_task.employer_name.nil? || @payroll_task.employer_name.empty?
       @payroll_task.employer_name  = 'Sample Employer Ltd.'
     end
-    if @payroll_task.employee_numb.empty?
+    if @payroll_task.employee_numb.nil? || @payroll_task.employee_numb.empty?
       @payroll_task.employee_numb  = '00001'
     end
-    if @payroll_task.department.empty?
+    if @payroll_task.department.nil? || @payroll_task.department.empty?
       @payroll_task.department     = 'Sample Department'
     end
 
